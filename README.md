@@ -1,10 +1,12 @@
-# Lab assay notebook
+# Lab experiment notebook
 
-I built a small notebook for plate-based assays because I wanted one place to connect a sample's identity to its plate-reader result. A spreadsheet can hold the numbers, but it is easy to lose which reagent lot I used, where a sample went, or which file produced the final concentration.
+I built a lab experiment notebook because I wanted to keep a sample's name, its test results and the materials used for it in one place. Keeping those pieces in separate spreadsheets makes it easy to lose which result belongs to which sample.
 
-I register samples and reagent lots, assign the wells on a plate, and import the reader's measurements. The notebook subtracts the background, uses known standards to estimate sample concentrations, and highlights results that need another look. It also generates Python instructions for an Opentrons OT-2 liquid-handling robot.
+The tests in this project use a plastic tray with many small containers, called **wells**. The tray is a **plate**, and a **plate reader** is the device that measures light from each well. An **assay** is the laboratory test being done. I record where each sample goes, import the device's readings, and compare them with samples containing known amounts to calculate the unknown concentrations, or amounts per unit volume.
 
-**Try it locally:** run the commands below, open the page, and click **Open synthetic demo**. The demo has two samples with known answers, 7 and 12 ng/mL. I can inspect each well, compare the recovered concentrations, download the results, and prepare a robot plan without an instrument or an account.
+The page warns me when repeated readings disagree or the control samples do not separate clearly. It keeps the original readings and a history of saved changes. I can also download instructions for an Opentrons OT-2, a robot that moves measured amounts of liquid between containers. My included full-test demonstration uses clearly labelled synthetic data, so it runs without laboratory equipment.
+
+**Try it locally:** run the commands below, open the page, and click **Open synthetic demo**. The demo has two samples with known answers, 7 and 12 nanograms per millilitre (ng/mL). I can inspect each well, compare the recovered concentrations, download the results, and prepare a robot plan without an instrument or an account.
 
 ![Plate map, fitted standard curve and recovered synthetic sample concentrations](docs/plate-review.png)
 
