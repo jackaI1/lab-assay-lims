@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Lab assay notebook</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="/static/app.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <a href="/" class="brand">Lab assay notebook</a>
+      <nav aria-label="Main">
+        <a href="#review">Plate review</a><a href="#setup">New experiment</a
+        ><a href="#robot">Robot plan</a><a href="#history">History</a>
+      </nav>
+    </header>
+    <main>
+      <section class="intro">
+        <div>
+          <h1>Keep the plate<br />and the story together.</h1>
+          <p>
+            Track what went into each well, import a reader file, and check the
+            results before preparing the next experiment.
+          </p>
+        </div>
+        <div class="start">
+          <button id="demo">Open synthetic demo</button>
+          <p>
+            Known answers. No real samples.<br />Runs locally on this computer.
+          </p>
+          <a href="/docs">API reference</a>
+        </div>
+      </section>
+      <p id="status" role="status" aria-live="polite">
+        Choose the demo, or register your own experiment below.
+      </p>
+      <section id="review" aria-labelledby="review-title">
+        <div class="section-head">
+          <h2 id="review-title">Plate review</h2>
+          <label
+            >Experiment
+            <select id="plate-select">
+              <option value="">Choose a plate</option>
+            </select></label
+          >
+        </div>
+        <p id="plate-detail">
+          No plate selected. The demo includes standards, blanks, controls and
+          two samples.
+        </p>
+        <div class="review-layout">
+          <div>
+            <div class="legend">
+              <span class="standard">Standard</span
+              ><span class="sample">Sample</span><span class="blank">Blank</span
+              ><span class="positive">Positive control</span
+              ><span class="negative">Negative control</span>
+            </div>
+            <div
+              class="plate-scroll"
+              role="region"
+              aria-label="96-well plate map"
+              tabindex="0"
+            >
+              <div id="plate-grid" class="plate-grid"></div>
+            </div>
+            <p id="well-detail">Select a well to inspect its contents.</p>
+          </div>
+          <div class="analysis-panel">
+            <h3>Reader import</h3>
+            <form id="import-form">
+              <label
+                >CSV or XLSX export
+                <input
+                  id="reader-file"
+                  type="file"
+                  accept=".csv,.xlsx"
+                  required
+              /></label>
+              <p class="help">
+                Use <code>well,signal</code> columns or an A–H × 1–12 matrix.
+                Every mapped well must have one signal.
+                <a href="/api/templates/synthetic-reader.csv">Example CSV</a>
+              </p>
+              <button type="submit" id="import-button" disabled>
+                Import reader file
+              </button>
+            </form>
+            <form id="analysis-form">
+              <label
+                >Saved import
+                <select id="import-select" required></select></label
+              ><label
+                >Standard curve
+                <select id="model">
+                  <option value="4pl">4PL · curved response</option>
+                  <option value="linear">Linear · straight response</option>
+                </select></label
+              ><button id="analyse-button" type="submit" disabled>
+                Calculate and save analysis
+              </button>
+            </form>
+            <label
+              >Saved analysis
+              <select id="analysis-select">
+                <option value="">Choose a result</option>
+              </select></label
+            >
+          </div>
+        </div>
+        <div id="results" hidden>
+          <div class="section-head">
+            <h3 id="qc-status"></h3>
+            <a id="csv-link" href="#">Download results CSV</a>
+          </div>
+          <p id="qc-summary"></p>
+          <ul id="qc-flags"></ul>
+          <div class="result-layout">
+            <div>
+              <svg
+                id="curve"
+                viewBox="0 0 600 300"
+                role="img"
+                aria-label="Standard curve: measured standards and fitted response"
+              ></svg>
+              <p class="help">
+                Dots are blank-corrected standards. The line is the fitted
+                response. Concentration axis uses log(1 + concentration).
+              </p>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <caption>
+                  Sample concentrations and replicate checks
+                </caption>
+                <thead>
+                  <tr>
+                    <th>Sample</th>
+                    <th>Concentration</th>
+                    <th>CV %</th>
+                    <th>Review</th>
+                  </tr>
+                </thead>
+                <tbody id="sample-results"></tbody>
+              </table>
+              <p class="help">
+                CV measures variation between repeated wells. Z-prime compares
+                the spread and separation of controls; 0.5 or greater passes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section id="setup" aria-labelledby="setup-title">
+        <h2 id="setup-title">Register a new experiment</h2>
+        <p>
+          Give samples and reagent lots stable IDs, then save a plate map. Saved
+          records are immutable; corrections use a new record with a new ID.
+        </p>
+        <div class="forms-layout">
+          <form id="sample-form">
+            <h3>Sample</h3>
+            <label
+              >Sample ID
+              <input
+                name="id"
+                required
+                placeholder="BUFFER-001"
+                pattern="[A-Za-z0-9_.\-]+"
+                maxlength="80" /></label
+            ><label
+              >Description
+              <input
+                name="description"
+                required
+                placeholder="Protein in buffer"
+                maxlength="500" /></label
+            ><button type="submit">Register sample</button>
+            <p id="sample-list" class="help">No samples registered.</p>
+          </form>
+          <form id="lot-form">
+            <h3>Reagent lot</h3>
+            <label
+              >Lot ID
+              <input
+                name="id"
+                required
+                placeholder="LOT-001"
+                pattern="[A-Za-z0-9_.\-]+"
+                maxlength="80" /></label
+            ><label
+              >Reagent
+              <input
+                name="reagent"
+                required
+                placeholder="Assay antibody"
+                maxlength="200" /></label
+            ><label
+              >Expires on
+              <input name="expires_on" type="date" required /></label
+            ><button type="submit">Register lot</button>
+            <p id="lot-list" class="help">No lots registered.</p>
+          </form>
+        </div>
+        <form id="plate-form">
+          <h3>Plate map</h3>
+          <div class="fields">
+            <label
+              >Plate name
+              <input
+                id="plate-name"
+                required
+                maxlength="120"
+                placeholder="Buffer assay, run 1" /></label
+            ><label
+              >Reagent lot
+              <select id="lot-select" required></select></label
+            ><label
+              >Concentration unit
+              <input id="unit" value="ng/mL" required maxlength="30"
+            /></label>
+          </div>
+          <p>
+            Assign a well below, then add it to the map. Repeat for each
+            occupied well. Include at least two blanks, three controls of each
+            type, and six distinct standard concentrations for a 4PL curve.
+          </p>
+          <div class="fields assignment">
+            <label>Well <input id="new-well" value="A1" maxlength="3" /></label
+            ><label
+              >Contents
+              <select id="new-role">
+                <option value="standard">Standard</option>
+                <option value="sample">Sample</option>
+                <option value="blank">Blank</option>
+                <option value="positive">Positive control</option>
+                <option value="negative">Negative control</option>
+              </select></label
+            ><label id="concentration-label"
+              >Known concentration
+              <input
+                id="new-concentration"
+                type="number"
+                min="0"
+                step="any"
+                value="0" /></label
+            ><label id="sample-label" hidden
+              >Sample ID
+              <select id="new-sample"></select></label
+            ><label id="dilution-label" hidden
+              >Dilution factor
+              <input
+                id="new-dilution"
+                type="number"
+                min="1"
+                step="any"
+                value="1" /></label
+            ><button id="assign" type="button">Assign well</button>
+          </div>
+          <div class="actions">
+            <button id="template" class="secondary" type="button">
+              Use demo layout</button
+            ><button id="clear-map" class="secondary" type="button">
+              Clear draft map</button
+            ><span id="map-count">0 wells assigned</span>
+          </div>
+          <div
+            id="draft-map"
+            class="draft-map"
+            aria-label="Draft well assignments"
+          ></div>
+          <button type="submit">Save plate map</button>
+        </form>
+      </section>
+      <section id="robot" aria-labelledby="robot-title">
+        <h2 id="robot-title">Prepare a robot plan</h2>
+        <p>
+          Generate an OT-2 Python protocol linked to the selected plate. These
+          are preparation plans; the robot layout is not inferred from the assay
+          map. Review the deck and liquid volumes before use.
+        </p>
+        <form id="robot-form">
+          <div class="fields">
+            <label
+              >Plan type
+              <select id="protocol-kind">
+                <option value="serial">Serial dilution</option>
+                <option value="transfer">Plate transfers</option>
+              </select></label
+            >
+          </div>
+          <div id="serial-fields" class="fields">
+            <label
+              >Row
+              <select id="robot-row">
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+                <option>D</option>
+                <option>E</option>
+                <option>F</option>
+                <option>G</option>
+                <option>H</option>
+              </select></label
+            ><label
+              >Number of wells
+              <input
+                id="steps"
+                type="number"
+                min="2"
+                max="12"
+                value="8" /></label
+            ><label
+              >Dilution factor
+              <input
+                id="factor"
+                type="number"
+                min="1.01"
+                step="any"
+                value="2" /></label
+            ><label
+              >Final volume / well (µL)
+              <input
+                id="final-volume"
+                type="number"
+                min="20"
+                max="200"
+                value="80"
+            /></label>
+          </div>
+          <div id="transfer-fields" hidden>
+            <label
+              >Transfers, one per line: source,destination,µL
+              <textarea id="moves" rows="4">
+A1,B1,50
+A1,B2,50</textarea></label
+            ><label
+              >Source loading, one per line: well,µL
+              <textarea id="stock" rows="3">A1,150</textarea>
+            </label>
+          </div>
+          <button id="generate" disabled>Generate protocol</button>
+        </form>
+        <div id="protocol-result" hidden>
+          <a id="protocol-link" href="#">Download Python protocol</a>
+          <p>
+            Validate this exact file before use:
+            <code>uv run opentrons_simulate assay-protocol.py</code>. The
+            download has not been simulated by the web service.
+          </p>
+          <pre id="robot-plan"></pre>
+        </div>
+      </section>
+      <section id="history" aria-labelledby="history-title">
+        <div class="section-head">
+          <h2 id="history-title">Records and history</h2>
+          <button id="refresh-history" class="secondary">
+            Refresh history
+          </button>
+        </div>
+        <p>
+          Every saved change gets a timestamp and an audit entry. This local
+          notebook uses the actor name <code>local-user</code>; it does not
+          authenticate users.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <caption>
+              Append-only audit trail
+            </caption>
+            <thead>
+              <tr>
+                <th>Time (UTC)</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Record</th>
+              </tr>
+            </thead>
+            <tbody id="audit"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <footer>
+      Built by Jack Lai · Local research demonstration · Simulator validation
+      does not replace instrument calibration or a laboratory review.
+    </footer>
+  </body>
+</html>

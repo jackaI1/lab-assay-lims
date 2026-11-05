@@ -1,0 +1,12 @@
+{
+  "source": "https://raw.githubusercontent.com/cran/ELISAtools/d28128c9c29c52a9e52c7896e500010536cdcd0b/inst/extdata/Assay_2.txt",
+  "annotation": "https://raw.githubusercontent.com/cran/ELISAtools/d28128c9c29c52a9e52c7896e500010536cdcd0b/inst/extdata/AnExp_2plate.txt",
+  "concentrations": "https://raw.githubusercontent.com/cran/ELISAtools/d28128c9c29c52a9e52c7896e500010536cdcd0b/inst/extdata/stdConc.txt",
+  "commit": "d28128c9c29c52a9e52c7896e500010536cdcd0b",
+  "source_sha256": "6a9c7bd408b24ffe12ea42b30c7fcea21f68f5fa80d5ac938b3138ba68dddc56",
+  "subset_sha256": "8949a5f6d1857d5e05c72b8dc5ce7e9adc0475d32d2d3cbda55918ef9accaf2b",
+  "transformation": "First plate; A1:H3 only (24 standard wells); signal = 450 nm minus 620 nm. No sample wells retained.",
+  "units": "Concentration units not specified in source; retained as source units.",
+  "license": "MIT; Copyright 2019 Feng Feng. See LICENSE-ELISAtools.txt.",
+  "limitation": "Calibration-only data; no independent positive/negative controls and no unknown ground truth."
+}

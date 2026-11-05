@@ -1,0 +1,194 @@
+[
+  {
+    "well": "A1",
+    "role": "standard",
+    "concentration": 0
+  },
+  {
+    "well": "A2",
+    "role": "standard",
+    "concentration": 0
+  },
+  {
+    "well": "A3",
+    "role": "standard",
+    "concentration": 0
+  },
+  {
+    "well": "B1",
+    "role": "standard",
+    "concentration": 0.2
+  },
+  {
+    "well": "B2",
+    "role": "standard",
+    "concentration": 0.2
+  },
+  {
+    "well": "B3",
+    "role": "standard",
+    "concentration": 0.2
+  },
+  {
+    "well": "C1",
+    "role": "standard",
+    "concentration": 0.5
+  },
+  {
+    "well": "C2",
+    "role": "standard",
+    "concentration": 0.5
+  },
+  {
+    "well": "C3",
+    "role": "standard",
+    "concentration": 0.5
+  },
+  {
+    "well": "D1",
+    "role": "standard",
+    "concentration": 1
+  },
+  {
+    "well": "D2",
+    "role": "standard",
+    "concentration": 1
+  },
+  {
+    "well": "D3",
+    "role": "standard",
+    "concentration": 1
+  },
+  {
+    "well": "E1",
+    "role": "standard",
+    "concentration": 2
+  },
+  {
+    "well": "E2",
+    "role": "standard",
+    "concentration": 2
+  },
+  {
+    "well": "E3",
+    "role": "standard",
+    "concentration": 2
+  },
+  {
+    "well": "F1",
+    "role": "standard",
+    "concentration": 5
+  },
+  {
+    "well": "F2",
+    "role": "standard",
+    "concentration": 5
+  },
+  {
+    "well": "F3",
+    "role": "standard",
+    "concentration": 5
+  },
+  {
+    "well": "G1",
+    "role": "standard",
+    "concentration": 20
+  },
+  {
+    "well": "G2",
+    "role": "standard",
+    "concentration": 20
+  },
+  {
+    "well": "G3",
+    "role": "standard",
+    "concentration": 20
+  },
+  {
+    "well": "H1",
+    "role": "standard",
+    "concentration": 100
+  },
+  {
+    "well": "H2",
+    "role": "standard",
+    "concentration": 100
+  },
+  {
+    "well": "H3",
+    "role": "standard",
+    "concentration": 100
+  },
+  {
+    "well": "A4",
+    "role": "blank"
+  },
+  {
+    "well": "B4",
+    "role": "positive"
+  },
+  {
+    "well": "C4",
+    "role": "negative"
+  },
+  {
+    "well": "A5",
+    "role": "blank"
+  },
+  {
+    "well": "B5",
+    "role": "positive"
+  },
+  {
+    "well": "C5",
+    "role": "negative"
+  },
+  {
+    "well": "A6",
+    "role": "blank"
+  },
+  {
+    "well": "B6",
+    "role": "positive"
+  },
+  {
+    "well": "C6",
+    "role": "negative"
+  },
+  {
+    "well": "D4",
+    "role": "sample",
+    "sample_id": "DEMO-S1",
+    "dilution_factor": 2
+  },
+  {
+    "well": "D5",
+    "role": "sample",
+    "sample_id": "DEMO-S1",
+    "dilution_factor": 2
+  },
+  {
+    "well": "D6",
+    "role": "sample",
+    "sample_id": "DEMO-S1",
+    "dilution_factor": 2
+  },
+  {
+    "well": "E4",
+    "role": "sample",
+    "sample_id": "DEMO-S2",
+    "dilution_factor": 3
+  },
+  {
+    "well": "E5",
+    "role": "sample",
+    "sample_id": "DEMO-S2",
+    "dilution_factor": 3
+  },
+  {
+    "well": "E6",
+    "role": "sample",
+    "sample_id": "DEMO-S2",
+    "dilution_factor": 3
+  }
+]
