@@ -1,0 +1,34 @@
+name: tissue-patch-eval / Test and replay report
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/tissue-patch-eval/**
+    - .github/workflows/tissue-patch-eval-ci.yml
+  pull_request:
+    paths:
+    - projects/tissue-patch-eval/**
+    - .github/workflows/tissue-patch-eval-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        version: 0.12.19
+        working-directory: projects/tissue-patch-eval
+    - run: uv sync --frozen --python 3.12 --extra dev
+    - run: uv run ruff check .
+    - run: uv run ruff format --check .
+    - run: uv run pytest -q
+    - name: Replay public-data metrics and every confidence interval
+      run: uv run tissue-patch-eval verify --report reports
+defaults:
+  run:
+    working-directory: projects/tissue-patch-eval
