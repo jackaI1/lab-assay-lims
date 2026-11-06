@@ -1,0 +1,3 @@
+sample,dilution,volume_ml,plate_1,plate_2,medium,incubation
+synthetic-1,0.01,1,100,110,TSA,30C 72h
+synthetic-2,0.1,1,40,43,TSA,30C 72h

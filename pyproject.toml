@@ -14,6 +14,12 @@ dependencies = [
     "scipy>=1.12,<2",
     "openpyxl>=3.1,<4",
     "python-multipart>=0.0.18,<1",
+    "pyvisa>=1.14,<2",
+    "pyvisa-sim>=0.7,<1",
+    "statsmodels>=0.14,<1",
+    "matplotlib>=3.8,<4",
+    "pandas>=3.0.6",
+    "pyvisa-py>=0.7,<1",
 ]
 
 [project.optional-dependencies]
