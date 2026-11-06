@@ -73,6 +73,8 @@ Files omitted from this snapshot:
 
 - reports/bbbc039/index.html (over 10 MB)
 
-Project checks run from this directory through the path-filtered hub workflows: `microscopy-count-qc-ci.yml`.
+Project checks run from this directory through the path-filtered hub workflows: (removed workflow).
 
 Generated output omitted from this copy: reports/ (generated output). Regenerate it with the project scripts.
+
+The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
