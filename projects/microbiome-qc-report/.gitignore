@@ -1,0 +1,8 @@
+data/cache/
+data/raw/
+data/reference/
+results/
+__pycache__/
+.Rhistory
+.RData
+.DS_Store

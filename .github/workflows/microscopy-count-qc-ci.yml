@@ -1,0 +1,59 @@
+name: microscopy-count-qc / checks
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/microscopy-count-qc/**
+    - .github/workflows/microscopy-count-qc-ci.yml
+  pull_request:
+    paths:
+    - projects/microscopy-count-qc/**
+    - .github/workflows/microscopy-count-qc-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v5
+      with:
+        version: 0.9.9
+        working-directory: projects/microscopy-count-qc
+    - run: uv sync --frozen --extra dev
+    - run: uv run --frozen --extra dev ruff check src tests
+    - run: uv run --frozen --extra dev ruff format --check src tests
+    - run: uv run --frozen --extra dev pytest -q
+    - run: uv run --frozen microscopy-qc audit
+    timeout-minutes: 20
+  real-model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      OMP_NUM_THREADS: '2'
+      MKL_NUM_THREADS: '2'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v5
+      with:
+        version: 0.9.9
+        working-directory: projects/microscopy-count-qc
+    - run: uv sync --frozen --extra model
+    - uses: actions/cache@v4
+      with:
+        path: 'projects/microscopy-count-qc/data/bbbc039/archives
+
+          projects/microscopy-count-qc/~/.cellpose/models'
+        key: bbbc039-cellpose3111-v1
+    - run: uv run --frozen --extra model microscopy-qc download
+    - run: uv run --frozen --extra model microscopy-qc run --limit 1 --output /tmp/model-smoke
+    - run: uv run --frozen microscopy-qc audit --output /tmp/model-smoke
+    - uses: actions/upload-artifact@v4
+      with:
+        name: real-model-smoke-report
+        path: projects/microscopy-count-qc//tmp/model-smoke
+defaults:
+  run:
+    working-directory: projects/microscopy-count-qc

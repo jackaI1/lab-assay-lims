@@ -1,0 +1,67 @@
+{
+  "study": "SRP155048",
+  "retrieved": "2026-11-05",
+  "samples": [
+    {
+      "sample": "D0",
+      "type": "sample",
+      "run": "SRR7588938",
+      "biosample": "SAMN09710899",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/008/SRR7588938/SRR7588938_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/008/SRR7588938/SRR7588938_2.fastq.gz"
+      ],
+      "md5": [
+        "c60128dca31d21f548c6bbb5974bf123",
+        "36e561c8a25cc1a795ebff89b56e2aea"
+      ]
+    },
+    {
+      "sample": "D4",
+      "type": "sample",
+      "run": "SRR7588942",
+      "biosample": "SAMN09710903",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/002/SRR7588942/SRR7588942_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/002/SRR7588942/SRR7588942_2.fastq.gz"
+      ],
+      "md5": [
+        "fa7729e6000a9d072fbf80cd887e19bd",
+        "2b6c24b532976b00fff19e92a6595345"
+      ]
+    },
+    {
+      "sample": "D8",
+      "type": "sample",
+      "run": "SRR7588945",
+      "biosample": "SAMN09710907",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/005/SRR7588945/SRR7588945_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/005/SRR7588945/SRR7588945_2.fastq.gz"
+      ],
+      "md5": [
+        "38f8e0d4729b0b665ea7ba2011673d4b",
+        "e54ce6d282458d73fefc58d71eb3ea12"
+      ]
+    },
+    {
+      "sample": "Blank",
+      "type": "negative",
+      "run": "SRR10898399",
+      "biosample": "SAMN13864709",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR108/099/SRR10898399/SRR10898399_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR108/099/SRR10898399/SRR10898399_2.fastq.gz"
+      ],
+      "md5": [
+        "ef08bb49d3c64f03c0453f8f39160a6e",
+        "95df1b8df89e4f9031178923afbbd360"
+      ]
+    }
+  ],
+  "taxonomy": {
+    "name": "RDP trainset 18",
+    "url": "https://zenodo.org/api/records/4310151/files/rdp_train_set_18.fa.gz/content",
+    "md5": "693c1ade0caf223e1fb7c6cf4da6f272"
+  }
+}

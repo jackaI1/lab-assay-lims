@@ -1,0 +1,8 @@
+{
+  "sample": "Coating A, rinse check",
+  "notes": "Synthetic example: one reading is outside its limit.",
+  "measurements": [
+    {"name": "Resistance", "unit": "ohm", "value": "101.2", "lower_limit": "95", "upper_limit": "105"},
+    {"name": "Thickness", "unit": "um", "value": "12.4", "lower_limit": "9", "upper_limit": "12"}
+  ]
+}

@@ -1,0 +1,11 @@
+name: microfluidic
+channels: [conda-forge]
+dependencies:
+  - python=3.12
+  - fenics-dolfinx=0.9.0
+  - gmsh=4.15.2
+  - python-gmsh=4.15.2
+  - numpy
+  - scipy
+  - matplotlib
+  - pytest

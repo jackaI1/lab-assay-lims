@@ -1,0 +1,10 @@
+{
+  "name": "jacklai/php-mysql-test-log",
+  "description": "A small bench test log with immutable readings and limits",
+  "type": "project",
+  "license": "MIT",
+  "require": {"php": "^8.4", "ext-pdo": "*", "ext-pdo_mysql": "*", "ext-mbstring": "*"},
+  "require-dev": {"phpunit/phpunit": "^12.5"},
+  "autoload": {"psr-4": {"TestLog\\": "src/"}},
+  "scripts": {"test": "phpunit", "lint": "find src public bin tests -name '*.php' -print0 | xargs -0 -n1 php -l"}
+}

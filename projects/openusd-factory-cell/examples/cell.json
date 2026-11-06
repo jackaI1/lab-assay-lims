@@ -1,0 +1,7 @@
+{
+  "equipment": [
+    {"name": "Conveyor", "size_m": [2.0, 0.8, 0.6], "position_m": [1.0, 0.0, 0.3]},
+    {"name": "RobotPedestal", "size_m": [0.6, 0.6, 1.2], "position_m": [0.0, 1.1, 0.6]},
+    {"name": "InspectionBench", "size_m": [1.2, 0.7, 0.9], "position_m": [2.6, 0.0, 0.45]}
+  ]
+}

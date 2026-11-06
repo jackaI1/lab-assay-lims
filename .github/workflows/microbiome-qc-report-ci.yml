@@ -1,0 +1,50 @@
+name: microbiome-qc-report / public-read pipeline
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/microbiome-qc-report/**
+    - .github/workflows/microbiome-qc-report-ci.yml
+  pull_request:
+    paths:
+    - projects/microbiome-qc-report/**
+    - .github/workflows/microbiome-qc-report-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: microbiome-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tiny-public-reads:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      OPENBLAS_NUM_THREADS: '1'
+      OMP_NUM_THREADS: '1'
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+    - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+    - uses: mamba-org/setup-micromamba@add3a49764cedee8ee24e82dfde87f5bc2914462
+      with:
+        environment-file: environment-linux-64.lock
+        environment-name: microbiome-qc
+        cache-environment: true
+        post-cleanup: all
+    - name: Run unit tests and real DADA2 fixture
+      run: make fixture-test
+    - name: Verify saved public demonstration
+      run: python tests/check_run.py reports/demo
+    - name: Save fixture report and analysis tables
+      if: always()
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      with:
+        name: public-read-fixture-report
+        path: projects/microbiome-qc-report/results/fixture
+        retention-days: 7
+defaults:
+  run:
+    working-directory: projects/microbiome-qc-report

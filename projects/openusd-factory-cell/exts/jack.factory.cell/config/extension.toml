@@ -1,0 +1,20 @@
+[package]
+version = "0.1.0"
+title = "Factory Cell"
+description = "Load, validate and play a layered manufacturing cell"
+category = "Manufacturing"
+authors = ["Jack Lai"]
+repository = "https://github.com/jackaI1/openusd-factory-cell"
+
+[dependencies]
+"omni.usd" = {}
+"omni.ui" = {}
+"omni.timeline" = {}
+
+[[python.module]]
+name = "factory_cell"
+path = "../../src"
+
+[[python.module]]
+name = "factory_cell_kit"
+path = "python"

@@ -1,0 +1,52 @@
+services:
+  db:
+    image: mysql:8.4
+    environment:
+      MYSQL_DATABASE: testlog
+      MYSQL_USER: testlog
+      MYSQL_PASSWORD: local-demo-only
+      MYSQL_ROOT_PASSWORD: local-root-only
+    volumes:
+      - readings:/var/lib/mysql
+    healthcheck:
+      test: [CMD-SHELL, 'MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u$$MYSQL_USER $$MYSQL_DATABASE -e "SELECT 1"']
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  app:
+    build: .
+    ports: ["127.0.0.1:${APP_PORT:-8088}:8080"]
+    environment:
+      DB_HOST: db
+      DB_NAME: testlog
+      DB_USER: testlog
+      DB_PASSWORD: local-demo-only
+    depends_on:
+      db: {condition: service_healthy}
+  db-test:
+    image: mysql:8.4
+    profiles: [test]
+    environment:
+      MYSQL_DATABASE: testlog_test
+      MYSQL_USER: testlog
+      MYSQL_PASSWORD: test-only
+      MYSQL_ROOT_PASSWORD: test-root-only
+    tmpfs: [/var/lib/mysql]
+    healthcheck:
+      test: [CMD-SHELL, 'MYSQL_PWD=$$MYSQL_PASSWORD mysql -h 127.0.0.1 -u$$MYSQL_USER $$MYSQL_DATABASE -e "SELECT 1"']
+      interval: 3s
+      timeout: 3s
+      retries: 40
+  tests:
+    build: .
+    profiles: [test]
+    command: composer test
+    environment:
+      DB_HOST: db-test
+      DB_NAME: testlog_test
+      DB_USER: testlog
+      DB_PASSWORD: test-only
+    depends_on:
+      db-test: {condition: service_healthy}
+volumes:
+  readings:

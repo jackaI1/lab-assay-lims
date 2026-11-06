@@ -1,0 +1,44 @@
+name: nextjs-clinic-intake / Clinic checks
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/nextjs-clinic-intake/**
+    - .github/workflows/nextjs-clinic-intake-ci.yml
+  pull_request:
+    paths:
+    - projects/nextjs-clinic-intake/**
+    - .github/workflows/nextjs-clinic-intake-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        cache: npm
+        cache-dependency-path: projects/nextjs-clinic-intake/package-lock.json
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run build
+    - run: npm run typecheck
+    - run: npm test
+    - run: npx playwright install --with-deps chromium
+    - run: npm run test:e2e
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: browser-failures
+        path: projects/nextjs-clinic-intake/test-results/
+        retention-days: 3
+defaults:
+  run:
+    working-directory: projects/nextjs-clinic-intake

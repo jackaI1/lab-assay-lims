@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=75,<83"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openusd-factory-cell"
+version = "0.1.0"
+description = "Build static layouts and layered, animated manufacturing cells in OpenUSD"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["usd-core==26.11"]
+license = "MIT"
+
+[project.optional-dependencies]
+preview = ["Pillow>=10,<13"]
+dev = ["pytest>=8,<10", "pytest-cov>=7,<8", "coverage>=7.10,<8", "build>=1,<2", "PyYAML>=6,<7", "jsonschema>=4.23,<5", "pytest-asyncio>=0.24,<2", "ruff>=0.9,<1"]
+
+[project.scripts]
+factory-cell = "factory_cell.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+source = ["factory_cell"]
+relative_files = true
+patch = ["subprocess"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
