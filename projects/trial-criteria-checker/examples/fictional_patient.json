@@ -1,0 +1,14 @@
+{
+  "fictional": true,
+  "description": "Invented screening record for a software demonstration; no real person's data",
+  "age": 42,
+  "sex": "female",
+  "diagnoses": ["classic hairy cell leukemia", "type 2 diabetes"],
+  "diagnoses_complete": false,
+  "labs": {
+    "hemoglobin": {"value": 12, "unit": "g/dL"},
+    "hba1c": {"value": 7.5, "unit": "%", "timepoint": "screening/baseline"},
+    "platelets": {"value": 180, "unit": "10^9/L"},
+    "anc": {"value": 2100, "unit": "cells/uL"}
+  }
+}

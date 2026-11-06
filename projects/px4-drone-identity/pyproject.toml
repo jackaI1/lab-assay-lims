@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "px4-drone-identity"
+version = "0.1.0"
+description = "Certificate-authenticated MAVLink companion and PX4 simulation experiments"
+requires-python = ">=3.11"
+dependencies = ["cryptography==46.0.3", "pymavlink==2.4.49"]
+
+[project.optional-dependencies]
+test = ["pytest==8.4.2", "ruff==0.14.3"]
+
+[project.scripts]
+drone-identity = "drone_identity.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

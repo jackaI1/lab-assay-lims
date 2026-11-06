@@ -1,0 +1,11 @@
+# Shared geometry source for world generation and independent map evaluation.
+# x, y, width, depth, height in metres. Interior is 8 by 8 m.
+boxes:
+  - [-4.1, 0.0, 0.2, 8.4, 1.0]
+  - [4.1, 0.0, 0.2, 8.4, 1.0]
+  - [0.0, -4.1, 8.0, 0.2, 1.0]
+  - [0.0, 4.1, 8.0, 0.2, 1.0]
+  - [-1.2, 0.0, 0.8, 2.0, 0.8]
+  - [1.2, 0.0, 0.8, 2.0, 0.8]
+  - [-3.7, 1.0, 0.6, 1.0, 0.8]
+  - [1.5, 3.7, 1.0, 0.6, 0.8]

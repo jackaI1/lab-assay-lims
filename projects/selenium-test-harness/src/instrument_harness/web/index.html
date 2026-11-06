@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bench supply simulator</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, sans-serif; color: #173451; background: #dbe3e9; }
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: clamp(16px, 4vw, 52px); }
+    main { max-width: 1000px; margin: auto; background: #f6f8fa; border: 2px solid #173451; }
+    header { padding: 24px 28px; border-bottom: 2px solid #173451; }
+    h1 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); }
+    p { line-height: 1.5; max-width: 65ch; margin: 8px 0; }
+    .panel { display: grid; grid-template-columns: 1fr 1fr; }
+    section { padding: 28px; }
+    section + section { border-left: 1px solid #a0b0be; }
+    h2 { font-size: 20px; margin: 0 0 20px; }
+    label { display: block; margin: 18px 0 7px; }
+    input, select, button { font: inherit; min-height: 44px; border: 1px solid #173451; border-radius: 3px; }
+    input, select { width: 100%; padding: 9px; background: white; color: #173451; }
+    button { padding: 10px 16px; background: #195e8f; color: white; cursor: pointer; }
+    button:disabled { background: #dbe3e9; color: #496073; cursor: default; }
+    :focus-visible { outline: 3px solid #195e8f; outline-offset: 3px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    #off { background: white; color: #a6242d; border-color: #a6242d; }
+    .display { background: #173451; color: white; padding: 22px; border-radius: 5px; }
+    .readout { font: clamp(34px, 4vw, 48px) 'Courier New', monospace; margin: 6px 0 20px; white-space: nowrap; }
+    .readout:last-child { margin-bottom: 0; }
+    .unit { font-size: 22px; }
+    #status { font-weight: bold; }
+    #message { min-height: 3em; }
+    .faults { border-top: 1px solid #a0b0be; padding: 20px 28px 28px; }
+    .faults select { max-width: 360px; }
+    #device[data-output="on"] #output-state { color: #185e47; font-weight: bold; }
+    @media (max-width: 650px) {
+      .panel { grid-template-columns: 1fr; }
+      section + section { border-left: none; border-top: 1px solid #a0b0be; }
+      section, header { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+<main id="device" data-revision="0" data-sequence="0" data-reading-revision="0" data-output="off">
+  <header>
+    <h1>Bench supply simulator</h1>
+    <p>Set a voltage, connect a simulated resistance, and measure the current. This is a practice instrument; it controls no physical equipment.</p>
+  </header>
+  <div class="panel">
+    <section aria-labelledby="settings-title">
+      <h2 id="settings-title">Supply settings</h2>
+      <form id="settings">
+        <label for="voltage">Voltage (0 to 12 V)</label>
+        <input id="voltage" type="number" min="0" max="12" step="any" value="1" required>
+        <label for="resistance">Load resistance (100 to 10,000 ohm)</label>
+        <input id="resistance" type="number" min="100" max="10000" step="any" value="1000" required>
+        <div class="actions">
+          <button id="apply" type="submit">Apply and enable output</button>
+          <button id="off" type="button">Output off</button>
+        </div>
+      </form>
+      <p>Output: <span id="output-state">Off</span></p>
+      <p id="applied">No settings applied yet.</p>
+    </section>
+    <section aria-labelledby="readings-title">
+      <h2 id="readings-title">Measurement readouts</h2>
+      <div class="display">
+        <div>Voltage</div>
+        <div class="readout"><span id="voltage-reading">--</span> <span class="unit" id="voltage-unit">V</span></div>
+        <div>Current</div>
+        <div class="readout"><span id="current-reading">--</span> <span class="unit" id="current-unit">mA</span></div>
+      </div>
+      <div class="actions"><button id="measure" type="button" disabled>Take measurement</button></div>
+      <p aria-live="polite">Status: <span id="status">Ready</span></p>
+      <p id="message" aria-live="polite">Apply settings to enable measurements.</p>
+    </section>
+  </div>
+  <div class="faults">
+    <label for="fault">Simulate a measurement fault</label>
+    <select id="fault">
+      <option value="normal">None: normal reading</option>
+      <option value="timeout">No response</option>
+      <option value="bad-reading">Unreadable sensor value</option>
+      <option value="non-finite">Non-finite sensor value</option>
+      <option value="wrong-unit">Unexpected current unit</option>
+      <option value="drift">Current drifts by 50%</option>
+      <option value="error">Device reports an error</option>
+      <option value="stale">Old measurement returned</option>
+    </select>
+    <p>Faults let me check that a test catches a problem instead of quietly accepting it.</p>
+  </div>
+</main>
+<script>
+  const el = id => document.getElementById(id);
+  const device = el('device');
+  let applied = null;
+  let pending = null;
+  function state(status, message) {
+    el('status').textContent = status;
+    el('message').textContent = message;
+    el('apply').disabled = status !== 'Ready';
+    el('measure').disabled = status !== 'Ready' || device.dataset.output !== 'on';
+    el('output-state').textContent = device.dataset.output === 'on' ? 'On' : 'Off';
+  }
+  el('settings').addEventListener('submit', event => {
+    event.preventDefault();
+    applied = { voltage: Number(el('voltage').value), resistance: Number(el('resistance').value) };
+    state('Settling', 'Waiting for the supply to settle.');
+    pending = setTimeout(() => {
+      device.dataset.revision = String(Number(device.dataset.revision) + 1);
+      device.dataset.output = 'on';
+      el('applied').textContent = `Applied: ${applied.voltage} V across ${applied.resistance} ohm.`;
+      state('Ready', 'Settings applied. Take a measurement when ready.');
+    }, 100);
+  });
+  el('measure').addEventListener('click', () => {
+    if (!applied || device.dataset.output !== 'on') return;
+    const fault = el('fault').value;
+    state('Measuring', 'Waiting for a fresh measurement.');
+    if (fault === 'timeout') return;
+    pending = setTimeout(() => {
+      if (fault === 'error') {
+        state('Error', 'Sensor disconnected. Turn output off before retrying.');
+        return;
+      }
+      if (fault !== 'stale') {
+        const current = applied.voltage / applied.resistance * 1000 * (fault === 'drift' ? 1.5 : 1);
+        el('voltage-reading').textContent = applied.voltage.toFixed(4);
+        el('current-reading').textContent = fault === 'bad-reading' ? 'sensor fault' :
+          fault === 'non-finite' ? 'NaN' : current.toFixed(4);
+        el('current-unit').textContent = fault === 'wrong-unit' ? 'A' : 'mA';
+        device.dataset.sequence = String(Number(device.dataset.sequence) + 1);
+        device.dataset.readingRevision = device.dataset.revision;
+      }
+      state('Ready', fault === 'stale' ? 'Previous sample returned.' : 'Measurement complete.');
+    }, 150);
+  });
+  el('off').addEventListener('click', () => {
+    clearTimeout(pending);
+    device.dataset.output = 'off';
+    state('Ready', 'Output disabled. Apply settings to start again.');
+  });
+</script>
+</body>
+</html>

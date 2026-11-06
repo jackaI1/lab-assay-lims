@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width"
+  /><title>Chart Send options</title
+  ><link rel="stylesheet" href="options.css" />
+  <main>
+    <h1>Chart Send options</h1>
+    <p>
+      The receiver runs on this computer and accepts fictional documents only.
+    </p>
+    <form>
+      <label for="receiver">Receiver address</label
+      ><input id="receiver" type="url" required aria-describedby="help" />
+      <p id="help">
+        Use http://127.0.0.1:4318 or http://127.0.0.1:4319. Start the receiver
+        before sending.
+      </p>
+      <button>Save address</button>
+    </form>
+    <p role="status" aria-live="polite"></p>
+    <p>
+      Only this address is saved. Documents and tokens stay in memory during a
+      send.
+    </p>
+  </main>
+  <script src="options.js" type="module"></script>
+</html>

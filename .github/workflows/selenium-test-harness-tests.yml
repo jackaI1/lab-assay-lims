@@ -1,0 +1,51 @@
+name: selenium-test-harness / Tests
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/selenium-test-harness/**
+    - .github/workflows/selenium-test-harness-tests.yml
+  pull_request:
+    paths:
+    - projects/selenium-test-harness/**
+    - .github/workflows/selenium-test-harness-tests.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+        working-directory: projects/selenium-test-harness
+    - uses: browser-actions/setup-chrome@v1
+      id: chrome
+      with:
+        chrome-version: stable
+        install-chromedriver: true
+        install-dependencies: true
+    - run: uv sync --frozen --extra dev --python 3.12
+    - run: uv run ruff check .
+    - run: uv run mypy
+    - run: uv run pytest -q --junitxml=.artifacts/pytest.xml
+      env:
+        CHROME_BINARY: ${{ steps.chrome.outputs.chrome-path }}
+        CHROMEDRIVER: ${{ steps.chrome.outputs.chromedriver-path }}
+    - run: uv run instrument-sweep --output .artifacts/sweep.json
+      env:
+        CHROME_BINARY: ${{ steps.chrome.outputs.chrome-path }}
+        CHROMEDRIVER: ${{ steps.chrome.outputs.chromedriver-path }}
+        HARNESS_RESOURCE_LOG: .artifacts/resources.jsonl
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: projects/selenium-test-harness/.artifacts/
+defaults:
+  run:
+    working-directory: projects/selenium-test-harness

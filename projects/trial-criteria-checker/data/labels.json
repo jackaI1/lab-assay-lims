@@ -1,0 +1,604 @@
+{
+  "annotation_method": "Reference rules written by direct reading of full public criteria before scoring, independently of parser predictions. Development sample, not held out and not clinically reviewed.",
+  "selection": "Five complete recruiting records selected from leukemia and diabetes searches to include short and long criteria, age, diagnosis, a timed HbA1c threshold, a source hemoglobin unit, nested lists and unsupported conditions. Not random or representative. No sex reference rule occurs.",
+  "scope": "Only self-contained age, sex, diagnosis and supported lab comparisons. Temporal diagnoses, alternatives and clinical judgments remain unknown. A clear compound age range has two reference rules even though the conservative parser abstains.",
+  "studies": [
+    {
+      "nct_id": "NCT07807280",
+      "annotations": [
+        {
+          "text": "Adults 18 years of age or older.",
+          "start": 23,
+          "end": 55,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "age",
+              "op": ">=",
+              "value": 18.0,
+              "unit": "years"
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Diagnosis of diabetes for at least 1 year.",
+          "start": 58,
+          "end": 100,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "Currently using or willing to start using a continuous glucose monitor (CGM).",
+          "start": 103,
+          "end": 180,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "Currently using multiple daily insulin injections (MDI).",
+          "start": 183,
+          "end": 239,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "HbA1c ≥8% at screening/baseline.",
+          "start": 242,
+          "end": 274,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "hba1c",
+              "op": ">=",
+              "value": 8.0,
+              "unit": "%",
+              "timepoint": "screening/baseline"
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Does not routinely use carbohydrate counting or demonstrates poor/inconsistent carbohydrate counting for mealtime insulin dosing.",
+          "start": 277,
+          "end": 406,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Able and willing to participate in the study visits and intervention sessions.",
+          "start": 409,
+          "end": 487,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Able to provide informed consent.",
+          "start": 490,
+          "end": 523,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Use of an insulin pump or automated insulin delivery system.",
+          "start": 548,
+          "end": 608,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Significant medical, cognitive, or psychiatric condition that, in the investigator's judgment, would interfere with participation or completion of study procedures.",
+          "start": 611,
+          "end": 775,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Limited life expectancy that would prevent completion of the study.",
+          "start": 777,
+          "end": 844,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Pregnancy or plans to become pregnant during the study period.",
+          "start": 848,
+          "end": 910,
+          "section": "exclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        },
+        {
+          "text": "Current participation in another interventional study that could affect diabetes management or study outcomes.",
+          "start": 913,
+          "end": 1023,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Inability/unwillingess to independently use a CGM device or administer insulin.",
+          "start": 1026,
+          "end": 1105,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Any other condition that, in the investigator's judgment, would make participation inappropriate or interfere with the study's objectives.",
+          "start": 1108,
+          "end": 1246,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        }
+      ]
+    },
+    {
+      "nct_id": "NCT02560883",
+      "annotations": [
+        {
+          "text": "Patients with classic hairy cell leukemia",
+          "start": 14,
+          "end": 55,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "diagnosis",
+              "op": "contains",
+              "value": "classic hairy cell leukemia",
+              "unit": null
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Patients with the variant of hairy cell leukemia.",
+          "start": 58,
+          "end": 107,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "diagnosis",
+              "op": "contains",
+              "value": "the variant of hairy cell leukemia",
+              "unit": null
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Children are excluded from the study, since Hairy Cell Leukemia wasn't described in children.",
+          "start": 123,
+          "end": 216,
+          "section": "exclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        }
+      ]
+    },
+    {
+      "nct_id": "NCT07524205",
+      "annotations": [
+        {
+          "text": "Aged 55 years and older",
+          "start": 23,
+          "end": 46,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "age",
+              "op": ">=",
+              "value": 55.0,
+              "unit": "years"
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Self-reported T2D for ≥5 years",
+          "start": 49,
+          "end": 79,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "Speak and read English",
+          "start": 82,
+          "end": 104,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Type 1 diabetes",
+          "start": 129,
+          "end": 144,
+          "section": "exclusion",
+          "rules": [
+            {
+              "field": "diagnosis",
+              "op": "contains",
+              "value": "type 1 diabetes",
+              "unit": null
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Use of a CGM for ≥1 month in past 1 year",
+          "start": 147,
+          "end": 187,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Not willing to use/wear the CGM, activPAL, or Fitbit",
+          "start": 190,
+          "end": 242,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Dementia",
+          "start": 245,
+          "end": 253,
+          "section": "exclusion",
+          "rules": [
+            {
+              "field": "diagnosis",
+              "op": "contains",
+              "value": "dementia",
+              "unit": null
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Any of the following conditions that may impact SB:",
+          "start": 256,
+          "end": 307,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Severe pulmonary disease",
+          "start": 314,
+          "end": 338,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Severe osteoarthritis",
+          "start": 344,
+          "end": 365,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Class III/IV heart failure",
+          "start": 371,
+          "end": 397,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Require wheelchair or walker",
+          "start": 403,
+          "end": 431,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        }
+      ]
+    },
+    {
+      "nct_id": "NCT07389005",
+      "annotations": [
+        {
+          "text": "Able to provide signed and dated written informed consent prior to any study specific procedures",
+          "start": 24,
+          "end": 120,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Adult men and women aged between more than 18 and ≤ 75 years",
+          "start": 124,
+          "end": 184,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "age",
+              "op": ">",
+              "value": 18.0,
+              "unit": "years"
+            },
+            {
+              "field": "age",
+              "op": "<=",
+              "value": 75.0,
+              "unit": "years"
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Body mass index (BMI) of 25 - 35 kg/m2",
+          "start": 188,
+          "end": 226,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Stable weight (no weight loss or gain \\> 3 kg in the past 3 months)",
+          "start": 230,
+          "end": 297,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Pre-diabetes defined as an isolated impaired glucose tolerance or a combination of impaired glucose tolerance and impaired fasting glucose (values are based on the American Diabetes Association (ADA):",
+          "start": 301,
+          "end": 501,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "impaired glucose tolerance (plasma glucose 140 mg/dL to 199 mg/dL, 120 minutes after consumption of 75g of glucose)",
+          "start": 509,
+          "end": 624,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "impaired fasting glucose (fasting plasma glucose 100 mg/dL to 125 mg/dL)",
+          "start": 631,
+          "end": 703,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Context-dependent diagnosis or lab definition; duration, timing or alternatives prevent an isolated rule."
+        },
+        {
+          "text": "Morning (Morningness-Eveningness Questionnaire \\[MEQ\\] score ≥ 59) or evening (MEQ score ≤ 41) chronotype",
+          "start": 707,
+          "end": 812,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Previously diagnosed with type 2 diabetes",
+          "start": 838,
+          "end": 879,
+          "section": "exclusion",
+          "rules": [
+            {
+              "field": "diagnosis",
+              "op": "contains",
+              "value": "type 2 diabetes",
+              "unit": null
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Moderate to severe anemia (hemoglobin \\< 10 g/L)",
+          "start": 883,
+          "end": 931,
+          "section": "exclusion",
+          "rules": [
+            {
+              "field": "hemoglobin",
+              "op": "<",
+              "value": 10.0,
+              "unit": "g/L"
+            }
+          ],
+          "note": "Source says 10 g/L. Preserve that unit literally; do not silently correct a possible source error."
+        },
+        {
+          "text": "Uncontrolled hypertension",
+          "start": 935,
+          "end": 960,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Abnormal electrocardiogram (ECG) at rest judged by the study physician",
+          "start": 964,
+          "end": 1034,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Pregnancy or breastfeeding",
+          "start": 1038,
+          "end": 1064,
+          "section": "exclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        },
+        {
+          "text": "HIV, hepatitis B, or C infection",
+          "start": 1068,
+          "end": 1100,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Disorders of blood clotting or wound healing",
+          "start": 1104,
+          "end": 1148,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Positive history of venous thrombosis (contraindication for clamp)",
+          "start": 1152,
+          "end": 1218,
+          "section": "exclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        },
+        {
+          "text": "Hypersensitivity to local anesthetics (contraindication for fat/muscle biopsies)",
+          "start": 1222,
+          "end": 1302,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Night shift work in the last 3 months",
+          "start": 1307,
+          "end": 1344,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Travel across \\> 1 time zone in the last 3 months",
+          "start": 1349,
+          "end": 1398,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Participation in another clinical trials that may possibly hamper the study results",
+          "start": 1403,
+          "end": 1486,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Engagement in structured exercise activities \\> 2 hours a week",
+          "start": 1491,
+          "end": 1553,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Any acute condition, exacerbation of chronic condition, or medical history that in the investigator's opinion would interfere with the study",
+          "start": 1558,
+          "end": 1698,
+          "section": "exclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        },
+        {
+          "text": "Any contraindication for MRI scanning",
+          "start": 1703,
+          "end": 1740,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Medication use known to hamper safety during the study procedures",
+          "start": 1745,
+          "end": 1810,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Non-German speaking",
+          "start": 1815,
+          "end": 1834,
+          "section": "exclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        }
+      ]
+    },
+    {
+      "nct_id": "NCT05011045",
+      "annotations": [
+        {
+          "text": "Age 18 years or older",
+          "start": 23,
+          "end": 44,
+          "section": "inclusion",
+          "rules": [
+            {
+              "field": "age",
+              "op": ">=",
+              "value": 18.0,
+              "unit": "years"
+            }
+          ],
+          "note": "Direct reference transcription; compare value, unit, operator and section exactly."
+        },
+        {
+          "text": "Treatment with radiation therapy to the brain for a hematologic malignancy (ex. primary central nervous system lymphoma \\[PCNSL\\], secondary central nervous system lymphoma \\[SCNSL\\], leukemia, myeloma)",
+          "start": 47,
+          "end": 249,
+          "section": "inclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        },
+        {
+          "text": "Proficient and capable of completing tests in English",
+          "start": 252,
+          "end": 305,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Patients with claustrophobia are eligible if the claustrophobia is managed with medication",
+          "start": 308,
+          "end": 398,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Patients with cognitively-impairment are eligible if the impairment is managed with medication",
+          "start": 401,
+          "end": 495,
+          "section": "inclusion",
+          "rules": [],
+          "note": "Outside the selected fields or requires additional clinical/contextual interpretation; unknown."
+        },
+        {
+          "text": "Patients who are pregnant",
+          "start": 498,
+          "end": 523,
+          "section": "inclusion",
+          "rules": [],
+          "note": "No self-contained supported rule; do not infer age, sex, diagnosis absence or treatment history."
+        }
+      ]
+    }
+  ]
+}

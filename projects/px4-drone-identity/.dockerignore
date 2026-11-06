@@ -1,0 +1,11 @@
+*
+!docker/
+!docker/**
+!px4/
+!px4/**
+!src/
+!src/**
+!tests/
+!tests/**
+!pyproject.toml
+**/__pycache__

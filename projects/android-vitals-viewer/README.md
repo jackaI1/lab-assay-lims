@@ -34,7 +34,7 @@ I wrote the app in Kotlin with Jetpack Compose, Android's interface toolkit. Roo
 
 ## Tests and limits
 
-There are 1 test source files in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
+I kept 5 files of test code and supporting test helpers in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
 
