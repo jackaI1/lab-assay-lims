@@ -80,4 +80,6 @@ This is a repeatable software fixture, not a model of real circuit or thermal ph
 There are 3 test source files in this copy. No test pass count is claimed here: I have not re-run the project suite as part of this move. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
-Project checks run from this directory through the path-filtered hub workflows: `scpi-bench-automation-ci.yml`.
+Project checks run from this directory through the path-filtered hub workflows: (removed workflow).
+
+The relocated workflow did not complete successfully within the migration batch. Local test sources remain available.

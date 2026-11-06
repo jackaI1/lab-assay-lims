@@ -45,4 +45,6 @@ I pinned the demo to OpenEMR 7.0.3 and MariaDB 10.11 so the document layout is r
 There are 4 test source files in this copy. No test pass count is claimed here: I have not re-run the project suite as part of this move. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
-Project checks run from this directory through the path-filtered hub workflows: `chart-send-extension-ci.yml`.
+Project checks run from this directory through the path-filtered hub workflows: (removed workflow).
+
+The relocated workflow did not complete successfully within the migration batch. Local test sources remain available.
