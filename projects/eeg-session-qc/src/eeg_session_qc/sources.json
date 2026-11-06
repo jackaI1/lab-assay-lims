@@ -1,0 +1,22 @@
+[
+  {
+    "file": "S001R01.edf",
+    "url": "https://physionet.org/files/eegmmidb/1.0.0/S001/S001R01.edf",
+    "sha256": "4743b736131a7e147c150e8b37711029b6cda5e356c4b3e8261a03cdcaaf8b0c"
+  },
+  {
+    "file": "S002R01.edf",
+    "url": "https://physionet.org/files/eegmmidb/1.0.0/S002/S002R01.edf",
+    "sha256": "d542689b31c977838f20b1a2062865b98ecf10a7e9702f56f101000d47f2ec68"
+  },
+  {
+    "file": "S003R01.edf",
+    "url": "https://physionet.org/files/eegmmidb/1.0.0/S003/S003R01.edf",
+    "sha256": "2af68afa8d4f158a7ae7f3903b66f0947925880639b7a8b5b6bb13b0c6c50f96"
+  },
+  {
+    "file": "S004R01.edf",
+    "url": "https://physionet.org/files/eegmmidb/1.0.0/S004/S004R01.edf",
+    "sha256": "23e9645f492488d2376ac3a606d177043efc6e5fb00281c2d6648e4b06a6ce62"
+  }
+]

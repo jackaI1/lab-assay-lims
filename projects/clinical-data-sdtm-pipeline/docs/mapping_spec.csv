@@ -1,0 +1,80 @@
+domain,variable,label,type,required,source_file,source_derivation,allowed_values
+DM,STUDYID,Study identifier,text,True,subjects.csv,constant SYNTH01,
+DM,DOMAIN,Domain abbreviation,text,True,subjects.csv,constant DM,
+DM,USUBJID,Unique subject identifier,text,True,subjects.csv,sid; prepend SYNTH01-,
+DM,SUBJID,Subject identifier,text,True,subjects.csv,sid,
+DM,SITEID,Study site identifier,text,True,subjects.csv,constant SYNTH,
+DM,AGE,Age in years,integer,True,subjects.csv,age,
+DM,AGEU,Age unit,text,True,subjects.csv,constant YEARS,YEARS
+DM,SEX,Sex,text,True,subjects.csv,sex,M | F | U
+DM,RACE,Race,text,True,subjects.csv,race,WHITE | BLACK OR AFRICAN AMERICAN | ASIAN | NOT REPORTED
+DM,ARMCD,Planned arm code,text,True,subjects.csv,arm; A or P,A | P
+DM,ARM,Planned arm,text,True,subjects.csv,"arm; A=ACTIVE, P=PLACEBO",ACTIVE | PLACEBO
+DM,ACTARMCD,Actual arm code,text,True,subjects.csv,arm; A or P,A | P
+DM,ACTARM,Actual arm,text,True,subjects.csv,"arm; A=ACTIVE, P=PLACEBO",ACTIVE | PLACEBO
+DM,RFSTDTC,Reference start date,date,True,subjects.csv,randomization,
+DM,RFENDTC,Reference end date,date,True,subjects.csv,death_date if present else last_contact,
+DM,RFXSTDTC,First exposure date,date,True,subjects.csv,randomization,
+DM,RFXENDTC,Last exposure date,date,True,subjects.csv,randomization + 27 days,
+DM,DTHFL,Death flag,text,False,subjects.csv,Y if death_date present else blank,Y
+DM,DTHDTC,Death date,date,False,subjects.csv,death_date,
+VS,STUDYID,Study identifier,text,True,vitals.csv,constant SYNTH01,
+VS,DOMAIN,Domain abbreviation,text,True,vitals.csv,constant VS,
+VS,USUBJID,Unique subject identifier,text,True,vitals.csv,sid; prepend SYNTH01-,
+VS,VSSEQ,Sequence number,integer,True,vitals.csv,source order within subject,
+VS,VSTESTCD,Vital sign short name,text,True,vitals.csv,test,SYSBP | DIABP
+VS,VSTEST,Vital sign name,text,True,vitals.csv,"test; SYSBP=Systolic Blood Pressure, DIABP=Diastolic Blood Pressure",
+VS,VSORRES,Original result,float,True,vitals.csv,value,
+VS,VSORRESU,Original unit,text,True,vitals.csv,unit,mmHg
+VS,VSSTRESC,Standard result text,text,True,vitals.csv,value,
+VS,VSSTRESN,Standard result numeric,float,True,vitals.csv,value,
+VS,VSSTRESU,Standard unit,text,True,vitals.csv,unit,mmHg
+VS,VISITNUM,Visit number,integer,True,vitals.csv,visit,
+VS,VSDTC,Observation date,date,True,vitals.csv,date,
+VS,VSDY,Study day,integer,True,vitals.csv,date minus RFSTDTC + 1,
+LB,STUDYID,Study identifier,text,True,labs.csv,constant SYNTH01,
+LB,DOMAIN,Domain abbreviation,text,True,labs.csv,constant LB,
+LB,USUBJID,Unique subject identifier,text,True,labs.csv,sid; prepend SYNTH01-,
+LB,LBSEQ,Sequence number,integer,True,labs.csv,source order within subject,
+LB,LBTESTCD,Lab test short name,text,True,labs.csv,constant GLUC,GLUC
+LB,LBTEST,Lab test name,text,True,labs.csv,constant Glucose,
+LB,LBORRES,Original result,float,True,labs.csv,value,
+LB,LBORRESU,Original unit,text,True,labs.csv,unit,mg/dL | mmol/L
+LB,LBSTRESC,Standard result text,text,True,labs.csv,value / 18.0182 for mg/dL; otherwise value,
+LB,LBSTRESN,Standard result numeric,float,True,labs.csv,value / 18.0182 for mg/dL; otherwise value,
+LB,LBSTRESU,Standard unit,text,True,labs.csv,constant mmol/L,mmol/L
+LB,LBSTNRLO,Standard lower reference limit,float,True,labs.csv,constant 3.9,
+LB,LBSTNRHI,Standard upper reference limit,float,True,labs.csv,constant 6.1,
+LB,LBNRIND,Reference range indicator,text,True,labs.csv,compare standard result with 3.9 and 6.1,LOW | NORMAL | HIGH
+LB,VISITNUM,Visit number,integer,True,labs.csv,visit,
+LB,LBDTC,Observation date,date,True,labs.csv,date,
+LB,LBDY,Study day,integer,True,labs.csv,date minus RFSTDTC + 1,
+AE,STUDYID,Study identifier,text,True,events.csv,constant SYNTH01,
+AE,DOMAIN,Domain abbreviation,text,True,events.csv,constant AE,
+AE,USUBJID,Unique subject identifier,text,True,events.csv,sid; prepend SYNTH01-,
+AE,AESEQ,Sequence number,integer,True,events.csv,source order within subject,
+AE,AETERM,Reported event,text,True,events.csv,term,
+AE,AESEV,Severity,text,True,events.csv,severity,MILD | MODERATE | SEVERE
+AE,AESER,Serious event,text,True,events.csv,serious,Y | N
+AE,AESTDTC,Event start,date,True,events.csv,start,
+AE,AEENDTC,Event end,date,True,events.csv,end,
+EX,STUDYID,Study identifier,text,True,exposure.csv,constant SYNTH01,
+EX,DOMAIN,Domain abbreviation,text,True,exposure.csv,constant EX,
+EX,USUBJID,Unique subject identifier,text,True,exposure.csv,sid; prepend SYNTH01-,
+EX,EXSEQ,Sequence number,integer,True,exposure.csv,source order within subject,
+EX,EXTRT,Treatment,text,True,exposure.csv,treatment,ACTIVE | PLACEBO
+EX,EXDOSE,Dose,float,True,exposure.csv,dose,
+EX,EXDOSU,Dose unit,text,True,exposure.csv,constant mg,mg
+EX,EXDOSFRQ,Dosing frequency,text,True,exposure.csv,constant QD,QD
+EX,EXROUTE,Route,text,True,exposure.csv,constant ORAL,ORAL
+EX,EXSTDTC,Exposure start,date,True,exposure.csv,start,
+EX,EXENDTC,Exposure end,date,True,exposure.csv,end,
+DS,STUDYID,Study identifier,text,True,disposition.csv,constant SYNTH01,
+DS,DOMAIN,Domain abbreviation,text,True,disposition.csv,constant DS,
+DS,USUBJID,Unique subject identifier,text,True,disposition.csv,sid; prepend SYNTH01-,
+DS,DSSEQ,Sequence number,integer,True,disposition.csv,source order within subject,
+DS,DSTERM,Reported disposition,text,True,disposition.csv,status; DEATH or COMPLETED,
+DS,DSDECOD,Standard disposition,text,True,disposition.csv,status,DEATH | COMPLETED
+DS,DSCAT,Disposition category,text,True,disposition.csv,constant DISPOSITION EVENT,DISPOSITION EVENT
+DS,DSSCAT,Disposition subcategory,text,True,disposition.csv,constant STUDY PARTICIPATION,
+DS,DSSTDTC,Disposition date,date,True,disposition.csv,date,

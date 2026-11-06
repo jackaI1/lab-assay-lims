@@ -1,0 +1,16 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Synthetic trial data quality</title>
+<style>body{font:17px system-ui;max-width:1100px;margin:3rem auto;padding:0 1rem}td,th{padding:.6rem;text-align:left;border-bottom:1px solid #ccc}table{border-collapse:collapse}</style>
+<h1>Synthetic trial data quality</h1><p>All records are fictional. This is a review workflow, not a regulatory validation certificate.</p>
+<p>119 / 120 subjects released. 5 open queries. 16 records quarantined.</p>
+<p>Every query remains OPEN until a reviewer checks the source. Nothing has been auto-corrected. Subject errors in DM or DS remove the subject from every released domain. Other errors remove only the affected record.</p>
+<p>The R analysis uses released DM and DS. Quarantined findings, events and doses are unavailable for safety summaries; this report does not declare the study ready for database lock.</p>
+<table><thead><tr><th>Query</th><th>Domain</th><th>Subject</th><th>Rule</th><th>Review question</th></tr></thead><tbody><tr><td>Q00001</td><td>DM</td><td>SYNTH01-0001</td><td>CT</td><td>Please confirm a value from: M, F, U.</td></tr><tr><td>Q00002</td><td>VS</td><td>SYNTH01-0002</td><td>RANGE</td><td>Please verify this implausible blood pressure result and its unit.</td></tr><tr><td>Q00003</td><td>LB</td><td>SYNTH01-0003</td><td>REQUIRED</td><td>Please provide the missing required value or confirm why it is unavailable.</td></tr><tr><td>Q00004</td><td>AE</td><td>SYNTH01-0006</td><td>DATE_ORDER</td><td>End precedes start. Please verify both dates against the source.</td></tr><tr><td>Q00005</td><td>EX</td><td>SYNTH01-0004</td><td>DOSE</td><td>Dose is negative. Please confirm the administered dose.</td></tr></tbody></table>
+<h2>Released rows</h2><pre>{
+  &quot;DM&quot;: 119,
+  &quot;VS&quot;: 713,
+  &quot;LB&quot;: 356,
+  &quot;AE&quot;: 39,
+  &quot;EX&quot;: 118,
+  &quot;DS&quot;: 119
+}</pre>
+<p>See query_log.csv, quarantine.csv, staging/ and manifest.json for source row references and SHA-256 fingerprints.</p></html>

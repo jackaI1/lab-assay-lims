@@ -1,0 +1,17 @@
+{
+  "dataset": "CGMacros version 1.0.0",
+  "doi": "https://doi.org/10.13026/3z8q-x658",
+  "url": "https://physionet.org/files/cgmacros/1.0.0/CGMacros_dateshifted365.zip",
+  "member": "CGMacros/CGMacros-001/CGMacros-001.csv",
+  "source_member_sha256": "64cde6f844a1ac43ac7802ff2a1b793df88abced4db55dcb016ff74a952b4f8f",
+  "normalized_sha256": "e482cc8b3a84c89ecef7fe25c215e406e86fea22d4718972179eb5e258d2b249",
+  "timestamp_column_index": 1,
+  "glucose_column_index": 2,
+  "unit": "mg/dL",
+  "cadence_minutes": 1,
+  "timezone_assumption": "UTC placeholder; source timezone unknown, dates already shifted by publisher",
+  "processing": "Published processed minute-resolution series. Original sensor wear and upstream filling cannot be audited from this CSV. No further filling or resampling.",
+  "license": "CC BY-NC-SA 4.0",
+  "license_url": "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "attribution": "Gutierrez-Osuna, R., Kerr, D., Mortazavi, B., & Das, A. (2025). CGMacros: a scientific dataset for personalized nutrition and diet monitoring (version 1.0.0). PhysioNet."
+}

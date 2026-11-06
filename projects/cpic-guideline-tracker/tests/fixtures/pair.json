@@ -1,0 +1,65 @@
+[
+  {
+    "cpiclevel": "A",
+    "drugid": "RxNorm:190521",
+    "genesymbol": "HLA-B",
+    "guidelineid": 100421,
+    "pairid": 110078,
+    "removed": false,
+    "usedforrecommendation": true
+  },
+  {
+    "cpiclevel": "A",
+    "drugid": "RxNorm:704",
+    "genesymbol": "CYP2C19",
+    "guidelineid": 100414,
+    "pairid": 110080,
+    "removed": false,
+    "usedforrecommendation": true
+  },
+  {
+    "cpiclevel": "A",
+    "drugid": "RxNorm:704",
+    "genesymbol": "CYP2D6",
+    "guidelineid": 100414,
+    "pairid": 110081,
+    "removed": false,
+    "usedforrecommendation": true
+  },
+  {
+    "cpiclevel": "A",
+    "drugid": "RxNorm:32968",
+    "genesymbol": "CYP2C19",
+    "guidelineid": 100411,
+    "pairid": 110091,
+    "removed": false,
+    "usedforrecommendation": true
+  },
+  {
+    "cpiclevel": "A",
+    "drugid": "RxNorm:121243",
+    "genesymbol": "CYP2C19",
+    "guidelineid": 100410,
+    "pairid": 110147,
+    "removed": false,
+    "usedforrecommendation": true
+  },
+  {
+    "cpiclevel": "B",
+    "drugid": "RxNorm:154",
+    "genesymbol": "CYP2C9",
+    "guidelineid": null,
+    "pairid": 110169,
+    "removed": false,
+    "usedforrecommendation": false
+  },
+  {
+    "cpiclevel": "C",
+    "drugid": "RxNorm:32968",
+    "genesymbol": "CES1",
+    "guidelineid": null,
+    "pairid": 110318,
+    "removed": false,
+    "usedforrecommendation": false
+  }
+]

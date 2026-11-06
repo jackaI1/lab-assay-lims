@@ -1,0 +1,25 @@
+[project]
+name = "clinical-data-sdtm-pipeline"
+version = "0.1.0"
+description = "Synthetic clinical-trial mapping, query management and survival analysis"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest==8.3.5"]
+
+[project.scripts]
+clinical-pipeline = "clinical_pipeline.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["clinical_pipeline*"]
+
+[tool.setuptools.package-data]
+clinical_pipeline = ["spec.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "calibration-inspection-log"
+version = "0.1.0"
+description = "Calibration register and traceable receiving inspection with Excel reports"
+requires-python = ">=3.10"
+dependencies = ["openpyxl>=3.1.5,<4"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.14,<1"]
+
+[project.scripts]
+inspection-log = "calibration_inspection_log.cli:main"
+
+[tool.setuptools.package-data]
+calibration_inspection_log = ["schema.sql"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]

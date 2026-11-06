@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fee-schedule-diff"
+version = "0.1.0"
+description = "Compare public BC MSC Payment Schedule editions with page-level evidence"
+requires-python = ">=3.11"
+dependencies = ["pdfplumber==0.11.10"]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "ruff==0.14.3"]
+
+[project.scripts]
+fee-schedule-diff = "fee_schedule_diff.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

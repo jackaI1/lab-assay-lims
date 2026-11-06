@@ -1,0 +1,22 @@
+{
+  "dataset": "MIT-BIH Arrhythmia Database",
+  "version": "1.0.0",
+  "base_url": "https://physionet.org/files/mitdb/1.0.0/",
+  "records": {
+    "100": {
+      "hea": "60ebc904c7bf3e04d142638d3fd5c903e8dc9f10f1ea3264e07926aa089ee75e",
+      "dat": "b2ea3c250e56e48f4b7b90697832b8ecd1afa1e0bb31f2dcfea4ed6e1075a639",
+      "atr": "8d8a5349fb16638ebbf649f1779d12e96d91b736b2aafe59db43719ae583d471"
+    },
+    "201": {
+      "hea": "dba34d6252879af28c1d10cde200989a4f6507d98df4395f5cba5f81af5b7e5a",
+      "dat": "16610ae46eff900794597503d15af4572a8b1518f18dbed2843b7e68c81f3898",
+      "atr": "df1276b6c6952b177ec6eea2be3edc7a96888454107a3ee56be880b0afaf6f35"
+    },
+    "203": {
+      "hea": "25b3a3107dd00221b245ef5c23ffdfbd07caaf58e2cf377734f3a947361b26a5",
+      "dat": "5ba7d2237fc838438efd8bb0a3baeffc5de2e70c76e3ab7e401e811ad82f43e0",
+      "atr": "2573f948e54a538983a44bf946e3e61cdda60e898b4c65ca8559b57c4877c706"
+    }
+  }
+}

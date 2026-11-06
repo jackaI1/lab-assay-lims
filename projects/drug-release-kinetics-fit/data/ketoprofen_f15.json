@@ -1,0 +1,16 @@
+{
+  "title": "Ketoprofen F15, published kinetics table",
+  "citation": "Ghosh DP, Mittal A, Gaur A, Sahoo J. Int J Pharm Sci Res. 2020;11(6):2906-2913. DOI: 10.13040/IJPSR.0975-8232.11(6).2906-13",
+  "source_url": "https://ijpsr.com/bft-article/formulation-and-evaluation-of-a-ph-dependent-multi-particulate-colon-targeted-drug-delivery-system-using-powder-layering-technology-of-ketoprofen/?view=fulltext",
+  "locator": "Second table labelled TABLE 4, heading ZERO ORDER, FIRST ORDER, HIGUCHI AND KORSMEYER-PEPPAS RELEASE KINETICS DATA, Time (h) and Q% Drug Release columns only",
+  "time_unit": "h",
+  "extraction": "Manual transcription of HTML table, percentages divided by 100. No graph digitization. Retrieved 2026-11-05.",
+  "error_halfwidth_fraction": 0.00005,
+  "error_description": "Digitization error: none introduced because values are tabulated. Rounding allowance: +/-0.005 percentage points (half of the displayed 0.01 percentage-point step). This is an assumed rounding bound, not a measured experimental error. Exact listed sampling times used; time error not quantified.",
+  "license": "Source data: CC BY-NC-SA 3.0, https://creativecommons.org/licenses/by-nc-sa/3.0/. Derived data and reports retain this license. Code has a separate MIT license.",
+  "notes": [
+    "Source discrepancy: kinetics table gives 16.32% at 4 h, while the comparative F15 table gives 14.32%. Values here follow the kinetics table without silently reconciling them.",
+    "Medium pH changes during the experiment. The prose and comparative table also differ on timings. Single-regime fits describe this selected table only; they cannot establish a release mechanism.",
+    "No raw replicate curves or experimental uncertainty available in the selected table. Rounded cumulative points are not independent replicates."
+  ]
+}

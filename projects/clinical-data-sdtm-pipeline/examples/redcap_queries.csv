@@ -1,0 +1,6 @@
+query_id,domain,source_file,source_row,USUBJID,variable,value,rule,severity,status,question,record_id,form_name,redcap_repeat_instrument,redcap_repeat_instance,field_name,source_derivation
+Q00001,DM,subjects.csv,2,SYNTH01-0001,SEX,X,CT,ERROR,OPEN,"Please confirm a value from: M, F, U.",SYNTH01-0001,dm,,,dm_sex,sex
+Q00002,VS,vitals.csv,8,SYNTH01-0002,VSSTRESN,400,RANGE,ERROR,OPEN,Please verify this implausible blood pressure result and its unit.,SYNTH01-0002,vs,vs,1,vs_vsstresn,value
+Q00003,LB,labs.csv,8,SYNTH01-0003,LBORRESU,,REQUIRED,ERROR,OPEN,Please provide the missing required value or confirm why it is unavailable.,SYNTH01-0003,lb,lb,1,lb_lborresu,unit
+Q00004,AE,events.csv,3,SYNTH01-0006,AEENDTC,2020-01-01,DATE_ORDER,ERROR,OPEN,End precedes start. Please verify both dates against the source.,SYNTH01-0006,ae,ae,1,ae_aeendtc,end
+Q00005,EX,exposure.csv,5,SYNTH01-0004,EXDOSE,-10,DOSE,ERROR,OPEN,Dose is negative. Please confirm the administered dose.,SYNTH01-0004,ex,ex,1,ex_exdose,dose

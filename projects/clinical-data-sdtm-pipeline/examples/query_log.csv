@@ -1,0 +1,6 @@
+query_id,domain,source_file,source_row,USUBJID,variable,value,rule,severity,status,question
+Q00001,DM,subjects.csv,2,SYNTH01-0001,SEX,X,CT,ERROR,OPEN,"Please confirm a value from: M, F, U."
+Q00002,VS,vitals.csv,8,SYNTH01-0002,VSSTRESN,400,RANGE,ERROR,OPEN,Please verify this implausible blood pressure result and its unit.
+Q00003,LB,labs.csv,8,SYNTH01-0003,LBORRESU,,REQUIRED,ERROR,OPEN,Please provide the missing required value or confirm why it is unavailable.
+Q00004,AE,events.csv,3,SYNTH01-0006,AEENDTC,2020-01-01,DATE_ORDER,ERROR,OPEN,End precedes start. Please verify both dates against the source.
+Q00005,EX,exposure.csv,5,SYNTH01-0004,EXDOSE,-10,DOSE,ERROR,OPEN,Dose is negative. Please confirm the administered dose.

@@ -1,0 +1,12 @@
+[
+  {
+    "label": "2024-12-31",
+    "url": "https://www2.gov.bc.ca/assets/gov/health/practitioner-pro/medical-services-plan/msc_payment_schedule_-_dec_31_2024.pdf",
+    "sha256": "eba6c6122d2fa12e2f5ce318e9bf23e98f0baecb366211d08cf1030b47c2afd0"
+  },
+  {
+    "label": "2025-04-30",
+    "url": "https://www2.gov.bc.ca/assets/gov/health/practitioner-pro/medical-services-plan/msc_payment_schedule_-_april_30_2025.pdf",
+    "sha256": "9409ac54bf2720f86cac9bb6b603f71ccf36a8c5c1030bc00a53cb652c3b0082"
+  }
+]

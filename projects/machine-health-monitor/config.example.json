@@ -1,0 +1,9 @@
+{
+  "window_seconds": 20,
+  "stale_seconds": 3,
+  "poll_seconds": 1,
+  "ideal_cycle_seconds": 2,
+  "drift_max": 0.25,
+  "fault_rate_max": 5,
+  "availability_min": 0.8
+}

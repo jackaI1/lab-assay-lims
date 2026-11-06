@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hpo-phenotype-validator"
+version = "0.1.0"
+description = "Offline validation and review of fictional HPO phenotype lists"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest==8.4.2", "phenopackets==2.0.2", "ruff==0.14.3", "setuptools==80.9.0"]
+
+[project.scripts]
+hpo-validate = "hpo_validator.cli:main"
+
+[tool.setuptools]
+packages = ["hpo_validator", "hpo_validator.data"]
+package-dir = {"hpo_validator.data" = "data"}
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.setuptools.package-data]
+"hpo_validator.data" = ["*.obo", "*.json", "*.md"]

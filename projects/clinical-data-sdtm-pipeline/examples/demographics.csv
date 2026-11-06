@@ -1,0 +1,3 @@
+arm,n,age_median,age_q1,age_q3,female,male,unknown_sex,deaths,censored
+PLACEBO,59,51,35,63.5,33,26,0,43,16
+ACTIVE,60,55,42,67,26,34,0,37,23

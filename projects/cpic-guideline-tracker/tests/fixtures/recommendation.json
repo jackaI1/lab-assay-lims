@@ -1,0 +1,108 @@
+[
+  {
+    "activityscore": {},
+    "allelestatus": {
+      "HLA-B": "HLA-B*57:01 negative"
+    },
+    "classification": "Strong",
+    "comments": "n/a",
+    "drugid": "RxNorm:190521",
+    "drugrecommendation": "Use abacavir per standard dosing guidelines",
+    "guidelineid": 100421,
+    "id": 8608483,
+    "implications": {
+      "HLA-B": "Low or reduced risk of abacavir hypersensitivity"
+    },
+    "lookupkey": {
+      "HLA-B": "*57:01 negative"
+    },
+    "phenotypes": {},
+    "population": "general"
+  },
+  {
+    "activityscore": {
+      "CYP2C19": "n/a",
+      "CYP2D6": "0.0"
+    },
+    "allelestatus": {},
+    "classification": "Optional",
+    "comments": "Patients may receive an initial low dose of a tricyclic, which is then increased over several days to the recommended steady-state dose. The starting dose in this guideline refers to the recommended steady-state dose. Dosing recommendations only apply to higher initial doses of TCAs for treatment of conditions such as depression. See other considerations for dosing recommendations for conditions where lower initial doses are used, such as neuropathic pain. Utilizing therapeutic drug monitoring if a tricyclic is prescribed to a patient with CYP2D6 ultrarapid, intermediate or poor metabolism in combination with CYP2C19 ultrarapid, intermediate or poor metabolism is strongly recommended.",
+    "drugid": "RxNorm:704",
+    "drugrecommendation": "Avoid amitriptyline use. If a amitripyline is warranted, consider a 50% reduction of recommended starting dose. Utilizing therapeutic drug monitoring to guide dose adjustments is strongly recommended.",
+    "guidelineid": 100414,
+    "id": 8608579,
+    "implications": {
+      "CYP2C19": "Reduced metabolism of tertiary amines compared to normal metabolizers",
+      "CYP2D6": "Greatly reduced metabolism of TCAs to less active compounds compared to normal metabolizers; Higher plasma concentrations of active drug will increase the probability of side effects"
+    },
+    "lookupkey": {
+      "CYP2C19": "Intermediate Metabolizer",
+      "CYP2D6": "0.0"
+    },
+    "phenotypes": {
+      "CYP2C19": "Intermediate Metabolizer",
+      "CYP2D6": "Poor Metabolizer"
+    },
+    "population": "general"
+  },
+  {
+    "activityscore": {},
+    "allelestatus": {},
+    "classification": "Moderate",
+    "comments": "For neurovascular indications. Neurovascular disease includes acute ischemic stroke or transient ischemic attack, secondary prevention of stroke, or prevention of thromboembolic events following neurointerventional procedures such as carotid artery stenting and stent-assisted coiling of intracranial aneurysms. Alternative P2Y12 inhibitors not impacted by CYP2C19 genetic variants include ticagrelor and ticlopidine. Prasugrel is contraindicated in patients with a history of stroke or TIA. Given limited outcomes data for genotype-guided anti-platelet therapy for neurovascular indications, selection of therapy should depend on individual patient treatment goals and risks for adverse events.",
+    "drugid": "RxNorm:32968",
+    "drugrecommendation": "Avoid clopidogrel if possible. Consider an alternative P2Y12 inhibitor at standard dose if clinically indicated and no contraindication.",
+    "guidelineid": 100411,
+    "id": 8609187,
+    "implications": {
+      "CYP2C19": "Significantly reduced clopidogrel active metabolite formation; increased on-treatment platelet reactivity; increased risk for adverse cardiac and cerebrovascular events"
+    },
+    "lookupkey": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "phenotypes": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "population": "NVI"
+  },
+  {
+    "activityscore": {},
+    "allelestatus": {},
+    "classification": "Moderate",
+    "comments": "Further dose adjustments or selection of alternative therapy may be necessary due to other clinical factors, such as drug interactions, hepatic function, renal function, species, site of infection, therapeutic drug monitoring, and comorbidities. Recommendation based upon data extrapolated from adults.",
+    "drugid": "RxNorm:121243",
+    "drugrecommendation": "Choose an alternative agent that is not dependent on CYP2C19 metabolism as primary therapy in lieu of voriconazole. Such agents include liposomal amphotericin B and posaconazole. In the event that voriconazole is considered to be the most appropriate agent, based on clinical advice, for a patient with poor metabolizer genotype, voriconazole should be administered at a preferably lower than standard dosage with careful therapeutic drug monitoring.",
+    "guidelineid": 100410,
+    "id": 8610610,
+    "implications": {
+      "CYP2C19": "Higher dose-adjusted trough concentrations of voriconazole and may increase probability of adverse events"
+    },
+    "lookupkey": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "phenotypes": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "population": "pediatrics"
+  },
+  {
+    "activityscore": {},
+    "allelestatus": {},
+    "classification": "Moderate",
+    "comments": "Further dose adjustments or selection of alternative therapy may be necessary due to other clinical factors, such as drug interactions, hepatic function, renal function, species, site of infection, therapeutic drug monitoring, and comorbidities.",
+    "drugid": "RxNorm:121243",
+    "drugrecommendation": "Choose an alternative agent that is not dependent on CYP2C19 metabolism as primary therapy in lieu of voriconazole. Such agents include isavuconazole, liposomal amphotericin B, and posaconazole. In the event that voriconazole is considered to be the most appropriate agent, based on clinical advice, for a patient with poor metabolizer genotype, voriconazole should be administered at a preferably lower than standard dosage with careful therapeutic drug monitoring.",
+    "guidelineid": 100410,
+    "id": 8610618,
+    "implications": {
+      "CYP2C19": "Higher dose-adjusted trough concentrations of voriconazole and may increase probability of adverse events"
+    },
+    "lookupkey": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "phenotypes": {
+      "CYP2C19": "Poor Metabolizer"
+    },
+    "population": "adults"
+  }
+]

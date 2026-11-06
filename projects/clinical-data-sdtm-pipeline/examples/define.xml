@@ -1,0 +1,1003 @@
+<?xml version='1.0' encoding='utf-8'?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:def="http://www.cdisc.org/ns/def/v2.1" ODMVersion="1.3.2" FileOID="SYNTH01.METADATA" FileType="Snapshot" CreationDateTime="2025-01-01T00:00:00Z">
+  <Study OID="SYNTH01">
+    <GlobalVariables>
+      <StudyName>Synthetic trial demonstration</StudyName>
+      <StudyDescription>Fictional records; educational SDTM subset. Not a validated submission.</StudyDescription>
+      <ProtocolName>SYNTH01</ProtocolName>
+    </GlobalVariables>
+    <MetaDataVersion OID="MDV.SYNTH01" Name="Synthetic SDTM subset" Description="Define-XML-style metadata, not certified Define-XML">
+      <ItemGroupDef OID="DM" Name="DM" Repeating="No" IsReferenceData="No" Domain="DM">
+        <ItemRef ItemOID="DM.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.SUBJID" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.SITEID" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.AGE" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.AGEU" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.SEX" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.RACE" OrderNumber="9" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.ARMCD" OrderNumber="10" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.ARM" OrderNumber="11" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.ACTARMCD" OrderNumber="12" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.ACTARM" OrderNumber="13" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.RFSTDTC" OrderNumber="14" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.RFENDTC" OrderNumber="15" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.RFXSTDTC" OrderNumber="16" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.RFXENDTC" OrderNumber="17" Mandatory="Yes" />
+        <ItemRef ItemOID="DM.DTHFL" OrderNumber="18" Mandatory="No" />
+        <ItemRef ItemOID="DM.DTHDTC" OrderNumber="19" Mandatory="No" />
+      </ItemGroupDef>
+      <ItemDef OID="DM.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: constant DM</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.SUBJID" Name="SUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: sid</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.SITEID" Name="SITEID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study site identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: constant SYNTH</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.AGE" Name="AGE" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Age in years</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: age</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.AGEU" Name="AGEU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Age unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: constant YEARS</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.AGEU.CT" />
+      </ItemDef>
+      <CodeList OID="DM.AGEU.CT" Name="Age unit" DataType="text">
+        <EnumeratedItem CodedValue="YEARS" />
+      </CodeList>
+      <ItemDef OID="DM.SEX" Name="SEX" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Sex</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: sex</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.SEX.CT" />
+      </ItemDef>
+      <CodeList OID="DM.SEX.CT" Name="Sex" DataType="text">
+        <EnumeratedItem CodedValue="M" />
+        <EnumeratedItem CodedValue="F" />
+        <EnumeratedItem CodedValue="U" />
+      </CodeList>
+      <ItemDef OID="DM.RACE" Name="RACE" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Race</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: race</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.RACE.CT" />
+      </ItemDef>
+      <CodeList OID="DM.RACE.CT" Name="Race" DataType="text">
+        <EnumeratedItem CodedValue="WHITE" />
+        <EnumeratedItem CodedValue="BLACK OR AFRICAN AMERICAN" />
+        <EnumeratedItem CodedValue="ASIAN" />
+        <EnumeratedItem CodedValue="NOT REPORTED" />
+      </CodeList>
+      <ItemDef OID="DM.ARMCD" Name="ARMCD" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Planned arm code</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: arm; A or P</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.ARMCD.CT" />
+      </ItemDef>
+      <CodeList OID="DM.ARMCD.CT" Name="Planned arm code" DataType="text">
+        <EnumeratedItem CodedValue="A" />
+        <EnumeratedItem CodedValue="P" />
+      </CodeList>
+      <ItemDef OID="DM.ARM" Name="ARM" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Planned arm</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: arm; A=ACTIVE, P=PLACEBO</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.ARM.CT" />
+      </ItemDef>
+      <CodeList OID="DM.ARM.CT" Name="Planned arm" DataType="text">
+        <EnumeratedItem CodedValue="ACTIVE" />
+        <EnumeratedItem CodedValue="PLACEBO" />
+      </CodeList>
+      <ItemDef OID="DM.ACTARMCD" Name="ACTARMCD" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Actual arm code</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: arm; A or P</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.ACTARMCD.CT" />
+      </ItemDef>
+      <CodeList OID="DM.ACTARMCD.CT" Name="Actual arm code" DataType="text">
+        <EnumeratedItem CodedValue="A" />
+        <EnumeratedItem CodedValue="P" />
+      </CodeList>
+      <ItemDef OID="DM.ACTARM" Name="ACTARM" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Actual arm</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: arm; A=ACTIVE, P=PLACEBO</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.ACTARM.CT" />
+      </ItemDef>
+      <CodeList OID="DM.ACTARM.CT" Name="Actual arm" DataType="text">
+        <EnumeratedItem CodedValue="ACTIVE" />
+        <EnumeratedItem CodedValue="PLACEBO" />
+      </CodeList>
+      <ItemDef OID="DM.RFSTDTC" Name="RFSTDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Reference start date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: randomization</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.RFENDTC" Name="RFENDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Reference end date</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: death_date if present else last_contact</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.RFXSTDTC" Name="RFXSTDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">First exposure date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: randomization</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.RFXENDTC" Name="RFXENDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Last exposure date</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: randomization + 27 days</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DM.DTHFL" Name="DTHFL" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Death flag</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>subjects.csv: Y if death_date present else blank</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DM.DTHFL.CT" />
+      </ItemDef>
+      <CodeList OID="DM.DTHFL.CT" Name="Death flag" DataType="text">
+        <EnumeratedItem CodedValue="Y" />
+      </CodeList>
+      <ItemDef OID="DM.DTHDTC" Name="DTHDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Death date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>subjects.csv: death_date</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemGroupDef OID="VS" Name="VS" Repeating="Yes" IsReferenceData="No" Domain="VS">
+        <ItemRef ItemOID="VS.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSSEQ" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSTESTCD" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSTEST" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSORRES" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSORRESU" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSSTRESC" OrderNumber="9" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSSTRESN" OrderNumber="10" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSSTRESU" OrderNumber="11" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VISITNUM" OrderNumber="12" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSDTC" OrderNumber="13" Mandatory="Yes" />
+        <ItemRef ItemOID="VS.VSDY" OrderNumber="14" Mandatory="Yes" />
+      </ItemGroupDef>
+      <ItemDef OID="VS.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>vitals.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>vitals.csv: constant VS</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>vitals.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSSEQ" Name="VSSEQ" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Sequence number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: source order within subject</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSTESTCD" Name="VSTESTCD" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Vital sign short name</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: test</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="VS.VSTESTCD.CT" />
+      </ItemDef>
+      <CodeList OID="VS.VSTESTCD.CT" Name="Vital sign short name" DataType="text">
+        <EnumeratedItem CodedValue="SYSBP" />
+        <EnumeratedItem CodedValue="DIABP" />
+      </CodeList>
+      <ItemDef OID="VS.VSTEST" Name="VSTEST" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Vital sign name</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>vitals.csv: test; SYSBP=Systolic Blood Pressure, DIABP=Diastolic Blood Pressure</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSORRES" Name="VSORRES" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Original result</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSORRESU" Name="VSORRESU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Original unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: unit</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="VS.VSORRESU.CT" />
+      </ItemDef>
+      <CodeList OID="VS.VSORRESU.CT" Name="Original unit" DataType="text">
+        <EnumeratedItem CodedValue="mmHg" />
+      </CodeList>
+      <ItemDef OID="VS.VSSTRESC" Name="VSSTRESC" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Standard result text</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSSTRESN" Name="VSSTRESN" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Standard result numeric</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSSTRESU" Name="VSSTRESU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Standard unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: unit</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="VS.VSSTRESU.CT" />
+      </ItemDef>
+      <CodeList OID="VS.VSSTRESU.CT" Name="Standard unit" DataType="text">
+        <EnumeratedItem CodedValue="mmHg" />
+      </CodeList>
+      <ItemDef OID="VS.VISITNUM" Name="VISITNUM" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Visit number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: visit</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSDTC" Name="VSDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Observation date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>vitals.csv: date</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="VS.VSDY" Name="VSDY" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Study day</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>vitals.csv: date minus RFSTDTC + 1</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemGroupDef OID="LB" Name="LB" Repeating="Yes" IsReferenceData="No" Domain="LB">
+        <ItemRef ItemOID="LB.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSEQ" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBTESTCD" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBTEST" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBORRES" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBORRESU" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSTRESC" OrderNumber="9" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSTRESN" OrderNumber="10" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSTRESU" OrderNumber="11" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSTNRLO" OrderNumber="12" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBSTNRHI" OrderNumber="13" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBNRIND" OrderNumber="14" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.VISITNUM" OrderNumber="15" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBDTC" OrderNumber="16" Mandatory="Yes" />
+        <ItemRef ItemOID="LB.LBDY" OrderNumber="17" Mandatory="Yes" />
+      </ItemGroupDef>
+      <ItemDef OID="LB.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant LB</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBSEQ" Name="LBSEQ" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Sequence number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>labs.csv: source order within subject</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBTESTCD" Name="LBTESTCD" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Lab test short name</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant GLUC</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="LB.LBTESTCD.CT" />
+      </ItemDef>
+      <CodeList OID="LB.LBTESTCD.CT" Name="Lab test short name" DataType="text">
+        <EnumeratedItem CodedValue="GLUC" />
+      </CodeList>
+      <ItemDef OID="LB.LBTEST" Name="LBTEST" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Lab test name</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant Glucose</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBORRES" Name="LBORRES" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Original result</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>labs.csv: value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBORRESU" Name="LBORRESU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Original unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>labs.csv: unit</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="LB.LBORRESU.CT" />
+      </ItemDef>
+      <CodeList OID="LB.LBORRESU.CT" Name="Original unit" DataType="text">
+        <EnumeratedItem CodedValue="mg/dL" />
+        <EnumeratedItem CodedValue="mmol/L" />
+      </CodeList>
+      <ItemDef OID="LB.LBSTRESC" Name="LBSTRESC" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Standard result text</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: value / 18.0182 for mg/dL; otherwise value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBSTRESN" Name="LBSTRESN" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Standard result numeric</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: value / 18.0182 for mg/dL; otherwise value</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBSTRESU" Name="LBSTRESU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Standard unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant mmol/L</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="LB.LBSTRESU.CT" />
+      </ItemDef>
+      <CodeList OID="LB.LBSTRESU.CT" Name="Standard unit" DataType="text">
+        <EnumeratedItem CodedValue="mmol/L" />
+      </CodeList>
+      <ItemDef OID="LB.LBSTNRLO" Name="LBSTNRLO" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Standard lower reference limit</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant 3.9</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBSTNRHI" Name="LBSTNRHI" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Standard upper reference limit</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: constant 6.1</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBNRIND" Name="LBNRIND" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Reference range indicator</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: compare standard result with 3.9 and 6.1</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="LB.LBNRIND.CT" />
+      </ItemDef>
+      <CodeList OID="LB.LBNRIND.CT" Name="Reference range indicator" DataType="text">
+        <EnumeratedItem CodedValue="LOW" />
+        <EnumeratedItem CodedValue="NORMAL" />
+        <EnumeratedItem CodedValue="HIGH" />
+      </CodeList>
+      <ItemDef OID="LB.VISITNUM" Name="VISITNUM" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Visit number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>labs.csv: visit</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBDTC" Name="LBDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Observation date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>labs.csv: date</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="LB.LBDY" Name="LBDY" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Study day</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>labs.csv: date minus RFSTDTC + 1</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemGroupDef OID="AE" Name="AE" Repeating="Yes" IsReferenceData="No" Domain="AE">
+        <ItemRef ItemOID="AE.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AESEQ" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AETERM" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AESEV" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AESER" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AESTDTC" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="AE.AEENDTC" OrderNumber="9" Mandatory="Yes" />
+      </ItemGroupDef>
+      <ItemDef OID="AE.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>events.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>events.csv: constant AE</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>events.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.AESEQ" Name="AESEQ" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Sequence number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: source order within subject</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.AETERM" Name="AETERM" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Reported event</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: term</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.AESEV" Name="AESEV" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Severity</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: severity</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="AE.AESEV.CT" />
+      </ItemDef>
+      <CodeList OID="AE.AESEV.CT" Name="Severity" DataType="text">
+        <EnumeratedItem CodedValue="MILD" />
+        <EnumeratedItem CodedValue="MODERATE" />
+        <EnumeratedItem CodedValue="SEVERE" />
+      </CodeList>
+      <ItemDef OID="AE.AESER" Name="AESER" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Serious event</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: serious</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="AE.AESER.CT" />
+      </ItemDef>
+      <CodeList OID="AE.AESER.CT" Name="Serious event" DataType="text">
+        <EnumeratedItem CodedValue="Y" />
+        <EnumeratedItem CodedValue="N" />
+      </CodeList>
+      <ItemDef OID="AE.AESTDTC" Name="AESTDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Event start</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: start</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="AE.AEENDTC" Name="AEENDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Event end</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>events.csv: end</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemGroupDef OID="EX" Name="EX" Repeating="Yes" IsReferenceData="No" Domain="EX">
+        <ItemRef ItemOID="EX.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXSEQ" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXTRT" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXDOSE" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXDOSU" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXDOSFRQ" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXROUTE" OrderNumber="9" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXSTDTC" OrderNumber="10" Mandatory="Yes" />
+        <ItemRef ItemOID="EX.EXENDTC" OrderNumber="11" Mandatory="Yes" />
+      </ItemGroupDef>
+      <ItemDef OID="EX.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: constant EX</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.EXSEQ" Name="EXSEQ" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Sequence number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>exposure.csv: source order within subject</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.EXTRT" Name="EXTRT" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Treatment</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>exposure.csv: treatment</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="EX.EXTRT.CT" />
+      </ItemDef>
+      <CodeList OID="EX.EXTRT.CT" Name="Treatment" DataType="text">
+        <EnumeratedItem CodedValue="ACTIVE" />
+        <EnumeratedItem CodedValue="PLACEBO" />
+      </CodeList>
+      <ItemDef OID="EX.EXDOSE" Name="EXDOSE" DataType="float">
+        <Description>
+          <TranslatedText xml:lang="en">Dose</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>exposure.csv: dose</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.EXDOSU" Name="EXDOSU" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Dose unit</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: constant mg</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="EX.EXDOSU.CT" />
+      </ItemDef>
+      <CodeList OID="EX.EXDOSU.CT" Name="Dose unit" DataType="text">
+        <EnumeratedItem CodedValue="mg" />
+      </CodeList>
+      <ItemDef OID="EX.EXDOSFRQ" Name="EXDOSFRQ" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Dosing frequency</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: constant QD</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="EX.EXDOSFRQ.CT" />
+      </ItemDef>
+      <CodeList OID="EX.EXDOSFRQ.CT" Name="Dosing frequency" DataType="text">
+        <EnumeratedItem CodedValue="QD" />
+      </CodeList>
+      <ItemDef OID="EX.EXROUTE" Name="EXROUTE" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Route</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>exposure.csv: constant ORAL</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="EX.EXROUTE.CT" />
+      </ItemDef>
+      <CodeList OID="EX.EXROUTE.CT" Name="Route" DataType="text">
+        <EnumeratedItem CodedValue="ORAL" />
+      </CodeList>
+      <ItemDef OID="EX.EXSTDTC" Name="EXSTDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Exposure start</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>exposure.csv: start</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="EX.EXENDTC" Name="EXENDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Exposure end</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>exposure.csv: end</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemGroupDef OID="DS" Name="DS" Repeating="Yes" IsReferenceData="No" Domain="DS">
+        <ItemRef ItemOID="DS.STUDYID" OrderNumber="1" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DOMAIN" OrderNumber="2" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.USUBJID" OrderNumber="3" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSSEQ" OrderNumber="4" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSTERM" OrderNumber="5" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSDECOD" OrderNumber="6" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSCAT" OrderNumber="7" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSSCAT" OrderNumber="8" Mandatory="Yes" />
+        <ItemRef ItemOID="DS.DSSTDTC" OrderNumber="9" Mandatory="Yes" />
+      </ItemGroupDef>
+      <ItemDef OID="DS.STUDYID" Name="STUDYID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Study identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: constant SYNTH01</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.DOMAIN" Name="DOMAIN" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Domain abbreviation</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: constant DS</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.USUBJID" Name="USUBJID" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Unique subject identifier</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: sid; prepend SYNTH01-</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.DSSEQ" Name="DSSEQ" DataType="integer">
+        <Description>
+          <TranslatedText xml:lang="en">Sequence number</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>disposition.csv: source order within subject</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.DSTERM" Name="DSTERM" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Reported disposition</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: status; DEATH or COMPLETED</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.DSDECOD" Name="DSDECOD" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Standard disposition</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>disposition.csv: status</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DS.DSDECOD.CT" />
+      </ItemDef>
+      <CodeList OID="DS.DSDECOD.CT" Name="Standard disposition" DataType="text">
+        <EnumeratedItem CodedValue="DEATH" />
+        <EnumeratedItem CodedValue="COMPLETED" />
+      </CodeList>
+      <ItemDef OID="DS.DSCAT" Name="DSCAT" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Disposition category</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: constant DISPOSITION EVENT</TranslatedText>
+          </Description>
+        </def:Origin>
+        <CodeListRef CodeListOID="DS.DSCAT.CT" />
+      </ItemDef>
+      <CodeList OID="DS.DSCAT.CT" Name="Disposition category" DataType="text">
+        <EnumeratedItem CodedValue="DISPOSITION EVENT" />
+      </CodeList>
+      <ItemDef OID="DS.DSSCAT" Name="DSSCAT" DataType="text">
+        <Description>
+          <TranslatedText xml:lang="en">Disposition subcategory</TranslatedText>
+        </Description>
+        <def:Origin Type="Derived">
+          <Description>
+            <TranslatedText>disposition.csv: constant STUDY PARTICIPATION</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+      <ItemDef OID="DS.DSSTDTC" Name="DSSTDTC" DataType="date">
+        <Description>
+          <TranslatedText xml:lang="en">Disposition date</TranslatedText>
+        </Description>
+        <def:Origin Type="Collected">
+          <Description>
+            <TranslatedText>disposition.csv: date</TranslatedText>
+          </Description>
+        </def:Origin>
+      </ItemDef>
+    </MetaDataVersion>
+  </Study>
+</ODM>

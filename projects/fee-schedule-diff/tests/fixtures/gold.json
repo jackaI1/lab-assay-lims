@@ -1,0 +1,282 @@
+{
+  "method": "Manual transcription from rendered complete fee-table pages. See docs/accuracy.md for selection and limits.",
+  "pages": [
+    {
+      "label": "2024-12-31",
+      "page": 50,
+      "items": [
+        {
+          "code": "01200",
+          "description": "Evening (call placed between 1800 hours and 2300 hours and service rendered between 1800 hours and 0800 hours)",
+          "fee": "79.08",
+          "prefix": ""
+        },
+        {
+          "code": "01201",
+          "description": "Night (call placed and service rendered between 2300 hours and 0800 hours)",
+          "fee": "111.05",
+          "prefix": ""
+        },
+        {
+          "code": "01202",
+          "description": "Saturday, Sunday or Statutory Holiday (call placed between 0800 hours and 2300 hours)",
+          "fee": "79.08",
+          "prefix": ""
+        },
+        {
+          "code": "01205",
+          "description": "Evening (service rendered between 1800 hours and 2300 hours) - per half hour or major part thereof",
+          "fee": "72.69",
+          "prefix": ""
+        },
+        {
+          "code": "01206",
+          "description": "Night (service rendered between 2300 hours and 0800 hours) - per half hour or major part thereof",
+          "fee": "99.40",
+          "prefix": ""
+        },
+        {
+          "code": "01207",
+          "description": "Saturday, Sunday or Statutory Holiday (Service rendered between 0800 hours and 2300 hours) - per half hour or major part thereof",
+          "fee": "72.69",
+          "prefix": ""
+        }
+      ],
+      "review_codes": []
+    },
+    {
+      "label": "2024-12-31",
+      "page": 51,
+      "items": [],
+      "review_codes": [
+        "01210",
+        "01211",
+        "01212"
+      ]
+    },
+    {
+      "label": "2024-12-31",
+      "page": 101,
+      "items": [
+        {
+          "code": "01513",
+          "description": "Day 1",
+          "fee": "474.76",
+          "prefix": ""
+        },
+        {
+          "code": "01523",
+          "description": "Day 2 - 10",
+          "fee": "149.74",
+          "prefix": ""
+        },
+        {
+          "code": "01533",
+          "description": "Day 11 onward",
+          "fee": "132.05",
+          "prefix": ""
+        }
+      ],
+      "review_codes": []
+    },
+    {
+      "label": "2025-04-30",
+      "page": 49,
+      "items": [
+        {
+          "code": "01200",
+          "description": "Evening (call placed between 1800 hours and 2300 hours and service rendered between 1800 hours and 0800 hours)",
+          "fee": "79.08",
+          "prefix": ""
+        },
+        {
+          "code": "01201",
+          "description": "Night (call placed and service rendered between 2300 hours and 0800 hours)",
+          "fee": "111.05",
+          "prefix": ""
+        },
+        {
+          "code": "01202",
+          "description": "Saturday, Sunday or Statutory Holiday (call placed between 0800 hours and 2300 hours)",
+          "fee": "79.08",
+          "prefix": ""
+        },
+        {
+          "code": "01205",
+          "description": "Evening (service rendered between 1800 hours and 2300 hours) - per half hour or major part thereof",
+          "fee": "72.69",
+          "prefix": ""
+        },
+        {
+          "code": "01206",
+          "description": "Night (service rendered between 2300 hours and 0800 hours) - per half hour or major part thereof",
+          "fee": "99.40",
+          "prefix": ""
+        },
+        {
+          "code": "01207",
+          "description": "Saturday, Sunday or Statutory Holiday (Service rendered between 0800 hours and 2300 hours) - per half hour or major part thereof",
+          "fee": "72.69",
+          "prefix": ""
+        }
+      ],
+      "review_codes": []
+    },
+    {
+      "label": "2025-04-30",
+      "page": 50,
+      "items": [],
+      "review_codes": [
+        "01210",
+        "01211",
+        "01212"
+      ]
+    },
+    {
+      "label": "2025-04-30",
+      "page": 100,
+      "items": [
+        {
+          "code": "01511",
+          "description": "Day 1",
+          "fee": "716.38",
+          "prefix": ""
+        },
+        {
+          "code": "01521",
+          "description": "Day 2 - 10",
+          "fee": "288.18",
+          "prefix": ""
+        },
+        {
+          "code": "01531",
+          "description": "Day 11 onward",
+          "fee": "193.65",
+          "prefix": ""
+        },
+        {
+          "code": "01512",
+          "description": "Day 1",
+          "fee": "550.09",
+          "prefix": ""
+        },
+        {
+          "code": "01522",
+          "description": "Day 2 - 10",
+          "fee": "202.59",
+          "prefix": ""
+        },
+        {
+          "code": "01532",
+          "description": "Day 11 onward",
+          "fee": "146.48",
+          "prefix": ""
+        },
+        {
+          "code": "01513",
+          "description": "Day 1",
+          "fee": "474.76",
+          "prefix": ""
+        },
+        {
+          "code": "01523",
+          "description": "Day 2 - 10",
+          "fee": "149.74",
+          "prefix": ""
+        },
+        {
+          "code": "01533",
+          "description": "Day 11 onward",
+          "fee": "132.05",
+          "prefix": ""
+        }
+      ],
+      "review_codes": []
+    },
+    {
+      "label": "2025-04-30",
+      "page": 440,
+      "items": [
+        {
+          "code": "13610",
+          "description": "Minor laceration or foreign body - not requiring anesthesia - operation only",
+          "fee": "40.64",
+          "prefix": ""
+        },
+        {
+          "code": "13611",
+          "description": "Minor laceration or foreign body - requiring anesthesia - operation only",
+          "fee": "75.71",
+          "prefix": ""
+        },
+        {
+          "code": "06063",
+          "description": "Extraction of foreign body from a wound requiring general anesthesia or procedural sedation - operation only",
+          "fee": "306.47",
+          "prefix": ""
+        },
+        {
+          "code": "13612",
+          "description": "Extensive lacerations greater than 5 cm. (maximum charge 35 cm) - operation only - per cm",
+          "fee": "15.19",
+          "prefix": ""
+        },
+        {
+          "code": "70155",
+          "description": "Debridement of skin and subcutaneous tissue restricted to genitalia and perineum for necrotizing infection (Fournier’s Gangrene) (stand alone procedure)",
+          "fee": "562.45",
+          "prefix": "V"
+        },
+        {
+          "code": "70158",
+          "description": "Debridement of skin and subcutaneous tissue; up to the first 5% of body surface area",
+          "fee": "301.31",
+          "prefix": "V"
+        },
+        {
+          "code": "70159",
+          "description": "Debridement of skin and subcutaneous tissue; for each subsequent 5% of body surface area or major portion thereof",
+          "fee": "132.78",
+          "prefix": ""
+        },
+        {
+          "code": "70162",
+          "description": "Debridement of skin, subcutaneous tissue and necrotic fascia OR muscle; up to the first 5% of body surface area",
+          "fee": "306.30",
+          "prefix": "V"
+        },
+        {
+          "code": "70163",
+          "description": "Debridement of skin, subcutaneous tissue and necrotic fascia OR muscle; for each subsequent 5% of body surface area or major portion thereof",
+          "fee": "133.93",
+          "prefix": ""
+        },
+        {
+          "code": "70165",
+          "description": "Debridement of skin, fascia, muscle and bone; up to the first 5% of body surface area",
+          "fee": "316.74",
+          "prefix": "V"
+        },
+        {
+          "code": "70166",
+          "description": "Debridement of skin, fascia, muscle and bone; for each subsequent 5% of body surface area or major portion thereof",
+          "fee": "147.32",
+          "prefix": ""
+        },
+        {
+          "code": "70168",
+          "description": "Active wound management during acute phase after debridement of soft tissues for necrotizing infection or severe trauma – per 5% of body surface area – operation only",
+          "fee": "80.35",
+          "prefix": ""
+        },
+        {
+          "code": "70169",
+          "description": "Active wound management during acute phase after debridement of soft tissue for necrotizing infection or severe trauma – per 5% of body surface area (operation only)",
+          "fee": "128.56",
+          "prefix": ""
+        }
+      ],
+      "review_codes": []
+    }
+  ]
+}
