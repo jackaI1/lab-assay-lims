@@ -1,0 +1,36 @@
+body {
+  font: 16px/1.6 system-ui;
+  background: #f1f5f7;
+  color: #182d3b;
+  margin: 40px auto;
+  max-width: 650px;
+  padding: 20px;
+}
+main {
+  padding: 24px;
+  background: white;
+  border: 1px solid #bccbd3;
+  border-radius: 8px;
+}
+label,
+input {
+  display: block;
+}
+input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  font: inherit;
+}
+button {
+  background: #185a6f;
+  color: white;
+  border: 0;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font: inherit;
+  cursor: pointer;
+}
+h1 {
+  font-size: 26px;
+}

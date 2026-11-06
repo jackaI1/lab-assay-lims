@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "drone-identity"
+version = "0.1.0"
+description = "Certificate-authenticated MAVLink companion for PX4 Gazebo SITL"
+requires-python = ">=3.11"
+dependencies = ["pymavlink==2.4.50", "cryptography==50.0.2"]
+
+[project.optional-dependencies]
+test = ["pytest==9.2.0"]
+
+[project.scripts]
+drone-identity = "drone_identity.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["sitl: requires a running PX4 Gazebo simulation"]

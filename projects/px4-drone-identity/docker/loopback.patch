@@ -1,0 +1,11 @@
+--- a/src/modules/mavlink/mavlink_main.cpp
++++ b/src/modules/mavlink/mavlink_main.cpp
+@@ -996,7 +996,7 @@
+ 	PX4_DEBUG("Setting up UDP with port %hu", _network_port);
+ 
+ 	_myaddr.sin_family = AF_INET;
+-	_myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
++	_myaddr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+ 	_myaddr.sin_port = htons(_network_port);
+ 
+ 	if ((_socket_fd = socket(AF_INET, SOCK_DGRAM, 0)) < 0) {

@@ -1,0 +1,3 @@
+menuconfig MODULES_IDENTITY_GUARD
+    bool "identity_guard"
+    default n

@@ -1,0 +1,18 @@
+#!/bin/sh
+# Only the in-container companion can reach this endpoint. No GCS, payload,
+# gimbal or public UDP links are started by this lab configuration.
+mavlink start -u 14580 -o 14540 -t 127.0.0.1 -r 200000 -m onboard
+mavlink stream -u 14580 -s HEARTBEAT -r 5
+mavlink stream -u 14580 -s GLOBAL_POSITION_INT -r 10
+mavlink stream -u 14580 -s LOCAL_POSITION_NED -r 10
+mavlink stream -u 14580 -s EXTENDED_SYS_STATE -r 10
+mavlink stream -u 14580 -s NAMED_VALUE_FLOAT -r 10
+identity_guard start
+# The independent identity watchdog owns this lab's link-loss policy.
+param set COM_DL_LOSS_T 120
+param set NAV_DLL_ACT 0
+param set COM_RC_IN_MODE 4
+param set COM_DISARM_LAND 1
+param set MIS_TAKEOFF_ALT 2
+param set MPC_TKO_SPEED 1
+param set MPC_LAND_SPEED 0.7

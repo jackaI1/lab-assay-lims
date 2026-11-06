@@ -1,0 +1,21 @@
+name: chart-send-demo
+services:
+  mysql:
+    image: mariadb:10.11
+    command: ["mariadbd", "--character-set-server=utf8mb4"]
+    environment:
+      MYSQL_ROOT_PASSWORD: fictional-local-demo
+    mem_limit: 512m
+  openemr:
+    image: openemr/openemr:7.0.3
+    ports: ["127.0.0.1:8080:80"]
+    volumes:
+      - ./demo/chart-send.conf:/etc/apache2/conf.d/chart-send.conf:ro
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_ROOT_PASS: fictional-local-demo
+      MYSQL_PASS: fictional-local-demo
+      OE_USER: admin
+      OE_PASS: fictional-demo-only
+    depends_on: [mysql]
+    mem_limit: 768m

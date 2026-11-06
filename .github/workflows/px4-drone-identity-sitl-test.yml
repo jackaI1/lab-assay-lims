@@ -1,0 +1,89 @@
+name: px4-drone-identity-sitl / tests
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/px4-drone-identity-sitl/**
+    - .github/workflows/px4-drone-identity-sitl-test.yml
+  pull_request:
+    paths:
+    - projects/px4-drone-identity-sitl/**
+    - .github/workflows/px4-drone-identity-sitl-test.yml
+  workflow_dispatch: {}
+concurrency:
+  group: tests-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+permissions:
+  contents: read
+jobs:
+  security:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.12.16
+    - run: python -m pip install -e '.[test]'
+    - run: python -m pytest -q -m 'not sitl' --junitxml=security.xml
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: security-results
+        path: projects/px4-drone-identity-sitl/security.xml
+    timeout-minutes: 20
+  gazebo:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 35
+    container:
+      image: px4io/px4-dev-simulation-jammy@sha256:ba6f790b63f8fec427aaf174a7cb6a89950c69083653e7f67543f49b9ce20928
+      options: --init
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.12.16
+    - name: Install companion
+      run: python -m pip install -e '.[test]'
+    - uses: actions/cache/restore@v4
+      id: px4-cache
+      with:
+        path: projects/px4-drone-identity-sitl//tmp/PX4-Autopilot
+        key: px4-v1.16.0-${{ runner.os }}-${{ runner.arch }}-ba6f790b-v1
+    - name: Fetch PX4 v1.16.0
+      run: 'test -d /tmp/PX4-Autopilot/.git || git clone --branch v1.16.0 --depth 1 https://github.com/PX4/PX4-Autopilot.git
+        /tmp/PX4-Autopilot
+
+        git -C /tmp/PX4-Autopilot submodule update --init --recursive --depth 1 -- src/modules/mavlink/mavlink src/drivers/gps/devices
+        src/lib/events/libevents src/modules/uxrce_dds_client/Micro-XRCE-DDS-Client src/lib/heatshrink/heatshrink Tools/simulation/gz
+
+        '
+    - name: Install Gazebo Harmonic
+      shell: bash
+      run: bash scripts/install_gazebo.sh > /tmp/gazebo-install.log 2>&1 || { tail -60 /tmp/gazebo-install.log; exit 1; }
+    - name: Build real SITL
+      shell: bash
+      run: 'python3 -m pip install -r /tmp/PX4-Autopilot/Tools/setup/requirements.txt
+
+        make -C /tmp/PX4-Autopilot px4_sitl_default PX4_MAKE_ARGS=-j2 > /tmp/px4-build.log 2>&1 || { tail -60 /tmp/px4-build.log;
+        exit 1; }
+
+        cmake --build /tmp/PX4-Autopilot/build/px4_sitl_default --target px4_gz_plugins --parallel 2 >> /tmp/px4-build.log
+        2>&1 || { tail -60 /tmp/px4-build.log; exit 1; }
+
+        '
+    - uses: actions/cache/save@v4
+      if: steps.px4-cache.outputs.cache-hit != 'true'
+      with:
+        path: projects/px4-drone-identity-sitl//tmp/PX4-Autopilot
+        key: px4-v1.16.0-${{ runner.os }}-${{ runner.arch }}-ba6f790b-v1
+    - name: Fly, break authentication, and lose the link
+      run: python scripts/sitl_check.py --px4 /tmp/PX4-Autopilot
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: gazebo-evidence
+        path: projects/px4-drone-identity-sitl/artifacts/
+defaults:
+  run:
+    working-directory: projects/px4-drone-identity-sitl

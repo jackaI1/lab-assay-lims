@@ -1,0 +1,24 @@
+{
+  "name": "chart-send-extension",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:e2e": "playwright test",
+    "receiver": "tsx receiver/main.ts",
+    "demo:seed": "node scripts/seed.mjs",
+    "check": "npm run typecheck && npm run build && npm test && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/chrome": "^0.1.24",
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "prettier": "^3.9.10",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

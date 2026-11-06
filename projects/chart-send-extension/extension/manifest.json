@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "Chart Send | fictional local demo",
+  "version": "1.0.0",
+  "description": "Send selected fictional OpenEMR documents to a local receiver.",
+  "permissions": ["storage"],
+  "host_permissions": ["http://127.0.0.1/*"],
+  "background": { "service_worker": "background.js", "type": "module" },
+  "content_scripts": [
+    {
+      "matches": ["http://127.0.0.1/openemr/controller.php*"],
+      "js": ["content.js"],
+      "all_frames": true
+    }
+  ],
+  "options_ui": { "page": "options.html", "open_in_tab": true },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  }
+}
