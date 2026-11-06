@@ -63,6 +63,7 @@ Each lookup includes the guideline URL and the publications associated with that
 There are 5 test source files in this copy. No test pass count is claimed here: I have not re-run the project suite as part of this move. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
-Project checks run from this directory through the path-filtered hub workflows: `cpic-guideline-tracker-ci.yml`.
 
 Generated output omitted from this copy: reports/ (generated output). Regenerate it with the project scripts.
+
+The relocated workflow was removed: Relocated CI failed because the test suite expects generated report files omitted from the source-only snapshot.
