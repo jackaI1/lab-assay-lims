@@ -98,6 +98,17 @@ def create_app(db_path=None):
     app = FastAPI(title="Lab assay notebook", version="0.1.0", docs_url=None, redoc_url=None)
     store = Store(db_path or os.environ.get("LIMS_DB", "assays.sqlite"))
     app.state.store = store
+
+    @app.post("/api/instruments/capture")
+    def instrument_capture(repeats: int = 3):
+        from .instrument import run_capture
+
+        if not 1 <= repeats <= 100:
+            from fastapi import HTTPException
+
+            raise HTTPException(status_code=422, detail="repeats must be between 1 and 100")
+        return run_capture(repeats)
+
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=["localhost", "127.0.0.1", "testserver"])
 
     @app.middleware("http")

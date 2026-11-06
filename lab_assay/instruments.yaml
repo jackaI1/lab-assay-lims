@@ -1,0 +1,21 @@
+spec: "1.0"
+devices:
+  scope:
+    eom:
+      TCPIP SOCKET: {q: "\n", r: "\n"}
+    dialogues:
+      - {q: "WAV:DATA?", r: "0,0.5,1,0.5,0"}
+      - {q: "SYST:ERR?", r: "0,No error"}
+  osa:
+    eom:
+      TCPIP SOCKET: {q: "\n", r: "\n"}
+    dialogues:
+      - {q: "SENS:WAV:STAR 1548"}
+      - {q: "SENS:WAV:STOP 1552"}
+      - {q: "SENS:BAND:RES 0.1"}
+      - {q: "INIT"}
+      - {q: "TRAC:DATA?", r: "-80,-70,-60,-40,-10,-40,-20,-70,-80"}
+      - {q: "SYST:ERR?", r: "0,No error"}
+resources:
+  TCPIP::localhost::10001::SOCKET: {device: scope}
+  TCPIP::localhost::10002::SOCKET: {device: osa}

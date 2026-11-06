@@ -23,6 +23,23 @@ uv run uvicorn lab_assay.app:app --host 127.0.0.1 --port 8000
 
 Open <http://127.0.0.1:8000>. Stop the server with Ctrl+C. My records stay in `assays.sqlite`; I can choose another file with the `LIMS_DB` environment variable. This is a local research demonstration with no login, so I keep it bound to this computer.
 
+## Try the other lab exercises
+
+I also use this notebook to practice measurements and plan experiments without needing equipment or biological samples. All of these examples use invented data and demonstration limits.
+
+```sh
+# Repeated simulated oscilloscope and optical spectrum captures, with CSV and JSON
+uv run python -m lab_assay.instrument --repeats 3 --output instrument-output
+# Sweep a synthetic power supply over a local network socket
+uv run python -m lab_assay.scpi_server --output sweep.csv
+# Plan and analyse a simulated thin-film experiment
+uv run python -m lab_assay.doe --output doe-output
+# Calculate plate counts, monitoring flags and medium volume
+uv run python -m lab_assay.microbiology data/synthetic-plates.csv --limit 10000 --environment data/synthetic-environment.csv --limits data/synthetic-limits.json --media-lot DEMO-01 --plates 20 --output microbiology-report.json
+```
+
+The instrument exercise sends text commands called SCPI to simulated devices using PyVISA. It checks the highest spectral peak, its power and the spacing between the two strongest peaks, and saves settings and repeated readings. The same capture is available at `POST /api/instruments/capture?repeats=3` while the app is running. The deposition exercise changes power, pressure and time together to estimate their effects, interactions and a curved response. The microbiology exercise estimates colony-forming units (CFU) from duplicate plates and flags unusually high environmental counts. These are teaching examples, not validated methods or real equipment results. [Details and assumptions](docs/lab-exercises.md).
+
 ## Follow an experiment
 
 1. **Register the materials.** Add a sample ID and description, then a reagent lot with an expiry date.
@@ -75,4 +92,4 @@ uv run playwright install chromium
 uv run python scripts/browser_check.py
 ```
 
-My local run passes **51 tests**, including four real Opentrons simulator runs. The seeded curve recovers 6.9989 and 12.0007 ng/mL for the 7 and 12 ng/mL samples, with Z-prime 0.9894. GitHub Actions runs the same unit and API tests on Python 3.11 and 3.12, plus the browser workflow. Tests cover concentration recovery, public calibration, malformed CSV/XLSX files, invalid record links, immutable history, expired lots, failing controls and impossible liquid transfers. The browser check registers materials, saves a map, imports a plate, calculates results, downloads files and checks desktop/mobile layouts. It closes its browser and temporary server in a `finally` block and checks that the port is closed.
+My original assay suite includes **51 tests**, including four real Opentrons simulator runs. The seeded curve recovers 6.9989 and 12.0007 ng/mL for the 7 and 12 ng/mL samples, with Z-prime 0.9894. GitHub Actions runs the same unit and API tests on Python 3.11 and 3.12, plus the browser workflow. Tests cover concentration recovery, public calibration, malformed CSV/XLSX files, invalid record links, immutable history, expired lots, failing controls and impossible liquid transfers. The browser check registers materials, saves a map, imports a plate, calculates results, downloads files and checks desktop/mobile layouts. It closes its browser and temporary server in a `finally` block and checks that the port is closed.
