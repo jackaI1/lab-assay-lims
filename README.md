@@ -93,3 +93,22 @@ uv run python scripts/browser_check.py
 ```
 
 My original assay suite includes **51 tests**, including four real Opentrons simulator runs. The seeded curve recovers 6.9989 and 12.0007 ng/mL for the 7 and 12 ng/mL samples, with Z-prime 0.9894. GitHub Actions runs the same unit and API tests on Python 3.11 and 3.12, plus the browser workflow. Tests cover concentration recovery, public calibration, malformed CSV/XLSX files, invalid record links, immutable history, expired lots, failing controls and impossible liquid transfers. The browser check registers materials, saves a map, imports a plate, calculates results, downloads files and checks desktop/mobile layouts. It closes its browser and temporary server in a `finally` block and checks that the port is closed.
+
+
+## Other things I've built here
+
+- [android-vitals-viewer](projects/android-vitals-viewer/)
+- [calibration-inspection-log](projects/calibration-inspection-log/)
+- [cgm-metrics-check](projects/cgm-metrics-check/)
+- [clinical-data-sdtm-pipeline](projects/clinical-data-sdtm-pipeline/)
+- [clinical-image-quality-gate](projects/clinical-image-quality-gate/)
+- [co2-capture-data-analysis](projects/co2-capture-data-analysis/)
+- [cpic-guideline-tracker](projects/cpic-guideline-tracker/)
+- [drug-release-kinetics-fit](projects/drug-release-kinetics-fit/)
+- [ecg-samd-lifecycle](projects/ecg-samd-lifecycle/)
+- [eeg-session-qc](projects/eeg-session-qc/)
+- [fee-schedule-diff](projects/fee-schedule-diff/)
+- [hl7-dicom-gateway](projects/hl7-dicom-gateway/)
+- [hpo-phenotype-validator](projects/hpo-phenotype-validator/)
+- [lidar-slam-ekf-localization](projects/lidar-slam-ekf-localization/)
+- [machine-health-monitor](projects/machine-health-monitor/)

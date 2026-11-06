@@ -1,0 +1,657 @@
+{
+  "DM": {
+    "label": "Demographics",
+    "source": "subjects.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant DM",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "SUBJID": {
+        "label": "Subject identifier",
+        "source": "sid",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "SITEID": {
+        "label": "Study site identifier",
+        "source": "constant SYNTH",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "AGE": {
+        "label": "Age in years",
+        "source": "age",
+        "type": "integer",
+        "required": true,
+        "terms": [],
+        "minimum": 18,
+        "maximum": 90
+      },
+      "AGEU": {
+        "label": "Age unit",
+        "source": "constant YEARS",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "YEARS"
+        ]
+      },
+      "SEX": {
+        "label": "Sex",
+        "source": "sex",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "M",
+          "F",
+          "U"
+        ]
+      },
+      "RACE": {
+        "label": "Race",
+        "source": "race",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "WHITE",
+          "BLACK OR AFRICAN AMERICAN",
+          "ASIAN",
+          "NOT REPORTED"
+        ]
+      },
+      "ARMCD": {
+        "label": "Planned arm code",
+        "source": "arm; A or P",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "A",
+          "P"
+        ]
+      },
+      "ARM": {
+        "label": "Planned arm",
+        "source": "arm; A=ACTIVE, P=PLACEBO",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "ACTIVE",
+          "PLACEBO"
+        ]
+      },
+      "ACTARMCD": {
+        "label": "Actual arm code",
+        "source": "arm; A or P",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "A",
+          "P"
+        ]
+      },
+      "ACTARM": {
+        "label": "Actual arm",
+        "source": "arm; A=ACTIVE, P=PLACEBO",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "ACTIVE",
+          "PLACEBO"
+        ]
+      },
+      "RFSTDTC": {
+        "label": "Reference start date",
+        "source": "randomization",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "RFENDTC": {
+        "label": "Reference end date",
+        "source": "death_date if present else last_contact",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "RFXSTDTC": {
+        "label": "First exposure date",
+        "source": "randomization",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "RFXENDTC": {
+        "label": "Last exposure date",
+        "source": "randomization + 27 days",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "DTHFL": {
+        "label": "Death flag",
+        "source": "Y if death_date present else blank",
+        "type": "text",
+        "required": false,
+        "terms": [
+          "Y"
+        ]
+      },
+      "DTHDTC": {
+        "label": "Death date",
+        "source": "death_date",
+        "type": "date",
+        "required": false,
+        "terms": []
+      }
+    }
+  },
+  "VS": {
+    "label": "Vital signs",
+    "source": "vitals.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant VS",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "VSSEQ": {
+        "label": "Sequence number",
+        "source": "source order within subject",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "VSTESTCD": {
+        "label": "Vital sign short name",
+        "source": "test",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "SYSBP",
+          "DIABP"
+        ]
+      },
+      "VSTEST": {
+        "label": "Vital sign name",
+        "source": "test; SYSBP=Systolic Blood Pressure, DIABP=Diastolic Blood Pressure",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "VSORRES": {
+        "label": "Original result",
+        "source": "value",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "VSORRESU": {
+        "label": "Original unit",
+        "source": "unit",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "mmHg"
+        ]
+      },
+      "VSSTRESC": {
+        "label": "Standard result text",
+        "source": "value",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "VSSTRESN": {
+        "label": "Standard result numeric",
+        "source": "value",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "VSSTRESU": {
+        "label": "Standard unit",
+        "source": "unit",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "mmHg"
+        ]
+      },
+      "VISITNUM": {
+        "label": "Visit number",
+        "source": "visit",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "VSDTC": {
+        "label": "Observation date",
+        "source": "date",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "VSDY": {
+        "label": "Study day",
+        "source": "date minus RFSTDTC + 1",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      }
+    }
+  },
+  "LB": {
+    "label": "Laboratory tests",
+    "source": "labs.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant LB",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "LBSEQ": {
+        "label": "Sequence number",
+        "source": "source order within subject",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "LBTESTCD": {
+        "label": "Lab test short name",
+        "source": "constant GLUC",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "GLUC"
+        ]
+      },
+      "LBTEST": {
+        "label": "Lab test name",
+        "source": "constant Glucose",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "LBORRES": {
+        "label": "Original result",
+        "source": "value",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "LBORRESU": {
+        "label": "Original unit",
+        "source": "unit",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "mg/dL",
+          "mmol/L"
+        ]
+      },
+      "LBSTRESC": {
+        "label": "Standard result text",
+        "source": "value / 18.0182 for mg/dL; otherwise value",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "LBSTRESN": {
+        "label": "Standard result numeric",
+        "source": "value / 18.0182 for mg/dL; otherwise value",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "LBSTRESU": {
+        "label": "Standard unit",
+        "source": "constant mmol/L",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "mmol/L"
+        ]
+      },
+      "LBSTNRLO": {
+        "label": "Standard lower reference limit",
+        "source": "constant 3.9",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "LBSTNRHI": {
+        "label": "Standard upper reference limit",
+        "source": "constant 6.1",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "LBNRIND": {
+        "label": "Reference range indicator",
+        "source": "compare standard result with 3.9 and 6.1",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "LOW",
+          "NORMAL",
+          "HIGH"
+        ]
+      },
+      "VISITNUM": {
+        "label": "Visit number",
+        "source": "visit",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "LBDTC": {
+        "label": "Observation date",
+        "source": "date",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "LBDY": {
+        "label": "Study day",
+        "source": "date minus RFSTDTC + 1",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      }
+    }
+  },
+  "AE": {
+    "label": "Adverse events",
+    "source": "events.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant AE",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "AESEQ": {
+        "label": "Sequence number",
+        "source": "source order within subject",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "AETERM": {
+        "label": "Reported event",
+        "source": "term",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "AESEV": {
+        "label": "Severity",
+        "source": "severity",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "MILD",
+          "MODERATE",
+          "SEVERE"
+        ]
+      },
+      "AESER": {
+        "label": "Serious event",
+        "source": "serious",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "Y",
+          "N"
+        ]
+      },
+      "AESTDTC": {
+        "label": "Event start",
+        "source": "start",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "AEENDTC": {
+        "label": "Event end",
+        "source": "end",
+        "type": "date",
+        "required": true,
+        "terms": []
+      }
+    }
+  },
+  "EX": {
+    "label": "Exposure",
+    "source": "exposure.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant EX",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "EXSEQ": {
+        "label": "Sequence number",
+        "source": "source order within subject",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "EXTRT": {
+        "label": "Treatment",
+        "source": "treatment",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "ACTIVE",
+          "PLACEBO"
+        ]
+      },
+      "EXDOSE": {
+        "label": "Dose",
+        "source": "dose",
+        "type": "float",
+        "required": true,
+        "terms": []
+      },
+      "EXDOSU": {
+        "label": "Dose unit",
+        "source": "constant mg",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "mg"
+        ]
+      },
+      "EXDOSFRQ": {
+        "label": "Dosing frequency",
+        "source": "constant QD",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "QD"
+        ]
+      },
+      "EXROUTE": {
+        "label": "Route",
+        "source": "constant ORAL",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "ORAL"
+        ]
+      },
+      "EXSTDTC": {
+        "label": "Exposure start",
+        "source": "start",
+        "type": "date",
+        "required": true,
+        "terms": []
+      },
+      "EXENDTC": {
+        "label": "Exposure end",
+        "source": "end",
+        "type": "date",
+        "required": true,
+        "terms": []
+      }
+    }
+  },
+  "DS": {
+    "label": "Disposition",
+    "source": "disposition.csv",
+    "fields": {
+      "STUDYID": {
+        "label": "Study identifier",
+        "source": "constant SYNTH01",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DOMAIN": {
+        "label": "Domain abbreviation",
+        "source": "constant DS",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "USUBJID": {
+        "label": "Unique subject identifier",
+        "source": "sid; prepend SYNTH01-",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DSSEQ": {
+        "label": "Sequence number",
+        "source": "source order within subject",
+        "type": "integer",
+        "required": true,
+        "terms": []
+      },
+      "DSTERM": {
+        "label": "Reported disposition",
+        "source": "status; DEATH or COMPLETED",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DSDECOD": {
+        "label": "Standard disposition",
+        "source": "status",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "DEATH",
+          "COMPLETED"
+        ]
+      },
+      "DSCAT": {
+        "label": "Disposition category",
+        "source": "constant DISPOSITION EVENT",
+        "type": "text",
+        "required": true,
+        "terms": [
+          "DISPOSITION EVENT"
+        ]
+      },
+      "DSSCAT": {
+        "label": "Disposition subcategory",
+        "source": "constant STUDY PARTICIPATION",
+        "type": "text",
+        "required": true,
+        "terms": []
+      },
+      "DSSTDTC": {
+        "label": "Disposition date",
+        "source": "date",
+        "type": "date",
+        "required": true,
+        "terms": []
+      }
+    }
+  }
+}

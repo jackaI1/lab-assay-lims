@@ -1,0 +1,71 @@
+---
+title: "From fictional trial records to survival analysis"
+author: "Jack Lai"
+output:
+  html_document:
+    self_contained: true
+    toc: true
+    mathjax: null
+params:
+  project_root: "."
+  sdtm_dir: "build/demo/output/sdtm"
+  output_dir: "build/analysis"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE,message=FALSE,warning=FALSE)
+source(file.path(params$project_root,'analysis','functions.R'))
+result <- run_analysis(params$sdtm_dir,params$output_dir)
+manifest <- jsonlite::fromJSON(file.path(dirname(params$sdtm_dir),'manifest.json'))
+```
+
+## What I wanted to check
+
+I built this example to follow a trial record from collection to a result I could explain. Every subject and measurement is generated. The treatment difference is programmed into the generator, so none of these results support a medical claim.
+
+This run starts with **`r manifest$subjects_input` fictional subjects**, releases **`r nrow(result$population)`** for analysis, and raises **`r manifest$queries` open queries**. A query is a question a data manager would send back to the person checking the original record. The quality report beside the input files gives those questions and their source rows.
+
+Records with errors are quarantined. A demographic or terminal-disposition error excludes that subject everywhere; a vital-sign, laboratory, event or dose error excludes that record. The survival calculation needs the demographic and disposition records. Open safety-record queries still need review before anyone could summarize safety or lock a real study database.
+
+## Who is included
+
+The table uses all eligible subjects in each assigned arm. Age is in years. The female, male and unknown-sex columns are counts with the arm's `n` as their denominator. Quartiles describe the middle half of the ages.
+
+```{r demographics}
+knitr::kable(result$demographics,digits=1)
+```
+
+## Time to death
+
+Time starts at randomization. A death is an event; a subject alive at their last recorded contact is right-censored, which means the later outcome is unknown. Elapsed time is the number of days between the two dates, rather than the SDTM convention that labels the starting day as day 1. The analysis rejects missing or duplicate dispositions, nonpositive follow-up and dates that disagree across the input tables.
+
+A Kaplan-Meier curve estimates the fraction surviving over time while accounting for subjects whose follow-up ends early. Dotted lines show 95% confidence limits; crosses show censoring. The risk table counts subjects still under observation just before each listed day. Rows after an arm's last observation are omitted.
+
+```{r km, fig.alt="Kaplan-Meier survival curves for two fictional treatment arms"}
+knitr::include_graphics(file.path(params$output_dir,'km.png'))
+knitr::kable(result$at_risk)
+```
+
+## Adjusting for age and sex
+
+The Cox model compares ACTIVE with PLACEBO while adjusting for age (per year) and recorded sex (M relative to F in this generated cohort). A hazard ratio below 1 corresponds to a lower estimated instantaneous death rate. The interval gives uncertainty in that estimate. This is an assigned-arm demonstration, not a per-protocol analysis or an ADaM submission dataset.
+
+```{r cox}
+knitr::kable(result$cox,digits=4)
+```
+
+The model assumes that hazard ratios stay roughly constant over follow-up and that censoring is independent of the unobserved outcome conditional on the covariates. The scaled Schoenfeld-residual test below checks the proportional-hazards assumption; a small p-value is a warning to investigate. A large p-value does not prove the assumption. The small synthetic cohort and deliberately chosen outcome mechanism limit interpretation.
+
+```{r ph}
+knitr::kable(result$ph,digits=4)
+```
+
+`r if (result$ph$p[result$ph$term=='GLOBAL'] < .05) 'This run flags a possible proportional-hazards violation. I would investigate time-varying effects before interpreting the adjusted hazard ratios as a stable treatment comparison.' else 'This run does not flag a global proportional-hazards violation; that does not prove the assumption.'`
+
+## Reproducing this report
+
+From the repository root, run `uv sync --extra test`, `uv run clinical-pipeline demo --output build/demo`, then `Rscript analysis/render.R build/demo/output/sdtm build/analysis`. Install R packages first with `Rscript analysis/install.R`. Use a fresh output directory when repeating the Python command. The default generator seed is 2026. Input and mapping fingerprints are in `manifest.json`; the R package versions used for this render follow below.
+
+```{r session}
+cat(paste(capture.output(sessionInfo()),collapse='\n'))
+```

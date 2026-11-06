@@ -1,0 +1,300 @@
+{
+  "baseline": "0.1.0",
+  "owner": "Jack Lai",
+  "requirements": [
+    {
+      "id": "SWR-001",
+      "description": "Reject nonfinite, flat, multidimensional or shorter-than-10-second signals and sample rates outside 100 to 1000 Hz.",
+      "rationale": "Do not silently process invalid ECG input.",
+      "tests": [
+        "tests/test_core.py::test_signal_rejection"
+      ]
+    },
+    {
+      "id": "SWR-002",
+      "description": "Detect QRS peaks from channel 0 using XQRS without annotation input; achieve QRS sensitivity and PPV >=0.90 on each full demonstration record, and >=0.98 on the first minute of record 100.",
+      "rationale": "A regression floor for this dataset subset, not a clinical acceptance criterion.",
+      "tests": [
+        "tests/test_integration.py::test_public_record_qrs",
+        "tests/test_integration.py::test_cli_full_benchmark"
+      ]
+    },
+    {
+      "id": "SWR-003",
+      "description": "Compute RR mean, population CV and RMSSD; flag irregular only when CV >=0.12 and RMSSD/mean >=0.08.",
+      "rationale": "Keep decisions explainable with timing features.",
+      "tests": [
+        "tests/test_core.py::test_regular_and_irregular_windows",
+        "tests/test_core.py::test_both_irregularity_conditions_are_required"
+      ]
+    },
+    {
+      "id": "SWR-004",
+      "description": "Return insufficient_data when fewer than 10 RR intervals exist or any RR is outside inclusive 0.25 to 2.5 s.",
+      "rationale": "Missing or implausible timing must not become a regular result.",
+      "tests": [
+        "tests/test_core.py::test_insufficient_is_not_regular"
+      ]
+    },
+    {
+      "id": "SWR-005",
+      "description": "Use complete 30-second windows, exclude crossing RR intervals, and reject invalid peak indices.",
+      "rationale": "Prevent duplicate beats, partial windows and unit mistakes.",
+      "tests": [
+        "tests/test_core.py::test_window_boundaries_and_peak_validation"
+      ]
+    },
+    {
+      "id": "SWR-006",
+      "description": "Score only annotated beats with chronological one-to-one matching at inclusive 150 ms; report TP, FP, FN, sensitivity and PPV, with null for empty denominators.",
+      "rationale": "Avoid inflated metrics from duplicate matches or rhythm events counted as beats.",
+      "tests": [
+        "tests/test_core.py::test_one_to_one_metrics_and_tolerance",
+        "tests/test_core.py::test_nonbeat_events_excluded",
+        "tests/test_integration.py::test_cli_full_benchmark",
+        "tests/test_core.py::test_nonfinite_beat_indices_are_rejected"
+      ]
+    },
+    {
+      "id": "SWR-007",
+      "description": "Compare window flags with AFIB rhythm duration: positive >=80%, negative <=20%, otherwise excluded; unknown rhythm is excluded; report abstentions and conservative sensitivity counting positive abstentions as misses.",
+      "rationale": "Separate a timing flag from a disease diagnosis and show abstention bias.",
+      "tests": [
+        "tests/test_core.py::test_rhythm_duration_and_unknown_labels",
+        "tests/test_core.py::test_unrecognized_rhythm_is_unknown",
+        "tests/test_evaluate.py::test_window_scoring_includes_abstentions"
+      ]
+    },
+    {
+      "id": "SWR-008",
+      "description": "Allow only records 100, 201 and 203 from MIT-BIH 1.0.0; verify every header, signal and annotation SHA-256 before parsing; fail closed on corrupt downloads.",
+      "rationale": "Keep the demonstration reproducible and avoid arbitrary private paths.",
+      "tests": [
+        "tests/test_data.py::test_checksum_rejects_corruption",
+        "tests/test_data.py::test_only_public_allowlisted_records",
+        "tests/test_data.py::test_download_failure_never_leaves_valid_cache"
+      ]
+    },
+    {
+      "id": "SWR-009",
+      "description": "Label successful output as a learning exercise and not a cleared device; reject unsupported record IDs with nonzero exit and no new report.",
+      "rationale": "Reduce foreseeable misuse and prevent a failed command appearing successful.",
+      "tests": [
+        "tests/test_integration.py::test_cli_full_benchmark",
+        "tests/test_integration.py::test_cli_rejects_unknown_record"
+      ]
+    },
+    {
+      "id": "SWR-010",
+      "description": "Fail traceability if a requirement or control lacks a test, names an absent test, lacks a requirement link, or its current JUnit test is not passing; generate the matrix only after validation.",
+      "rationale": "Prevent documentary links from substituting for execution evidence.",
+      "tests": [
+        "tests/test_traceability.py::test_requirement_without_test_fails",
+        "tests/test_traceability.py::test_control_without_verification_fails",
+        "tests/test_traceability.py::test_absent_skipped_or_failed_test_fails",
+        "tests/test_traceability.py::test_unknown_links_and_duplicate_ids_fail",
+        "tests/test_traceability.py::test_matrix_contains_executed_links",
+        "tests/test_traceability.py::test_junit_outcomes_and_duplicates",
+        "tests/test_traceability.py::test_gate_cli_fails_for_uncovered_requirement",
+        "tests/test_traceability.py::test_omitted_unlinked_execution_fails"
+      ]
+    },
+    {
+      "id": "SWR-011",
+      "description": "Write per-record QRS and exploratory AFIB-proxy counts and rates, per-window features/status, abstentions, omitted duration, configuration and input hashes as strict JSON.",
+      "rationale": "Regenerate every result and inspect false positives rather than a pooled headline.",
+      "tests": [
+        "tests/test_integration.py::test_cli_full_benchmark",
+        "tests/test_evaluate.py::test_window_scoring_includes_abstentions"
+      ]
+    }
+  ],
+  "risks": [
+    {
+      "id": "R-001",
+      "hazard": "Incorrect timing information",
+      "sequence": "A beat is missed; RR variability is distorted; a reader interprets a regular flag as reassurance.",
+      "harm": "Delayed assessment if misused clinically.",
+      "severity": "Serious",
+      "initial_probability": "Unknown; not estimated from three records",
+      "controls": [
+        {
+          "id": "RC-001",
+          "description": "Reject invalid signals",
+          "requirements": [
+            "SWR-001"
+          ],
+          "tests": [
+            "tests/test_core.py::test_signal_rejection"
+          ]
+        },
+        {
+          "id": "RC-002",
+          "description": "Exercise QRS regression floors on independent annotations",
+          "requirements": [
+            "SWR-002"
+          ],
+          "tests": [
+            "tests/test_integration.py::test_public_record_qrs",
+            "tests/test_integration.py::test_cli_full_benchmark"
+          ]
+        }
+      ],
+      "residual": "76 and 65 beats are missed on records 201 and 203 in the baseline. The flag cannot rule out disease.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    },
+    {
+      "id": "R-002",
+      "hazard": "False alarm interpreted as disease",
+      "sequence": "Ectopy or noise increases RR variation; the irregular flag is mistaken for an AFIB diagnosis.",
+      "harm": "Anxiety or unnecessary intervention if misused.",
+      "severity": "Moderate to serious",
+      "initial_probability": "Observed false-positive windows; clinical probability unknown",
+      "controls": [
+        {
+          "id": "RC-003",
+          "description": "Expose nonclinical warning and explicit learning-only output",
+          "requirements": [
+            "SWR-009"
+          ],
+          "tests": [
+            "tests/test_integration.py::test_cli_full_benchmark"
+          ]
+        },
+        {
+          "id": "RC-004",
+          "description": "Publish per-record false positives and AFIB-proxy limitations",
+          "requirements": [
+            "SWR-011"
+          ],
+          "tests": [
+            "tests/test_integration.py::test_cli_full_benchmark"
+          ]
+        }
+      ],
+      "residual": "Record 201 has 35 false-positive AFIB-proxy windows and 32.7% proxy PPV. There is no clinical benefit-risk justification.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    },
+    {
+      "id": "R-003",
+      "hazard": "Corrupt or unintended input",
+      "sequence": "Wrong record, modified annotation or truncated download is processed as trusted data.",
+      "harm": "Misleading performance claims could support an unsafe downstream change.",
+      "severity": "Serious",
+      "initial_probability": "Unknown",
+      "controls": [
+        {
+          "id": "RC-005",
+          "description": "Restrict dataset and verify all input hashes before reading",
+          "requirements": [
+            "SWR-008"
+          ],
+          "tests": [
+            "tests/test_data.py::test_checksum_rejects_corruption",
+            "tests/test_data.py::test_only_public_allowlisted_records",
+            "tests/test_data.py::test_download_failure_never_leaves_valid_cache"
+          ]
+        }
+      ],
+      "residual": "Initial trusted manifest could be wrong and upstream annotations can contain error. Hashes establish consistency, not clinical truth.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    },
+    {
+      "id": "R-004",
+      "hazard": "Unavailable information presented as normal",
+      "sequence": "Too few or implausibly spaced beats produce a reassuring result; an abstention is excluded from sensitivity.",
+      "harm": "False reassurance if misused.",
+      "severity": "Serious",
+      "initial_probability": "Observed abstentions; clinical probability unknown",
+      "controls": [
+        {
+          "id": "RC-006",
+          "description": "Abstain on insufficient or implausible RR sequences",
+          "requirements": [
+            "SWR-004"
+          ],
+          "tests": [
+            "tests/test_core.py::test_insufficient_is_not_regular"
+          ]
+        },
+        {
+          "id": "RC-007",
+          "description": "Count positive abstentions as misses in conservative sensitivity",
+          "requirements": [
+            "SWR-007"
+          ],
+          "tests": [
+            "tests/test_evaluate.py::test_window_scoring_includes_abstentions"
+          ]
+        }
+      ],
+      "residual": "Four AFIB-positive windows in record 203 abstain. Conservative sensitivity is 91.7%; finite noise and some artifacts can still produce plausible peaks.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    },
+    {
+      "id": "R-005",
+      "hazard": "Biased verification evidence",
+      "sequence": "Duplicate matches, nonbeat annotations or mixed/unknown rhythm spans are mislabeled, inflating accuracy.",
+      "harm": "Unsafe reliance on misleading benchmark results.",
+      "severity": "Serious",
+      "initial_probability": "Unknown",
+      "controls": [
+        {
+          "id": "RC-008",
+          "description": "Enforce one-to-one beat scoring and exclude nonbeat events",
+          "requirements": [
+            "SWR-006"
+          ],
+          "tests": [
+            "tests/test_core.py::test_one_to_one_metrics_and_tolerance",
+            "tests/test_core.py::test_nonbeat_events_excluded",
+            "tests/test_core.py::test_nonfinite_beat_indices_are_rejected"
+          ]
+        },
+        {
+          "id": "RC-009",
+          "description": "Label by known rhythm duration and disclose exclusions",
+          "requirements": [
+            "SWR-007"
+          ],
+          "tests": [
+            "tests/test_core.py::test_rhythm_duration_and_unknown_labels",
+            "tests/test_core.py::test_unrecognized_rhythm_is_unknown",
+            "tests/test_evaluate.py::test_window_scoring_includes_abstentions"
+          ]
+        }
+      ],
+      "residual": "Three selected records are not representative. AFIB proxy labels do not measure general arrhythmia sensitivity; no clinical validation exists.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    },
+    {
+      "id": "R-006",
+      "hazard": "Unverified software change",
+      "sequence": "A requirement or risk control changes without a verifying test, but the release appears complete.",
+      "harm": "Undetected regressions in a downstream medical use.",
+      "severity": "Serious",
+      "initial_probability": "Unknown",
+      "controls": [
+        {
+          "id": "RC-010",
+          "description": "Require collected and passed tests for every requirement/control",
+          "requirements": [
+            "SWR-010"
+          ],
+          "tests": [
+            "tests/test_traceability.py::test_requirement_without_test_fails",
+            "tests/test_traceability.py::test_control_without_verification_fails",
+            "tests/test_traceability.py::test_absent_skipped_or_failed_test_fails",
+            "tests/test_traceability.py::test_unknown_links_and_duplicate_ids_fail",
+            "tests/test_traceability.py::test_matrix_contains_executed_links",
+            "tests/test_traceability.py::test_junit_outcomes_and_duplicates",
+            "tests/test_traceability.py::test_gate_cli_fails_for_uncovered_requirement",
+            "tests/test_traceability.py::test_omitted_unlinked_execution_fails"
+          ]
+        }
+      ],
+      "residual": "A passing test can have weak assertions. Human design review and broader validation remain necessary; the gate checks evidence completeness, not adequacy.",
+      "residual_review": "Accepted for public offline education only. Unacceptable for clinical release; no patient use authorized."
+    }
+  ]
+}

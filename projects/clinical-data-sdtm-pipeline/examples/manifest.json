@@ -1,0 +1,25 @@
+{
+  "synthetic_only": true,
+  "subjects_input": 120,
+  "subjects_released": 119,
+  "queries": 5,
+  "quarantined_records": 16,
+  "domain_rows": {
+    "DM": 119,
+    "VS": 713,
+    "LB": 356,
+    "AE": 39,
+    "EX": 118,
+    "DS": 119
+  },
+  "source_sha256": {
+    "subjects.csv": "7b32bd3783d5f1da2906dde51476b96f63f84f1e1c3f2335963cb23a303ca6dc",
+    "vitals.csv": "cdc2538b461217eecdc8b0f59df839d9cf4fc275a7472bb75e3f6efc418834e5",
+    "labs.csv": "7b2154085f19eab602dd71adaaef9e9c10be5ab7c87080c02283e4e54e1111f4",
+    "events.csv": "57cf80a8a725f8baa99083aae196ac040057ffc2ce3efc6c61364285a48a04d1",
+    "exposure.csv": "bbabd89e973ddfa6dcf3f63a79cf261fffbc2891aff787db19b5f97bdc95ea91",
+    "disposition.csv": "9dba4410cc905a9fa0244c5acf2fb8995b4936a4ae04c35877716db0d47cc764",
+    "provenance.json": "a2aae1176d56cb5a977b9f33cf40d81edc21406b134218768bed7fabfdac1928"
+  },
+  "spec_sha256": "030e580f924fcabb52c45e62c7d5371a57dfbdfe852077e9d9e0751a536c7276"
+}

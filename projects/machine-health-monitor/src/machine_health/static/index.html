@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Filling line | Service desk</title><link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script></head>
+<body>
+<header><a class="brand" href="/">Filling line <span>Service desk</span></a><span id="connection" role="status">Connecting to monitor…</span></header>
+<main>
+<section class="overview" aria-labelledby="title"><div><p class="context" id="source-label">Local training line · Simulated equipment</p><h1 id="title">Machine condition</h1><p id="condition" class="condition">Waiting for readings</p><p id="machine">Usable data will appear after the first two samples.</p></div>
+<div class="line" aria-hidden="true"><div class="pipe"></div><div class="nozzle"></div><div class="bottles"><i></i><i></i><i></i></div><div class="conveyor"></div><p>Filling station</p></div></section>
+<div id="error" role="alert" hidden></div>
+<section aria-label="Performance measures" class="measures">
+<div><h2>Availability</h2><strong id="availability">—</strong><p>Observed time running without a fault</p></div>
+<div><h2>Performance</h2><strong id="performance">—</strong><p>Completed cycles against the target pace</p></div>
+<div><h2>Fault rate</h2><strong id="fault-rate">—</strong><p>New faults per observed minute</p></div>
+<div><h2>Cycle-time drift</h2><strong id="drift">—</strong><p>Average cycle time above the target</p></div>
+</section>
+<p id="coverage" class="coverage">Measuring usable observation time…</p>
+<div class="workspace"><section aria-labelledby="alerts-title"><div class="section-title"><h2 id="alerts-title">Alerts needing attention</h2><span id="alert-count"></span></div><p>Acknowledge an alert after reviewing it. It clears when usable readings show the rule has recovered.</p><div id="alerts" aria-live="polite"></div>
+<details><summary>Previous incidents</summary><div id="history"></div></details>
+</section>
+<section aria-labelledby="report-title" class="report"><h2 id="report-title">Service report</h2><p id="report">Waiting for the first report.</p><a href="/api/report" download="filling-line-report.txt">Download report</a><p class="note">This monitor observes the line. Acknowledging an alert never resets a fault or starts a motor.</p></section></div>
+<section id="demo" hidden aria-labelledby="demo-title"><div class="section-title"><h2 id="demo-title">Try a fault and recovery</h2><span>Demo only</span></div><p>Choose a scenario, then restore normal operation. Rolling measures take up to 20 seconds to recover with the default settings.</p><form id="scenario-form"><label for="scenario">Simulated condition</label><select id="scenario"><option value="normal">Normal operation</option><option value="slow">Slow filling</option><option value="faults">Repeated conveyor faults</option><option value="stopped">Motor stopped</option><option value="stale">Old timestamps</option><option value="missing">Missing cycle time</option><option value="out_of_range">Impossible cycle time</option><option value="duplicate">Frozen / replayed sample</option><option value="bad_status">Bad sensor quality</option></select><button>Apply scenario</button><button id="restore" type="button" class="secondary">Restore normal</button><span id="scenario-status" role="status"></span></form></section>
+<section aria-labelledby="readings-title"><div class="section-title"><h2 id="readings-title">Reading history</h2><span>Latest 60 samples</span></div><p>Rejected samples stay here with a reason. They do not contribute to the measures above.</p><svg id="trend" role="img" aria-label="Recent accepted cycle times in seconds" viewBox="0 0 900 140" preserveAspectRatio="none"><text x="20" y="50">Waiting for accepted cycle times</text></svg><div class="table-scroll"><table><thead><tr><th scope="col">Received</th><th scope="col">Cycle count</th><th scope="col">Cycle time</th><th scope="col">Motor</th><th scope="col">Fault code</th><th scope="col">Quality / reason</th></tr></thead><tbody id="readings"></tbody></table></div></section>
+</main><footer id="scope">Personal practice simulation. No physical PLC or safety control. Times shown in your local timezone.</footer>
+</body></html>

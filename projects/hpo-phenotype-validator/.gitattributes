@@ -1,0 +1,2 @@
+# Preserve the upstream ontology byte-for-byte, including upstream whitespace.
+data/hp.obo -whitespace

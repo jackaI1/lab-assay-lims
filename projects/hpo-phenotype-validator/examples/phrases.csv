@@ -1,0 +1,49 @@
+split,phrase,expected_id,rationale
+dev,Seizure,HP:0001250,Public preferred label
+dev,Low muscle tone,HP:0001252,Public exact synonym
+dev,Cerebellar ataxia,HP:0001251,Public exact synonym
+dev,Short stature,HP:0004322,Public preferred label
+dev,Microcephaly,HP:0000252,Public preferred label
+dev,no seizures,,Negated phrase needs explicit excluded field
+dev,feels strange,,No single feature specified
+dev,possible seizure,,Uncertain assertion needs review
+eval,Seizures,HP:0001250,Public exact plural synonym
+eval,Epileptic seizure,HP:0001250,Public exact synonym
+eval,Hypotonia,HP:0001252,Public preferred label
+eval,Muscle hypotonia,HP:0001252,Public exact synonym
+eval,Ataxia,HP:0001251,Public preferred label
+eval,Global developmental delay,HP:0001263,Public preferred label
+eval,Abnormally small cranium,HP:0000252,Public exact synonym
+eval,Impaired vision,HP:0000505,Public exact synonym
+eval,Retinal dystrophy,HP:0000556,Public preferred label
+eval,Hearing impairment,HP:0000365,Public preferred label
+eval,Atrial septal defect,HP:0001631,Public preferred label
+eval,Ventricular septal defect,HP:0001629,Public preferred label
+eval,Intellectual disability,HP:0001249,Public preferred label
+eval,Joint hypermobility,HP:0001382,Public preferred label
+eval,Muscular weakness,HP:0001324,Public exact synonym
+eval,Vomiting,HP:0002013,Public preferred label
+eval,Fever,HP:0001945,Public preferred label
+eval,Easy bruising,HP:0000978,Public exact synonym
+eval,seizurre,HP:0001250,Authored typo of seizure
+eval,short statur,HP:0004322,Authored typo of short stature
+eval,microcephly,HP:0000252,Authored typo of microcephaly
+eval,hypotnia,HP:0001252,Authored typo of hypotonia
+eval,poor eyesight,HP:0000505,Authored paraphrase of visual impairment
+eval,low tone in muscles,HP:0001252,Authored paraphrase of hypotonia
+eval,unusually flexible joints,HP:0001382,Authored paraphrase of joint hypermobility
+eval,delayed development across several areas,HP:0001263,Authored paraphrase of global developmental delay
+eval,Epilepsy,,RELATED synonym does not establish one seizure feature
+eval,small head,,Size alone lacks the circumference criterion for microcephaly
+eval,not sure about seizures,,Uncertain negated statement
+eval,no seizure,,Negation belongs in excluded field
+eval,denies low muscle tone,,Negation belongs in excluded field
+eval,family history of seizures,,Family history is not a subject feature
+eval,possible hypotonia,,Uncertain assertion
+eval,seizure and short stature,,Multiple findings need separate rows
+eval,normal examination,,No abnormal feature specified
+eval,feels off after lunch,,No specific phenotype
+eval,takes vitamin tablets,,Medication is not a phenotype
+eval,follow up next month,,Administrative instruction
+eval,HP:9999999,,Identifier is invalid and not a phrase
+eval,blue,,Ambiguous colour with no anatomical finding

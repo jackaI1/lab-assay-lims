@@ -1,0 +1,43 @@
+name: ecg-samd-lifecycle / Lifecycle verification
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/ecg-samd-lifecycle/**
+    - .github/workflows/ecg-samd-lifecycle-verify.yml
+  pull_request:
+    paths:
+    - projects/ecg-samd-lifecycle/**
+    - .github/workflows/ecg-samd-lifecycle-verify.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        version: 0.12.19
+        working-directory: projects/ecg-samd-lifecycle
+    - run: uv sync --frozen --python 3.12
+    - name: Run tests, enforce traceability and regenerate results
+      run: uv run --frozen python -m scripts.verify
+    - name: Check committed traceability is current
+      run: diff -u docs/traceability.md build/traceability.md
+    - name: Publish verification summary
+      if: success()
+      run: cat build/verification-report.md >> "$GITHUB_STEP_SUMMARY"
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: lifecycle-verification-${{ github.sha }}
+        path: projects/ecg-samd-lifecycle/build/
+        if-no-files-found: error
+        retention-days: 30
+defaults:
+  run:
+    working-directory: projects/ecg-samd-lifecycle

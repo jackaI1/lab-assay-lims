@@ -1,0 +1,60 @@
+name: hl7-dicom-gateway / CI
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/hl7-dicom-gateway/**
+    - .github/workflows/hl7-dicom-gateway-ci.yml
+  pull_request:
+    paths:
+    - projects/hl7-dicom-gateway/**
+    - .github/workflows/hl7-dicom-gateway-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python:
+        - '3.11'
+        - '3.12'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        python-version: ${{ matrix.python }}
+        working-directory: projects/hl7-dicom-gateway
+    - run: uv sync --frozen --extra dev
+    - run: uv run ruff check src tests
+    - run: uv run ruff format --check src tests
+    - run: uv run pytest -q
+    - run: uv build
+    timeout-minutes: 20
+  orthanc:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        python-version: '3.12'
+        working-directory: projects/hl7-dicom-gateway
+    - run: uv sync --frozen --extra dev
+    - run: docker compose up -d --wait orthanc
+    - run: uv run pytest -q
+      env:
+        ORTHANC_URL: http://localhost:8042
+        ORTHANC_DICOM_PORT: '4242'
+    - run: docker compose up --build -d --wait
+    - run: docker compose exec -T gateway gateway demo
+    - run: "for attempt in $(seq 1 30); do\n  docker compose exec -T gateway gateway status --state /state > /tmp/status.json\n\
+        \  if python -c 'import json; assert json.load(open(\"/tmp/status.json\"))[\"counts\"].get(\"delivered\") == 4'; then\n\
+        \    cat /tmp/status.json\n    exit 0\n  fi\n  sleep 1\ndone\nexit 1\n"
+    - if: always()
+      run: docker compose down -v --remove-orphans
+defaults:
+  run:
+    working-directory: projects/hl7-dicom-gateway

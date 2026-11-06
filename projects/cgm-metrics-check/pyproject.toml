@@ -1,0 +1,24 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cgm-metrics-check"
+version = "0.1.0"
+description = "Auditable continuous glucose monitoring metrics, coverage checks and FHIR R4 export"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+authors = [{name = "Jack Lai"}]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=8,<10", "fhir.resources==6.1.0", "pydantic>=1.10.17,<2"]
+fetch = ["remotezip==0.12.6"]
+
+[project.scripts]
+cgm-check = "cgm_metrics_check.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

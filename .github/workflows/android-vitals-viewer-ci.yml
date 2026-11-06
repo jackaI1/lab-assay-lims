@@ -1,0 +1,111 @@
+name: android-vitals-viewer / Android checks
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/android-vitals-viewer/**
+    - .github/workflows/android-vitals-viewer-ci.yml
+  pull_request:
+    paths:
+    - projects/android-vitals-viewer/**
+    - .github/workflows/android-vitals-viewer-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: android-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - uses: android-actions/setup-android@v3
+      with:
+        packages: platform-tools platforms;android-35 build-tools;35.0.0
+        log-accepted-android-sdk-licenses: false
+    - uses: gradle/actions/setup-gradle@v4
+    - run: ./gradlew --no-daemon assembleDebug testDebugUnitTest lintDebug
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: android-reports-and-apk
+        path: 'projects/android-vitals-viewer/app/build/reports/
+
+          projects/android-vitals-viewer/app/build/outputs/apk/debug/*.apk'
+  sandbox:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        working-directory: projects/android-vitals-viewer
+    - run: uv venv --python 3.12
+    - run: uv pip install -r sandbox/requirements.lock
+    - run: uv run --no-project pytest -q tests
+    - name: Existing bridge regression tests
+      run: 'git clone https://github.com/jackaI1/fhir-emr-bridge.git /tmp/bridge
+
+        git -C /tmp/bridge checkout c538aa220a40e0e322599d4edccc5267971061a0
+
+        cd /tmp/bridge
+
+        uv sync --frozen
+
+        uv run pytest -q
+
+        '
+  instrumented:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '17'
+    - uses: android-actions/setup-android@v3
+      with:
+        packages: platform-tools platforms;android-35 build-tools;35.0.0
+        log-accepted-android-sdk-licenses: false
+    - uses: gradle/actions/setup-gradle@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        working-directory: projects/android-vitals-viewer
+    - run: uv venv --python 3.12 && uv pip install -r sandbox/requirements.lock
+    - name: Enable emulator acceleration
+      run: 'echo ''KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"'' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+
+        sudo udevadm control --reload-rules
+
+        sudo udevadm trigger --name-match=kvm
+
+        '
+    - uses: reactivecircus/android-emulator-runner@v2
+      with:
+        api-level: 35
+        arch: x86_64
+        profile: pixel_2
+        disable-animations: true
+        script: bash scripts/instrumented.sh
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: instrumented-results
+        path: 'projects/android-vitals-viewer/app/build/reports/screenshots/
+
+          projects/android-vitals-viewer/app/build/reports/androidTests/
+
+          projects/android-vitals-viewer/app/build/outputs/connected_android_test_additional_output/
+
+          projects/android-vitals-viewer/app/build/outputs/androidTest-results/'
+defaults:
+  run:
+    working-directory: projects/android-vitals-viewer

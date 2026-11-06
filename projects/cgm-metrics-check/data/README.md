@@ -1,0 +1,9 @@
+# Public example data
+
+The CSV contains only publisher-shifted timestamps and the first glucose series from CGMacros-001, plus its declared mg/dL unit. This is a public, anonymized research extract, with no demographics, meal records or photos. No private data was used. It is a processed minute-resolution series; neither original sensor wear nor upstream filling can be reconstructed from it.
+
+Source: Gutierrez-Osuna, R., Kerr, D., Mortazavi, B., & Das, A. (2025). *CGMacros: a scientific dataset for personalized nutrition and diet monitoring (version 1.0.0).* PhysioNet. [DOI](https://doi.org/10.13026/3z8q-x658). The hosting platform also requests citation of Goldberger et al. (2000), *PhysioBank, PhysioToolkit, and PhysioNet: Components of a new research resource for complex physiologic signals*, [DOI](https://doi.org/10.1161/01.CIR.101.23.e215).
+
+The extract and its derived study reports retain the source [CC BY-NC-SA 4.0 license](https://creativecommons.org/licenses/by-nc-sa/4.0/), including attribution, noncommercial and share-alike conditions. The package code's MIT license does not relicense the data. Changes: selected the timestamp and one glucose column, renamed columns, added declared units, and attached a UTC placeholder without claiming that collection occurred in UTC. No extra filling or rounding was applied.
+
+`provenance.json` records the download URL, archive member and both checksums. `python scripts/fetch_public_data.py` fetches just that member using HTTP ranges, validates the source checksum and rebuilds the extract. The full source archive is never saved. `python scripts/reproduce.py` needs no network and checks the extract checksum before rebuilding reports. The damaged report is a deliberately changed demonstration; it is never a study finding. The hand report uses synthetic values.

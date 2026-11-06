@@ -1,0 +1,41 @@
+name: hpo-phenotype-validator / CI
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/hpo-phenotype-validator/**
+    - .github/workflows/hpo-phenotype-validator-ci.yml
+  pull_request:
+    paths:
+    - projects/hpo-phenotype-validator/**
+    - .github/workflows/hpo-phenotype-validator-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+        - '3.10'
+        - '3.12'
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        version: 0.9.8
+        python-version: ${{ matrix.python-version }}
+        working-directory: projects/hpo-phenotype-validator
+    - run: uv sync --extra dev --locked
+    - run: uv run --no-sync ruff check .
+    - run: uv run --no-sync ruff format --check .
+    - run: uv run --no-sync pytest -q
+    - run: uv run --no-sync python scripts/build_reports.py --check
+    - run: uv build --quiet
+    - run: uv run --no-sync python scripts/check_wheel.py
+    timeout-minutes: 20
+defaults:
+  run:
+    working-directory: projects/hpo-phenotype-validator
