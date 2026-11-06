@@ -71,6 +71,8 @@ Files omitted from this snapshot:
 
 - data/hp.obo (over 10 MB)
 
-Project checks run from this directory through the path-filtered hub workflows: `hpo-phenotype-validator-ci.yml`.
+Project checks run from this directory through the path-filtered hub workflows: (removed workflow).
 
 Generated output omitted from this copy: reports/ (generated output). Regenerate it with the project scripts.
+
+The relocated workflow did not complete successfully within the migration batch. Local test sources remain available.
