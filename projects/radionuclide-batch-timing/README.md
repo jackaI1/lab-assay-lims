@@ -72,11 +72,12 @@ For the timing study I sample positive, independent lognormal step durations usi
 
 ## Tests and limits
 
-There are 3 test source files in this copy. No test pass count is claimed here: I have not re-run the project suite as part of this move. This is a source snapshot, and running it on a new machine may need environment-specific setup.
+There are 3 test source files in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
-Project checks run from this directory through the path-filtered hub workflows: (removed workflow).
 
 Generated output omitted from this copy: reports/ (generated output). Regenerate it with the project scripts.
 
 The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
+
+No project-specific GitHub Actions workflow was retained. The local test sources remain in this folder.
