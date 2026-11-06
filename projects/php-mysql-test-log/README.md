@@ -42,7 +42,7 @@ For a host PHP 8.4+ installation, I can also run `composer install`, set `DB_HOS
 
 ## Tests and limits
 
-I kept 4 files of test code and supporting test helpers in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
+I kept 5 files of test code and supporting test helpers in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
 
 
 
