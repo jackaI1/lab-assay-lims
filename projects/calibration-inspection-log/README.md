@@ -2,6 +2,8 @@
 
 I built a calibration and receiving-inspection log to learn how the underlying idea works. This is a learning project.
 
+The example certificates are clearly labelled synthetic.
+
 ## Use my own records
 
 I keep each instrument's unit as either `mm` or `in`. Measurements must use the same unit. Document paths are relative to the database folder, or they can be web URLs. The files stay where I store them; the database records references rather than copying attachments.

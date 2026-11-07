@@ -2,6 +2,8 @@
 
 I built a simulator for a group of robots and shared lab equipment to learn how the underlying idea works. This is a learning project.
 
+I use example batches and simulated robots and equipment to compare schedules.
+
 ## Try it
 
 Install Python 3.9 or newer, then run:

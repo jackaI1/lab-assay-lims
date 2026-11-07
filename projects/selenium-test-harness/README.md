@@ -2,6 +2,8 @@
 
 I built a tool that uses a web browser to test a practice power supply to learn how the underlying idea works. This is a learning project.
 
+I use a simulated power supply and generated readings for the browser checks.
+
 ## Use the library
 
 Selenium drives the browser by clicking controls and reading the page. A page object, `SupplyPage`, keeps the page's control names in one place. `BenchSupply` provides the instrument operations, while `SweepRunner` checks measurements and writes the report.

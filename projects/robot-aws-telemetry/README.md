@@ -2,6 +2,8 @@
 
 I built a robot status link to learn how the underlying idea works. This is a learning project.
 
+The examples use generated robot readings and local service emulators.
+
 ## Try it
 
 Python 3.9 or later is needed. From this folder:

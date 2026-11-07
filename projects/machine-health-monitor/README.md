@@ -2,6 +2,8 @@
 
 I built a machine health monitor to learn how the underlying idea works. This is a learning project.
 
+I use readings from the simulated filling line for the examples.
+
 ## Try the other faults
 
 The scenario selector includes repeated conveyor faults, a stopped motor, old timestamps, a missing cycle time, an impossible cycle time, a frozen sample and bad sensor quality. Each scenario goes through the same OPC UA connection as normal readings. OPC UA is a protocol for exchanging machine data between equipment and software.
