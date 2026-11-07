@@ -1,0 +1,3522 @@
+{
+  "revision": "A",
+  "title": "Simulated bottle-filling machine",
+  "supply": {
+    "line_v": 208,
+    "phase": 3,
+    "frequency_hz": 60,
+    "system": "grounded-wye",
+    "available_fault_ka": 4,
+    "source": "scenario"
+  },
+  "thermal": {
+    "width_m": 0.4,
+    "height_m": 0.6,
+    "depth_m": 0.2,
+    "ambient_c": 40,
+    "limit_c": 45,
+    "k_w_m2k": 5.5,
+    "air_factor": 3.1,
+    "airflow_margin": 1.25,
+    "fan_delivered_m3h": 0,
+    "fan_tag": null,
+    "source": "cooling",
+    "assumptions_source": "scenario"
+  },
+  "sources": {
+    "sb": {
+      "url": "https://www.mersen.com/sites/default/files/files_imported_ep/WP-Achieving-Higher-Short-Circuit-Current-Ratings-for-Industrial-Control-Panels.pdf",
+      "locator": "p.3, Table SB4.1 reproduced by Mersen",
+      "note": "Unmarked contactor/motor controller and overload 5 kA; terminal block 10 kA. No tested-combination uplift."
+    },
+    "method": {
+      "url": "https://www.eaton.com/content/dam/eaton/markets/machinebuilding/protect-personnel-assets-and-machine-reliability/documents/documents-english-language/eaton-control-panel-design-guide-ul-508a-br033001en-us.pdf",
+      "locator": "p.70, weakest-link procedure",
+      "note": "Main circuit minimum; feeder protective device interrupting rating must also cover panel rating."
+    },
+    "control": {
+      "url": "https://electrification.us.abb.com/nec409ul-508a-support",
+      "locator": "SB3.2.1 quotation",
+      "note": "Control supply primary branch protection is included. Downstream control-only devices are excluded."
+    },
+    "breaker": {
+      "url": "https://www.eaton.com/us/en-us/skuPage.FAZ-C6%7B%7D3-NA.html",
+      "locator": "Performance Ratings / Certifications",
+      "note": "UL 489, 10 kA conservative interrupting rating, 277/480Y V; use only grounded-wye supply."
+    },
+    "breaker_loss": {
+      "url": "https://www.scatts.co.uk/datasheets/496661?desc=Technical-Datasheet",
+      "locator": "Eaton 102244 FAZ-C6/3-NA datasheet, p.2, design verification",
+      "note": "3.5 W whole device at 6 A, not per pole. Manufacturer document mirrored by distributor."
+    },
+    "control_breaker": {
+      "url": "https://www.farnell.com/datasheets/3049687.pdf",
+      "locator": "Eaton 102160 FAZ-C2/2-NA, p.1",
+      "note": "2.8 W whole device at 2 A; UL489 10 kA at 480Y/277 V. Manufacturer datasheet mirror."
+    },
+    "contactor": {
+      "url": "https://iportal.se.com/Contents/docs/SQD-LC1D09BD.PDF",
+      "locator": "LC1D09BD, power dissipation per pole / hold-in consumption",
+      "note": "0.2 W/pole AC-3 plus 5.4 W DC coil. Three power poles = 6.0 W total; no AC-coil FAQ used."
+    },
+    "coil": {
+      "url": "https://www.se.com/in/en/faqs/FA114908/",
+      "locator": "Resolution",
+      "note": "Standard DC coil 5.4 W."
+    },
+    "overload": {
+      "url": "https://www.se.com/ie/en/faqs/FA142123/",
+      "locator": "LRD07 row",
+      "note": "1.67 VA at maximum setting, taken as 1.67 W resistive thermal loss for complete device."
+    },
+    "supply": {
+      "url": "https://www.meanwell.com/Upload/PDF/HDR-60/HDR-60-SPEC.PDF",
+      "locator": "p.1 HDR-60-24; p.3 derating; p.4 dimensions",
+      "note": "24 V 2.5 A 60 W, typical 90% efficiency at full load, 52.5 x 90 x 54.5 mm. Loss estimate 60*(1/.90-1), not a guaranteed maximum at all loads."
+    },
+    "plc": {
+      "url": "https://cdn.automationdirect.com/static/specs/clickpower.pdf",
+      "locator": "Basic PLC units C0-00DR-D row",
+      "note": "120 mA at 24 V logic supply; all 2.88 W assumed to heat panel."
+    },
+    "plc_wiring": {
+      "url": "https://cdn.automationdirect.com/static/specs/c000drd.pdf",
+      "locator": "C0-00DR-D wiring and dimensions",
+      "note": "8 DC inputs and 6 relay outputs. CPU 24 V x 0.120 A = 2.88 W; seven wired inputs bounded by (2 x 0.006 + 5 x 0.005) A x 26.4 V = 0.9768 W. Sum 3.8568 W included in heat and DC budget. Maximum channel currents are specified at 26.4 V."
+    },
+    "cooling": {
+      "url": "https://www.rittal.com/imf3/none/3_8419/3305500_Catalogo_tecnico_EN/",
+      "locator": "Calculation basis for enclosure climate control, p.13",
+      "note": "Qsurface=k*A*(Ti-Ta), natural rise=Q/(k*A); steel k=5.5 W/m2K."
+    },
+    "air": {
+      "url": "https://www.rittal.com/imf3/none/3_8419/3305500_Catalogo_tecnico_EN/",
+      "locator": "Calculation of required air flow",
+      "note": "Sea-level air-flow factor 3.1 m3 K/(Wh). Residual heat method after enclosure surface cooling."
+    },
+    "fan": {
+      "url": "https://www.rittal.com/pdf-creator/variant/us-en/3237124",
+      "locator": "p.2 performance and dimensions",
+      "note": "24 V DC; 2.4 W rated power; 15 m3/h WITH one 3237200 outlet, versus 20 free-air; 92 x 92 mm cutout. p.4 legacy tender text says 3 W: use conservative 3 W in budget."
+    },
+    "scenario": {
+      "url": "docs/design.md#design-inputs",
+      "locator": "Design inputs, authored scenario assumptions",
+      "note": "Simulated machine nameplate, environment, wiring allowances, generic field loads and layout envelopes. These are design choices, not measured/manufacturer claims."
+    }
+  },
+  "components": [
+    {
+      "tag": "Q0",
+      "part": "FAZ-C6/3-NA",
+      "description": "Incoming 6 A 3-pole breaker",
+      "kind": "breaker3",
+      "heat_w": 3.5,
+      "heat_source": "breaker_loss",
+      "scope": "power",
+      "sccr_ka": 10,
+      "sccr_basis": "UL489 interrupting rating",
+      "sccr_source": "breaker",
+      "voltage_v": 480,
+      "location": "panel",
+      "width_mm": 54,
+      "height_mm": 106,
+      "depth_mm": 71,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "Q1",
+      "part": "FAZ-C6/3-NA",
+      "description": "Motor branch 6 A 3-pole breaker",
+      "kind": "breaker3",
+      "heat_w": 3.5,
+      "heat_source": "breaker_loss",
+      "scope": "power",
+      "sccr_ka": 10,
+      "sccr_basis": "UL489 interrupting rating",
+      "sccr_source": "breaker",
+      "voltage_v": 480,
+      "location": "panel",
+      "width_mm": 54,
+      "height_mm": 106,
+      "depth_mm": 71,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "Q2",
+      "part": "FAZ-C2/2-NA",
+      "description": "Control branch 2 A 2-pole breaker",
+      "kind": "breaker2",
+      "heat_w": 2.8,
+      "heat_source": "control_breaker",
+      "scope": "power",
+      "sccr_ka": 10,
+      "sccr_basis": "UL489 interrupting rating",
+      "sccr_source": "control_breaker",
+      "voltage_v": 480,
+      "location": "panel",
+      "width_mm": 36,
+      "height_mm": 106,
+      "depth_mm": 71,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "K1",
+      "part": "LC1D09BD",
+      "description": "Conveyor contactor, 24 V DC coil",
+      "kind": "contactor3",
+      "heat_w": 6.0,
+      "heat_source": "contactor",
+      "scope": "power",
+      "sccr_ka": 5,
+      "sccr_basis": "SB4.1 unmarked motor controller",
+      "sccr_source": "sb",
+      "voltage_v": 600,
+      "location": "panel",
+      "width_mm": 45,
+      "height_mm": 77,
+      "depth_mm": 95,
+      "dc_load_w": 5.4,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "OL1",
+      "part": "LRD07",
+      "description": "Motor overload, set 2.0 A, manual reset",
+      "kind": "overload3",
+      "heat_w": 1.67,
+      "heat_source": "overload",
+      "scope": "power",
+      "sccr_ka": 5,
+      "sccr_basis": "SB4.1 unmarked overload",
+      "sccr_source": "sb",
+      "voltage_v": 600,
+      "location": "panel",
+      "width_mm": 45,
+      "height_mm": 70,
+      "depth_mm": 70,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "PS1",
+      "part": "HDR-60-24",
+      "description": "24 V 2.5 A supply, L1-L2 at 208 V",
+      "kind": "psu",
+      "heat_w": 6.66666666666667,
+      "heat_source": "supply",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 53,
+      "height_mm": 90,
+      "depth_mm": 55,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "assembly total at simultaneous duty; external loads excluded"
+    },
+    {
+      "tag": "A1",
+      "part": "C0-00DR-D",
+      "description": "CLICK PLC, relay outputs",
+      "kind": "plc",
+      "heat_w": 3.8568,
+      "heat_source": "plc_wiring",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 60,
+      "height_mm": 90,
+      "depth_mm": 60,
+      "dc_load_w": 3.8568,
+      "quantity": 1,
+      "heat_basis": "2.88 W CPU plus 0.9768 W seven input channels, maximum input currents at 26.4 V"
+    },
+    {
+      "tag": "F3",
+      "part": "CHCC1DU + FNQ-R-2",
+      "description": "2 A DC fuse/holder, control distribution; heat is design allowance",
+      "kind": "fuse",
+      "heat_w": 0.3,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 18,
+      "height_mm": 85,
+      "depth_mm": 85,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "F4",
+      "part": "CHCC1DU + FNQ-R-1",
+      "description": "1 A DC fuse/holder, PLC branch; heat is design allowance",
+      "kind": "fuse",
+      "heat_w": 0.2,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 18,
+      "height_mm": 85,
+      "depth_mm": 85,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "S0",
+      "part": "SIM-S0",
+      "description": "Stop NC",
+      "kind": "nc",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "door",
+      "width_mm": 30,
+      "height_mm": 30,
+      "depth_mm": 55,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "S1",
+      "part": "SIM-S1",
+      "description": "Start NO",
+      "kind": "no",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "door",
+      "width_mm": 30,
+      "height_mm": 30,
+      "depth_mm": 55,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "S2",
+      "part": "SIM-S2",
+      "description": "Reset NO",
+      "kind": "no",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "door",
+      "width_mm": 30,
+      "height_mm": 30,
+      "depth_mm": 55,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "S3",
+      "part": "SIM-S3",
+      "description": "Enable NC, simulation only",
+      "kind": "nc",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "door",
+      "width_mm": 30,
+      "height_mm": 30,
+      "depth_mm": 55,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "H1",
+      "part": "SIM-H1",
+      "description": "Run lamp 24 V 0.5 W",
+      "kind": "lamp",
+      "heat_w": 0.5,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "door",
+      "width_mm": 30,
+      "height_mm": 30,
+      "depth_mm": 55,
+      "dc_load_w": 0.5,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "M1",
+      "part": "SIM-0.37KW-208V",
+      "description": "Conveyor motor, 3ph 208 V 2.0 A",
+      "kind": "motor",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "External machine load, outside panel SCCR boundary",
+      "sccr_source": "control",
+      "voltage_v": 208,
+      "location": "field",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "YV1",
+      "part": "SIM-24V-6W",
+      "description": "Fill valve, spring return closed, suppressed",
+      "kind": "valve",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "field",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 6,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "S4",
+      "part": "SIM-PHOTO-PNP",
+      "description": "Bottle-present PNP sensor, 0.5 W",
+      "kind": "sensor",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "field",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0.5,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "X0",
+      "part": "Phoenix Contact PT 2,5 / 3209510",
+      "description": "Incoming L1/L2/L3/PE; PE terminals separately in PE assembly",
+      "kind": "terminal",
+      "heat_w": 0.2,
+      "heat_source": "scenario",
+      "scope": "power",
+      "sccr_ka": 10,
+      "sccr_basis": "SB4.1 terminal block",
+      "sccr_source": "sb",
+      "voltage_v": 600,
+      "location": "panel",
+      "width_mm": 70,
+      "height_mm": 45,
+      "depth_mm": 45,
+      "dc_load_w": 0,
+      "quantity": 3,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "X1",
+      "part": "Phoenix Contact PT 2,5 / 3209510",
+      "description": "Motor U/V/W/PE; PE terminals separately in PE assembly",
+      "kind": "terminal",
+      "heat_w": 0.2,
+      "heat_source": "scenario",
+      "scope": "power",
+      "sccr_ka": 10,
+      "sccr_basis": "SB4.1 terminal block",
+      "sccr_source": "sb",
+      "voltage_v": 600,
+      "location": "panel",
+      "width_mm": 70,
+      "height_mm": 45,
+      "depth_mm": 45,
+      "dc_load_w": 0,
+      "quantity": 3,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "X2",
+      "part": "Phoenix Contact PT 2,5 / 3209510",
+      "description": "24 V control field terminals; PE terminals separately in PE assembly",
+      "kind": "terminal",
+      "heat_w": 0.1,
+      "heat_source": "scenario",
+      "scope": "control",
+      "sccr_ka": null,
+      "sccr_basis": "not in power path",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 90,
+      "height_mm": 45,
+      "depth_mm": 45,
+      "dc_load_w": 0,
+      "quantity": 13,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "PE",
+      "part": "PT 2,5-PE / 3209536 + copper bar",
+      "description": "Protective earth bar and door bond",
+      "kind": "terminal",
+      "heat_w": 0.1,
+      "heat_source": "scenario",
+      "scope": "earth",
+      "sccr_ka": null,
+      "sccr_basis": "not in power path",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 70,
+      "height_mm": 45,
+      "depth_mm": 45,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "W1",
+      "part": "INTERNAL-WIRING",
+      "description": "Internal copper and connection loss allowance",
+      "kind": "allowance",
+      "heat_w": 2,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "E1",
+      "part": "SIM-STEEL-600-400-200",
+      "description": "Wall-mounted steel enclosure and backplate",
+      "kind": "mechanical",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 400,
+      "height_mm": 600,
+      "depth_mm": 200,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "DR1",
+      "part": "SIM-DIN35",
+      "description": "DIN rail",
+      "kind": "mechanical",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "DR2",
+      "part": "SIM-DIN35",
+      "description": "DIN rail",
+      "kind": "mechanical",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "DR3",
+      "part": "SIM-DIN35",
+      "description": "DIN rail",
+      "kind": "mechanical",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    },
+    {
+      "tag": "WD1",
+      "part": "SIM-DUCT25",
+      "description": "Slotted wire duct and segregation",
+      "kind": "mechanical",
+      "heat_w": 0,
+      "heat_source": "scenario",
+      "scope": "passive",
+      "sccr_ka": null,
+      "sccr_basis": "control circuit",
+      "sccr_source": "control",
+      "voltage_v": 24,
+      "location": "panel",
+      "width_mm": 0,
+      "height_mm": 0,
+      "depth_mm": 0,
+      "dc_load_w": 0,
+      "quantity": 1,
+      "heat_basis": "explicit engineering allowance or simulated load, see design inputs"
+    }
+  ],
+  "sheets": [
+    {
+      "number": 1,
+      "title": "Incoming power and motor starter",
+      "instances": [
+        {
+          "id": "X0",
+          "tag": "X0",
+          "x": 55,
+          "y": 125,
+          "width": 120,
+          "height": 152,
+          "pins": [
+            {
+              "name": "L1",
+              "x": 132,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "L2",
+              "x": 132,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "L3",
+              "x": 132,
+              "y": 98,
+              "side": "right"
+            },
+            {
+              "name": "PE",
+              "x": 132,
+              "y": 126,
+              "side": "right"
+            }
+          ],
+          "kind": "block",
+          "label": null
+        },
+        {
+          "id": "Q0",
+          "tag": "Q0",
+          "x": 260,
+          "y": 125,
+          "width": 130,
+          "height": 124,
+          "pins": [
+            {
+              "name": "1/L1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3/L2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "5/L3",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "2/T1",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "4/T2",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "6/T3",
+              "x": 142,
+              "y": 98,
+              "side": "right"
+            }
+          ],
+          "kind": "switch3",
+          "label": null
+        },
+        {
+          "id": "Q1",
+          "tag": "Q1",
+          "x": 465,
+          "y": 125,
+          "width": 130,
+          "height": 124,
+          "pins": [
+            {
+              "name": "1/L1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3/L2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "5/L3",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "2/T1",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "4/T2",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "6/T3",
+              "x": 142,
+              "y": 98,
+              "side": "right"
+            }
+          ],
+          "kind": "switch3",
+          "label": null
+        },
+        {
+          "id": "K1",
+          "tag": "K1",
+          "x": 670,
+          "y": 125,
+          "width": 130,
+          "height": 124,
+          "pins": [
+            {
+              "name": "1/L1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3/L2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "5/L3",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "2/T1",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "4/T2",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "6/T3",
+              "x": 142,
+              "y": 98,
+              "side": "right"
+            }
+          ],
+          "kind": "switch3",
+          "label": null
+        },
+        {
+          "id": "OL1",
+          "tag": "OL1",
+          "x": 875,
+          "y": 125,
+          "width": 130,
+          "height": 124,
+          "pins": [
+            {
+              "name": "1/L1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3/L2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "5/L3",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "2/T1",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "4/T2",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "6/T3",
+              "x": 142,
+              "y": 98,
+              "side": "right"
+            }
+          ],
+          "kind": "overload",
+          "label": null
+        },
+        {
+          "id": "X1",
+          "tag": "X1",
+          "x": 1080,
+          "y": 125,
+          "width": 115,
+          "height": 152,
+          "pins": [
+            {
+              "name": "U",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "V",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "W",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 126,
+              "side": "left"
+            },
+            {
+              "name": "U-out",
+              "x": 127,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "V-out",
+              "x": 127,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "W-out",
+              "x": 127,
+              "y": 98,
+              "side": "right"
+            },
+            {
+              "name": "PE-out",
+              "x": 127,
+              "y": 126,
+              "side": "right"
+            }
+          ],
+          "kind": "block",
+          "label": null
+        },
+        {
+          "id": "M1",
+          "tag": "M1",
+          "x": 1080,
+          "y": 430,
+          "width": 115,
+          "height": 152,
+          "pins": [
+            {
+              "name": "U1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "V1",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "W1",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 126,
+              "side": "left"
+            }
+          ],
+          "kind": "motor",
+          "label": null
+        },
+        {
+          "id": "Q2",
+          "tag": "Q2",
+          "x": 465,
+          "y": 430,
+          "width": 130,
+          "height": 96,
+          "pins": [
+            {
+              "name": "1/L1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3/L2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "2/T1",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "4/T2",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            }
+          ],
+          "kind": "switch2",
+          "label": null
+        },
+        {
+          "id": "PS1",
+          "tag": "PS1",
+          "x": 670,
+          "y": 430,
+          "width": 130,
+          "height": 96,
+          "pins": [
+            {
+              "name": "L",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "N",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "+V",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "-V",
+              "x": 142,
+              "y": 70,
+              "side": "right"
+            }
+          ],
+          "kind": "psu",
+          "label": null
+        },
+        {
+          "id": "PS-24RAW",
+          "tag": null,
+          "x": 870,
+          "y": 430,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24RAW",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24RAW / 02"
+        },
+        {
+          "id": "PS-0V",
+          "tag": null,
+          "x": 870,
+          "y": 530,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "PE",
+          "tag": "PE",
+          "x": 55,
+          "y": 430,
+          "width": 160,
+          "height": 152,
+          "pins": [
+            {
+              "name": "SUPPLY-PE",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "MOTOR-PE",
+              "x": 172,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "ENCLOSURE",
+              "x": 172,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "DOOR",
+              "x": 172,
+              "y": 98,
+              "side": "right"
+            },
+            {
+              "name": "DC-BOND",
+              "x": 172,
+              "y": 126,
+              "side": "right"
+            }
+          ],
+          "kind": "block",
+          "label": null
+        },
+        {
+          "id": "PE-E1",
+          "tag": null,
+          "x": 310,
+          "y": 590,
+          "width": 100,
+          "height": 70,
+          "kind": "port",
+          "label": "PE / E1 bond",
+          "pins": [
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ]
+        },
+        {
+          "id": "PE-DOOR",
+          "tag": null,
+          "x": 310,
+          "y": 680,
+          "width": 100,
+          "height": 70,
+          "kind": "port",
+          "label": "PE / door bond",
+          "pins": [
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ]
+        },
+        {
+          "id": "PE-DC",
+          "tag": null,
+          "x": 70,
+          "y": 680,
+          "width": 100,
+          "height": 70,
+          "kind": "port",
+          "label": "PE / 02 0V bond",
+          "pins": [
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "208 V, 3 phase, 60 Hz, grounded-wye only. Assumed available fault: 4 kA rms symmetrical.",
+        "Q0: incoming breaker. Q1: motor short-circuit protection. No selective trip coordination claimed.",
+        "OL1: 1.6-2.5 A range; simulated M1 nameplate 2.0 A; manual reset. Motor loss is outside enclosure.",
+        "Power: 14 AWG Cu design choice. PE: green/yellow, never switched or fused. No neutral required.",
+        "Concept study only. Upstream lockout/isolation, guarding and safety-rated stop need engineered review."
+      ]
+    },
+    {
+      "number": 2,
+      "title": "24 V DC distribution and bonding",
+      "instances": [
+        {
+          "id": "RAW0",
+          "tag": null,
+          "x": 70,
+          "y": 110,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24RAW",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24RAW / 01"
+        },
+        {
+          "id": "F4",
+          "tag": "F4",
+          "x": 310,
+          "y": 110,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "IN",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "OUT",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "fuse",
+          "label": null
+        },
+        {
+          "id": "A1",
+          "tag": "A1",
+          "x": 610,
+          "y": 110,
+          "width": 130,
+          "height": 96,
+          "pins": [
+            {
+              "name": "V+",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "GND",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            }
+          ],
+          "kind": "plc",
+          "label": null
+        },
+        {
+          "id": "ZERO0",
+          "tag": null,
+          "x": 900,
+          "y": 138,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 01"
+        },
+        {
+          "id": "RAW1",
+          "tag": null,
+          "x": 70,
+          "y": 300,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24RAW",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24RAW / 01"
+        },
+        {
+          "id": "F3",
+          "tag": "F3",
+          "x": 310,
+          "y": 300,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "IN",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "OUT",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "fuse",
+          "label": null
+        },
+        {
+          "id": "FIELD",
+          "tag": null,
+          "x": 570,
+          "y": 300,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 03,04"
+        },
+        {
+          "id": "RETURN",
+          "tag": null,
+          "x": 70,
+          "y": 690,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 01,03,04"
+        },
+        {
+          "id": "BOND",
+          "tag": null,
+          "x": 610,
+          "y": 690,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "PE",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "PE / 01 PE:DC-BOND"
+        }
+      ],
+      "notes": [
+        "PS1 is fed line-to-line at 208 V (01). 24 V / 2.5 A supply; all field loads included in DC budget.",
+        "F4: 1 A PLC; F3: 2 A control/field; Control conductors: 18 AWG Cu design choice.",
+        "0 V has one intentional bond to PE at the DC distribution terminal; protective earth stays continuous.",
+        "PLC V+ and GND power logic only. Relay output commons are separately wired on 04.",
+        "REV A review: passive cooling at 40 C exceeds the 45 C target. Fan not yet fitted."
+      ]
+    },
+    {
+      "number": 3,
+      "title": "PLC inputs and field terminal strip",
+      "instances": [
+        {
+          "id": "A1-IN",
+          "tag": "A1",
+          "x": 1070,
+          "y": 110,
+          "width": 140,
+          "height": 360,
+          "pins": [
+            {
+              "name": "X1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "X2",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "X3",
+              "x": -12,
+              "y": 98,
+              "side": "left"
+            },
+            {
+              "name": "X4",
+              "x": -12,
+              "y": 126,
+              "side": "left"
+            },
+            {
+              "name": "X5",
+              "x": -12,
+              "y": 154,
+              "side": "left"
+            },
+            {
+              "name": "X6",
+              "x": -12,
+              "y": 182,
+              "side": "left"
+            },
+            {
+              "name": "X7",
+              "x": -12,
+              "y": 210,
+              "side": "left"
+            },
+            {
+              "name": "X8",
+              "x": -12,
+              "y": 238,
+              "side": "left"
+            },
+            {
+              "name": "C1",
+              "x": -12,
+              "y": 266,
+              "side": "left"
+            },
+            {
+              "name": "C2",
+              "x": -12,
+              "y": 294,
+              "side": "left"
+            }
+          ],
+          "kind": "plc",
+          "label": null
+        },
+        {
+          "id": "S4",
+          "tag": "S4",
+          "x": 370,
+          "y": 90,
+          "width": 130,
+          "height": 72,
+          "pins": [
+            {
+              "name": "BN",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "BU",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "BK",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "sensor",
+          "label": null
+        },
+        {
+          "id": "24-IN0",
+          "tag": null,
+          "x": 60,
+          "y": 90,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-1",
+          "tag": "X2",
+          "x": 675,
+          "y": 90,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "1i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "1",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "SENSOR-0",
+          "tag": null,
+          "x": 60,
+          "y": 700,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "S1-IN",
+          "tag": "S1",
+          "x": 370,
+          "y": 169,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "13",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "14",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "no",
+          "label": null
+        },
+        {
+          "id": "24-IN1",
+          "tag": null,
+          "x": 60,
+          "y": 169,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-2",
+          "tag": "X2",
+          "x": 675,
+          "y": 169,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "2i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "2",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "S0-IN",
+          "tag": "S0",
+          "x": 370,
+          "y": 248,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "21",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "22",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "nc",
+          "label": null
+        },
+        {
+          "id": "24-IN2",
+          "tag": null,
+          "x": 60,
+          "y": 248,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-3",
+          "tag": "X2",
+          "x": 675,
+          "y": 248,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "3i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "3",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "S3-IN",
+          "tag": "S3",
+          "x": 370,
+          "y": 327,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "21",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "22",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "nc",
+          "label": null
+        },
+        {
+          "id": "24-IN3",
+          "tag": null,
+          "x": 60,
+          "y": 327,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-4",
+          "tag": "X2",
+          "x": 675,
+          "y": 327,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "4i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "4",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "OL1-IN",
+          "tag": "OL1",
+          "x": 370,
+          "y": 406,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "97",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "98",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "no",
+          "label": null
+        },
+        {
+          "id": "24-IN4",
+          "tag": null,
+          "x": 60,
+          "y": 406,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-5",
+          "tag": "X2",
+          "x": 675,
+          "y": 406,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "5i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "5",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "K1-IN",
+          "tag": "K1",
+          "x": 370,
+          "y": 485,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "13",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "14",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "no",
+          "label": null
+        },
+        {
+          "id": "24-IN5",
+          "tag": null,
+          "x": 60,
+          "y": 485,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-6",
+          "tag": "X2",
+          "x": 675,
+          "y": 485,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "6i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "6",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "S2-IN",
+          "tag": "S2",
+          "x": 370,
+          "y": 564,
+          "width": 130,
+          "height": 70,
+          "pins": [
+            {
+              "name": "13",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "14",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "no",
+          "label": null
+        },
+        {
+          "id": "24-IN6",
+          "tag": null,
+          "x": 60,
+          "y": 564,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "X2-7",
+          "tag": "X2",
+          "x": 675,
+          "y": 564,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "7i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "7",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "COM0",
+          "tag": null,
+          "x": 780,
+          "y": 670,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "COM1",
+          "tag": null,
+          "x": 780,
+          "y": 750,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "X2-11",
+          "tag": "X2",
+          "x": 220,
+          "y": 90,
+          "width": 110,
+          "height": 70,
+          "kind": "terminal",
+          "label": null,
+          "pins": [
+            {
+              "name": "11i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "11",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ]
+        },
+        {
+          "id": "X2-12",
+          "tag": "X2",
+          "x": 220,
+          "y": 700,
+          "width": 110,
+          "height": 70,
+          "kind": "terminal",
+          "label": null,
+          "pins": [
+            {
+              "name": "12i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "12",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "A1: C0-00DR-D. X1 bottle present; X2 start; X3 stop healthy; X4 enable healthy;",
+        "X5 overload tripped; X6 contactor feedback; X7 reset; X8 spare (unconnected). C1/C2 to 0 V.",
+        "S0 and S3 use separate NC monitoring poles here. Their hardwired interrupt poles are on 04.",
+        "S4 brown=24CTL, blue=0V, black=PNP signal. X2 terminal strip: numbered internal and field sides.",
+        "Stop and enable are educational interlocks only, not an emergency-stop or safety function."
+      ]
+    },
+    {
+      "number": 4,
+      "title": "Hardwired inhibit and PLC relay outputs",
+      "instances": [
+        {
+          "id": "24-OUT",
+          "tag": null,
+          "x": 55,
+          "y": 100,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "24CTL",
+              "x": 112,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "port",
+          "label": "24CTL / 02"
+        },
+        {
+          "id": "S0-OUT",
+          "tag": "S0",
+          "x": 250,
+          "y": 100,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "11",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "12",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "nc",
+          "label": null
+        },
+        {
+          "id": "S3-OUT",
+          "tag": "S3",
+          "x": 480,
+          "y": 100,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "11",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "12",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "nc",
+          "label": null
+        },
+        {
+          "id": "OL1-OUT",
+          "tag": "OL1",
+          "x": 710,
+          "y": 100,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "95",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "96",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "nc",
+          "label": null
+        },
+        {
+          "id": "A1-OUT",
+          "tag": "A1",
+          "x": 930,
+          "y": 100,
+          "width": 140,
+          "height": 235,
+          "pins": [
+            {
+              "name": "C3",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "C4",
+              "x": -12,
+              "y": 70,
+              "side": "left"
+            },
+            {
+              "name": "Y1",
+              "x": 152,
+              "y": 42,
+              "side": "right"
+            },
+            {
+              "name": "Y2",
+              "x": 152,
+              "y": 70,
+              "side": "right"
+            },
+            {
+              "name": "Y3",
+              "x": 152,
+              "y": 98,
+              "side": "right"
+            },
+            {
+              "name": "Y4",
+              "x": 152,
+              "y": 126,
+              "side": "right"
+            },
+            {
+              "name": "Y5",
+              "x": 152,
+              "y": 154,
+              "side": "right"
+            },
+            {
+              "name": "Y6",
+              "x": 152,
+              "y": 182,
+              "side": "right"
+            }
+          ],
+          "kind": "plc",
+          "label": null
+        },
+        {
+          "id": "K1-LOAD",
+          "tag": "K1",
+          "x": 780,
+          "y": 430,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "A1",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "A2",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "coil",
+          "label": null
+        },
+        {
+          "id": "X2-OUT0",
+          "tag": "X2",
+          "x": 470,
+          "y": 430,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "8i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "8",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "OUT00",
+          "tag": null,
+          "x": 1020,
+          "y": 430,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "YV1-LOAD",
+          "tag": "YV1",
+          "x": 780,
+          "y": 540,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "+",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "-",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "valve",
+          "label": null
+        },
+        {
+          "id": "X2-OUT1",
+          "tag": "X2",
+          "x": 470,
+          "y": 540,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "9i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "9",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "OUT01",
+          "tag": null,
+          "x": 1160,
+          "y": 540,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "H1-LOAD",
+          "tag": "H1",
+          "x": 780,
+          "y": 650,
+          "width": 130,
+          "height": 76,
+          "pins": [
+            {
+              "name": "+",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "-",
+              "x": 142,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "lamp",
+          "label": null
+        },
+        {
+          "id": "X2-OUT2",
+          "tag": "X2",
+          "x": 470,
+          "y": 650,
+          "width": 110,
+          "height": 70,
+          "pins": [
+            {
+              "name": "10i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "10",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ],
+          "kind": "terminal",
+          "label": null
+        },
+        {
+          "id": "OUT02",
+          "tag": null,
+          "x": 1020,
+          "y": 650,
+          "width": 100,
+          "height": 70,
+          "pins": [
+            {
+              "name": "0V",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            }
+          ],
+          "kind": "port",
+          "label": "0V / 02"
+        },
+        {
+          "id": "X2-13",
+          "tag": "X2",
+          "x": 950,
+          "y": 540,
+          "width": 110,
+          "height": 70,
+          "kind": "terminal",
+          "label": null,
+          "pins": [
+            {
+              "name": "13i",
+              "x": -12,
+              "y": 42,
+              "side": "left"
+            },
+            {
+              "name": "13",
+              "x": 122,
+              "y": 42,
+              "side": "right"
+            }
+          ]
+        }
+      ],
+      "notes": [
+        "24CTL -> S0 NC -> S3 NC -> OL1 95-96 NC -> A1 C3. Opening any contact removes Y1-Y4 load supply.",
+        "A1 relay group C3 supplies Y1-Y4; C4 (Y5/Y6) unused. Y4/Y5/Y6 are spare and unconnected.",
+        "Y1 energizes K1 coil (A1/A2), Y2 opens YV1, Y3 lights H1. All loads return to 0 V.",
+        "K1 BD has built-in suppression. YV1 diode cathode at +24. X2:11/12 sensor power; X2:13 valve return.",
+        "Start latches a cycle; bottle stops conveyor and starts a 2 s fill. Stop/enable/overload aborts; reset then start.",
+        "No automatic restart. See python3 -m panel simulate for executable timing and fault sequence."
+      ]
+    },
+    {
+      "number": 5,
+      "title": "Panel layout, dimensions in mm",
+      "instances": [],
+      "notes": [
+        "E1: 600 H x 400 W x 200 D steel. Coordinates below are millimetres from backplate upper-left.",
+        "Main power left; 24 V control right. Separate duct routes. DIN rails at y=100, 290, 460 mm.",
+        "Envelopes include conservative planning sizes; verify final vendor drawings and wiring clearances before build.",
+        "PS1: reserve 40 mm above and 20 mm below per mounting guidance.",
+        "Door: S0, S1, S2, S3 and H1, 30 mm envelopes. Bond door to PE. No mains devices on door.",
+        "REV A: initial passive design, retained as a failed thermal review iteration; see Revision B."
+      ]
+    }
+  ],
+  "wires": [
+    {
+      "sheet": 1,
+      "a": "X0:L1",
+      "b": "Q0:1/L1",
+      "net": "L1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q0:2/T1",
+      "b": "Q1:1/L1",
+      "net": "Q0-1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q1:2/T1",
+      "b": "K1:1/L1",
+      "net": "Q1-1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "K1:2/T1",
+      "b": "OL1:1/L1",
+      "net": "K1-1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "OL1:2/T1",
+      "b": "X1:U",
+      "net": "M1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "X0:L2",
+      "b": "Q0:3/L2",
+      "net": "L2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q0:4/T2",
+      "b": "Q1:3/L2",
+      "net": "Q0-2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q1:4/T2",
+      "b": "K1:3/L2",
+      "net": "Q1-2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "K1:4/T2",
+      "b": "OL1:3/L2",
+      "net": "K1-2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "OL1:4/T2",
+      "b": "X1:V",
+      "net": "M2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "X0:L3",
+      "b": "Q0:5/L3",
+      "net": "L3",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q0:6/T3",
+      "b": "Q1:5/L3",
+      "net": "Q0-3",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q1:6/T3",
+      "b": "K1:5/L3",
+      "net": "Q1-3",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "K1:6/T3",
+      "b": "OL1:5/L3",
+      "net": "K1-3",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "OL1:6/T3",
+      "b": "X1:W",
+      "net": "M3",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "X1:U-out",
+      "b": "M1:U1",
+      "net": "M1",
+      "via": [
+        [
+          1260,
+          167
+        ],
+        [
+          1260,
+          472
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "X1:V-out",
+      "b": "M1:V1",
+      "net": "M2",
+      "via": [
+        [
+          1282,
+          195
+        ],
+        [
+          1282,
+          500
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "X1:W-out",
+      "b": "M1:W1",
+      "net": "M3",
+      "via": [
+        [
+          1304,
+          223
+        ],
+        [
+          1304,
+          528
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "X1:PE-out",
+      "b": "M1:PE",
+      "net": "PE",
+      "via": [
+        [
+          1326,
+          251
+        ],
+        [
+          1326,
+          556
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "Q0:2/T1",
+      "b": "Q2:1/L1",
+      "net": "Q0-1",
+      "via": [
+        [
+          425,
+          167
+        ],
+        [
+          425,
+          472
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "Q0:4/T2",
+      "b": "Q2:3/L2",
+      "net": "Q0-2",
+      "via": [
+        [
+          443,
+          195
+        ],
+        [
+          443,
+          500
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "Q2:2/T1",
+      "b": "PS1:L",
+      "net": "AC-PS-L1",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "Q2:4/T2",
+      "b": "PS1:N",
+      "net": "AC-PS-L2",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "PS1:+V",
+      "b": "PS-24RAW:24RAW",
+      "net": "24RAW",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "PS1:-V",
+      "b": "PS-0V:0V",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "X0:PE",
+      "b": "PE:SUPPLY-PE",
+      "net": "PE",
+      "via": [
+        [
+          220,
+          251
+        ],
+        [
+          220,
+          380
+        ],
+        [
+          25,
+          380
+        ],
+        [
+          25,
+          472
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "PE:MOTOR-PE",
+      "b": "X1:PE",
+      "net": "PE",
+      "via": [
+        [
+          240,
+          472
+        ],
+        [
+          240,
+          370
+        ],
+        [
+          1040,
+          370
+        ],
+        [
+          1040,
+          251
+        ]
+      ]
+    },
+    {
+      "sheet": 2,
+      "a": "RAW0:24RAW",
+      "b": "F4:IN",
+      "net": "24RAW",
+      "via": []
+    },
+    {
+      "sheet": 2,
+      "a": "F4:OUT",
+      "b": "A1:V+",
+      "net": "24PLC",
+      "via": []
+    },
+    {
+      "sheet": 2,
+      "a": "A1:GND",
+      "b": "ZERO0:0V",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 2,
+      "a": "RAW1:24RAW",
+      "b": "F3:IN",
+      "net": "24RAW",
+      "via": []
+    },
+    {
+      "sheet": 2,
+      "a": "F3:OUT",
+      "b": "FIELD:24CTL",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 2,
+      "a": "RETURN:0V",
+      "b": "BOND:PE",
+      "net": "0V",
+      "via": [
+        [
+          470,
+          732
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN0:24CTL",
+      "b": "X2-11:11i",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-11:11",
+      "b": "S4:BN",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "S4:BK",
+      "b": "X2-1:1",
+      "net": "DI-X1",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-1:1i",
+      "b": "A1-IN:X1",
+      "net": "DI-X1",
+      "via": [
+        [
+          930,
+          132
+        ],
+        [
+          930,
+          152
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "SENSOR-0:0V",
+      "b": "X2-12:12i",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-12:12",
+      "b": "S4:BU",
+      "net": "0V",
+      "via": [
+        [
+          350,
+          742
+        ],
+        [
+          350,
+          160
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN1:24CTL",
+      "b": "S1-IN:13",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "S1-IN:14",
+      "b": "X2-2:2",
+      "net": "DI-X2",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-2:2i",
+      "b": "A1-IN:X2",
+      "net": "DI-X2",
+      "via": [
+        [
+          942,
+          211
+        ],
+        [
+          942,
+          180
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN2:24CTL",
+      "b": "S0-IN:21",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "S0-IN:22",
+      "b": "X2-3:3",
+      "net": "DI-X3",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-3:3i",
+      "b": "A1-IN:X3",
+      "net": "DI-X3",
+      "via": [
+        [
+          954,
+          290
+        ],
+        [
+          954,
+          208
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN3:24CTL",
+      "b": "S3-IN:21",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "S3-IN:22",
+      "b": "X2-4:4",
+      "net": "DI-X4",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-4:4i",
+      "b": "A1-IN:X4",
+      "net": "DI-X4",
+      "via": [
+        [
+          966,
+          369
+        ],
+        [
+          966,
+          236
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN4:24CTL",
+      "b": "OL1-IN:97",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "OL1-IN:98",
+      "b": "X2-5:5",
+      "net": "DI-X5",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-5:5i",
+      "b": "A1-IN:X5",
+      "net": "DI-X5",
+      "via": [
+        [
+          978,
+          448
+        ],
+        [
+          978,
+          264
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN5:24CTL",
+      "b": "K1-IN:13",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "K1-IN:14",
+      "b": "X2-6:6",
+      "net": "DI-X6",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-6:6i",
+      "b": "A1-IN:X6",
+      "net": "DI-X6",
+      "via": [
+        [
+          990,
+          527
+        ],
+        [
+          990,
+          292
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "24-IN6:24CTL",
+      "b": "S2-IN:13",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "S2-IN:14",
+      "b": "X2-7:7",
+      "net": "DI-X7",
+      "via": []
+    },
+    {
+      "sheet": 3,
+      "a": "X2-7:7i",
+      "b": "A1-IN:X7",
+      "net": "DI-X7",
+      "via": [
+        [
+          1002,
+          606
+        ],
+        [
+          1002,
+          320
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "COM0:0V",
+      "b": "A1-IN:C1",
+      "net": "0V",
+      "via": [
+        [
+          1015,
+          732
+        ],
+        [
+          1015,
+          376
+        ]
+      ]
+    },
+    {
+      "sheet": 3,
+      "a": "COM1:0V",
+      "b": "A1-IN:C2",
+      "net": "0V",
+      "via": [
+        [
+          1035,
+          812
+        ],
+        [
+          1035,
+          404
+        ]
+      ]
+    },
+    {
+      "sheet": 4,
+      "a": "24-OUT:24CTL",
+      "b": "S0-OUT:11",
+      "net": "24CTL",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "S0-OUT:12",
+      "b": "S3-OUT:11",
+      "net": "EN1",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "S3-OUT:12",
+      "b": "OL1-OUT:95",
+      "net": "EN2",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "OL1-OUT:96",
+      "b": "A1-OUT:C3",
+      "net": "24EN",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "A1-OUT:Y1",
+      "b": "X2-OUT0:8i",
+      "net": "DO-Y1",
+      "via": [
+        [
+          1170,
+          142
+        ],
+        [
+          1170,
+          385
+        ],
+        [
+          430,
+          385
+        ],
+        [
+          430,
+          472
+        ]
+      ]
+    },
+    {
+      "sheet": 4,
+      "a": "X2-OUT0:8",
+      "b": "K1-LOAD:A1",
+      "net": "DO-Y1",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "K1-LOAD:A2",
+      "b": "OUT00:0V",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "A1-OUT:Y2",
+      "b": "X2-OUT1:9i",
+      "net": "DO-Y2",
+      "via": [
+        [
+          1205,
+          170
+        ],
+        [
+          1205,
+          393
+        ],
+        [
+          412,
+          393
+        ],
+        [
+          412,
+          582
+        ]
+      ]
+    },
+    {
+      "sheet": 4,
+      "a": "X2-OUT1:9",
+      "b": "YV1-LOAD:+",
+      "net": "DO-Y2",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "YV1-LOAD:-",
+      "b": "X2-13:13",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "X2-13:13i",
+      "b": "OUT01:0V",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "A1-OUT:Y3",
+      "b": "X2-OUT2:10i",
+      "net": "DO-Y3",
+      "via": [
+        [
+          1240,
+          198
+        ],
+        [
+          1240,
+          401
+        ],
+        [
+          394,
+          401
+        ],
+        [
+          394,
+          692
+        ]
+      ]
+    },
+    {
+      "sheet": 4,
+      "a": "X2-OUT2:10",
+      "b": "H1-LOAD:+",
+      "net": "DO-Y3",
+      "via": []
+    },
+    {
+      "sheet": 4,
+      "a": "H1-LOAD:-",
+      "b": "OUT02:0V",
+      "net": "0V",
+      "via": []
+    },
+    {
+      "sheet": 1,
+      "a": "PE:ENCLOSURE",
+      "b": "PE-E1:PE",
+      "net": "PE",
+      "via": [
+        [
+          265,
+          500
+        ],
+        [
+          265,
+          632
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "PE:DOOR",
+      "b": "PE-DOOR:PE",
+      "net": "PE",
+      "via": [
+        [
+          280,
+          528
+        ],
+        [
+          280,
+          722
+        ]
+      ]
+    },
+    {
+      "sheet": 1,
+      "a": "PE:DC-BOND",
+      "b": "PE-DC:PE",
+      "net": "PE",
+      "via": [
+        [
+          295,
+          556
+        ],
+        [
+          295,
+          722
+        ]
+      ]
+    }
+  ],
+  "ports": [
+    {
+      "sheet": 1,
+      "instance": "PS-24RAW",
+      "pin": "24RAW",
+      "net": "24RAW"
+    },
+    {
+      "sheet": 1,
+      "instance": "PS-0V",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 2,
+      "instance": "RAW0",
+      "pin": "24RAW",
+      "net": "24RAW"
+    },
+    {
+      "sheet": 2,
+      "instance": "ZERO0",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 2,
+      "instance": "RAW1",
+      "pin": "24RAW",
+      "net": "24RAW"
+    },
+    {
+      "sheet": 2,
+      "instance": "FIELD",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 2,
+      "instance": "RETURN",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 2,
+      "instance": "BOND",
+      "pin": "PE",
+      "net": "PE"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN0",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "SENSOR-0",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN1",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN2",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN3",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN4",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN5",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "24-IN6",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 3,
+      "instance": "COM0",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 3,
+      "instance": "COM1",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 4,
+      "instance": "24-OUT",
+      "pin": "24CTL",
+      "net": "24CTL"
+    },
+    {
+      "sheet": 4,
+      "instance": "OUT00",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 4,
+      "instance": "OUT01",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 4,
+      "instance": "OUT02",
+      "pin": "0V",
+      "net": "0V"
+    },
+    {
+      "sheet": 1,
+      "instance": "PE-E1",
+      "pin": "PE",
+      "net": "PE"
+    },
+    {
+      "sheet": 1,
+      "instance": "PE-DOOR",
+      "pin": "PE",
+      "net": "PE"
+    },
+    {
+      "sheet": 1,
+      "instance": "PE-DC",
+      "pin": "PE",
+      "net": "PE"
+    }
+  ],
+  "layout": {
+    "placements": {
+      "Q0": [
+        55,
+        75
+      ],
+      "Q1": [
+        55,
+        245
+      ],
+      "Q2": [
+        145,
+        75
+      ],
+      "PS1": [
+        240,
+        80
+      ],
+      "A1": [
+        235,
+        265
+      ],
+      "K1": [
+        145,
+        235
+      ],
+      "OL1": [
+        145,
+        320
+      ],
+      "F3": [
+        235,
+        430
+      ],
+      "F4": [
+        265,
+        430
+      ],
+      "X0": [
+        45,
+        480
+      ],
+      "X1": [
+        130,
+        480
+      ],
+      "X2": [
+        235,
+        535
+      ],
+      "PE": [
+        55,
+        550
+      ]
+    },
+    "origin": [
+      100,
+      90
+    ],
+    "scale": 1,
+    "backplate": [
+      400,
+      600
+    ],
+    "rails_y": [
+      100,
+      290,
+      460
+    ],
+    "ducts": [
+      [
+        20,
+        15,
+        360,
+        20
+      ],
+      [
+        20,
+        195,
+        360,
+        25
+      ],
+      [
+        20,
+        400,
+        360,
+        25
+      ],
+      [
+        205,
+        50,
+        25,
+        500
+      ]
+    ],
+    "door": {
+      "S0": [
+        30,
+        80
+      ],
+      "S1": [
+        110,
+        80
+      ],
+      "S2": [
+        190,
+        80
+      ],
+      "S3": [
+        270,
+        80
+      ],
+      "H1": [
+        110,
+        180
+      ]
+    },
+    "side": {}
+  },
+  "io": {
+    "X1": "bottle",
+    "X2": "start",
+    "X3": "stop_ok",
+    "X4": "enable_ok",
+    "X5": "overload",
+    "X6": "feedback",
+    "X7": "reset",
+    "X8": "spare",
+    "Y1": "conveyor",
+    "Y2": "fill_valve",
+    "Y3": "run_lamp",
+    "Y4": "spare",
+    "Y5": "spare",
+    "Y6": "spare"
+  }
+}

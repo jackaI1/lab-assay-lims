@@ -1,0 +1,69 @@
+# Shared commands also run in GitHub Actions, without an Azure account.
+trigger:
+  branches:
+    include:
+      - main
+      - skills/*
+pr:
+  branches:
+    include:
+      - main
+
+pool:
+  vmImage: ubuntu-latest
+
+jobs:
+  - job: BuildAndTest
+    displayName: Test and package the factory cell
+    strategy:
+      matrix:
+        Python311:
+          python.version: '3.11'
+        Python312:
+          python.version: '3.12'
+    steps:
+      - checkout: self
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '$(python.version)'
+          architecture: x64
+        displayName: Select Python
+      - script: |
+          set -euo pipefail
+          python -m pip install --upgrade pip
+          python -m pip install -e '.[dev]'
+        displayName: Install package and test dependencies
+      - script: python scripts/validate_pipeline.py
+        displayName: Check Azure YAML against Microsoft schema
+      - script: bash scripts/test.sh
+        displayName: Run pytest with JUnit and coverage
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFormat: JUnit
+          testResultsFiles: reports/junit.xml
+          testRunTitle: 'Factory cell Python $(python.version)'
+          failTaskOnFailedTests: true
+          failTaskOnFailureToPublishResults: true
+          failTaskOnMissingResultsFile: true
+        displayName: Publish test results even after failures
+      - task: UseDotNet@2
+        condition: succeededOrFailed()
+        inputs:
+          packageType: sdk
+          version: 8.0.x
+        displayName: Install coverage publisher prerequisite
+      - task: PublishCodeCoverageResults@2
+        condition: succeededOrFailed()
+        inputs:
+          summaryFileLocation: '$(System.DefaultWorkingDirectory)/reports/coverage.xml'
+          pathToSources: '$(System.DefaultWorkingDirectory)'
+          failIfCoverageEmpty: true
+        displayName: Publish coverage even after failures
+      - script: bash scripts/build-wheel.sh "$(Build.ArtifactStagingDirectory)/wheel"
+        displayName: Build and test the installed wheel
+      - task: PublishPipelineArtifact@1
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)/wheel'
+          artifact: 'wheel-python$(python.version)'
+        displayName: Publish wheel for this Python version

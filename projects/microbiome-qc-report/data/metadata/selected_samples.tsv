@@ -1,0 +1,5 @@
+study	run	biosample	alias	role
+SRP155048	SRR7588938	SAMN09710899	D0	mock community, undiluted
+SRP155048	SRR7588942	SAMN09710903	D4	mock community, diluted
+SRP155048	SRR7588945	SAMN09710907	D8	mock community, diluted
+SRP155048	SRR10898399	SAMN13864709	Blank	extraction negative control

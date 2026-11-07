@@ -1,0 +1,7 @@
+change,tag,field,before,after
+ADD,B1,component,,SK 3237124
+ADD,EF1,component,,SK 3237200
+ADD,EF2,component,,SK 3237200
+ADD,F5,component,,CHCC1DU + FNQ-R-2
+MODIFY,THERMAL,fan_delivered_m3h,0,16
+MODIFY,THERMAL,fan_tag,,B1

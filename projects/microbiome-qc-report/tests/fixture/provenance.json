@@ -1,0 +1,85 @@
+{
+  "study": "SRP155048",
+  "samples": [
+    {
+      "sample": "D0",
+      "type": "sample",
+      "run": "SRR7588938",
+      "biosample": "SAMN09710899",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/008/SRR7588938/SRR7588938_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/008/SRR7588938/SRR7588938_2.fastq.gz"
+      ],
+      "md5": [
+        "c60128dca31d21f548c6bbb5974bf123",
+        "36e561c8a25cc1a795ebff89b56e2aea"
+      ],
+      "pairs_retained": 2000,
+      "selection": "first N pairs, no quality-based selection",
+      "subset_sha256": [
+        "5855ae40d79846bb3ed198c7c45c7357494d2528b289a2fa17ceb0d329555477",
+        "83fb92e71c90a46861afd020cf46c02dfdb92cccda37e679afc8853784619075"
+      ]
+    },
+    {
+      "sample": "D4",
+      "type": "sample",
+      "run": "SRR7588942",
+      "biosample": "SAMN09710903",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/002/SRR7588942/SRR7588942_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/002/SRR7588942/SRR7588942_2.fastq.gz"
+      ],
+      "md5": [
+        "fa7729e6000a9d072fbf80cd887e19bd",
+        "2b6c24b532976b00fff19e92a6595345"
+      ],
+      "pairs_retained": 2000,
+      "selection": "first N pairs, no quality-based selection",
+      "subset_sha256": [
+        "731081bddf28e99dd2aea5498dabee029b27a6081fda03128b6b020f9488c4ed",
+        "63541dd8f9485c518e5e8ed2e4c636635b32a29e2aef377121fb123007f56482"
+      ]
+    },
+    {
+      "sample": "D8",
+      "type": "sample",
+      "run": "SRR7588945",
+      "biosample": "SAMN09710907",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/005/SRR7588945/SRR7588945_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR758/005/SRR7588945/SRR7588945_2.fastq.gz"
+      ],
+      "md5": [
+        "38f8e0d4729b0b665ea7ba2011673d4b",
+        "e54ce6d282458d73fefc58d71eb3ea12"
+      ],
+      "pairs_retained": 80,
+      "selection": "first N pairs, no quality-based selection",
+      "subset_sha256": [
+        "b8dbe5736f64db8227a13486ace2909732cee02a1787a8047d737511117ff65f",
+        "29fb688952763cefb03ac94159930e2a27a65e37d80f2c19213c310e40b91a8b"
+      ]
+    },
+    {
+      "sample": "Blank",
+      "type": "negative",
+      "run": "SRR10898399",
+      "biosample": "SAMN13864709",
+      "urls": [
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR108/099/SRR10898399/SRR10898399_1.fastq.gz",
+        "https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR108/099/SRR10898399/SRR10898399_2.fastq.gz"
+      ],
+      "md5": [
+        "ef08bb49d3c64f03c0453f8f39160a6e",
+        "95df1b8df89e4f9031178923afbbd360"
+      ],
+      "pairs_retained": 2000,
+      "selection": "first N pairs, no quality-based selection",
+      "subset_sha256": [
+        "aefdb122487add02740311dde0aa1f7ca1b0812f97e86c791961ad3e6596832f",
+        "a8033842c676dcc97e81add6fa52a8ed83e672f0dd274011ecc079e08f08d07d"
+      ]
+    }
+  ]
+}

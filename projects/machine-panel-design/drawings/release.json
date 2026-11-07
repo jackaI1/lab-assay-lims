@@ -1,0 +1,10 @@
+{
+  "revision": "B",
+  "exporter": "QElectroTech 0.100.0",
+  "pages": 5,
+  "sha256": {
+    "data/panel.json": "d07011bc4e690a773946d478d7da05d6cc903606a3fe24755861ea3e032a8dda",
+    "drawings/bottle-filler.qet": "0cf06a10d7730822166eeef7fe25db3c0a5c5066f8014bdc9d2386ae793b47cc",
+    "drawings/bottle-filler.pdf": "564e84ab1c16b53d1993eb71a842cdf1755435fab6f4852bcca9b10471c6cbc1"
+  }
+}

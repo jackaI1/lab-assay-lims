@@ -1,0 +1,60 @@
+name: Bug report
+description: Reproduce a factory-cell defect with Azure Boards-style fields.
+title: '[Bug]: '
+body:
+  - type: markdown
+    attributes:
+      value: I track these as Bug work items. Start at New; record the fix and verification before closing.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area path
+      options: [FactoryCell / Export, FactoryCell / CLI, FactoryCell / Build]
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options: ['1 - Unusable output or data loss', '2 - Incorrect result', '3 - Broken edge case', '4 - Minor nuisance']
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options: ['1 - First', '2 - Soon', '3 - Normal', '4 - Later']
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Found in version and environment
+      description: Commit, operating system, Python and usd-core version.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include the smallest layout and exact command, with no private data.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result and acceptance criteria
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Error message or measured scene value.
+    validations:
+      required: true
+  - type: textarea
+    id: resolution
+    attributes:
+      label: Resolution and verification
+      description: After investigation, add the cause, fix PR, regression test, build link and state history.

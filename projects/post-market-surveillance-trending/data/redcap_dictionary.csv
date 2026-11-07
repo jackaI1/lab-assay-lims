@@ -1,0 +1,11 @@
+Variable / Field Name,Form Name,Section Header,Field Type,Field Label,"Choices, Calculations, OR Slider Labels",Field Note,Text Validation Type OR Show Slider Number,Text Validation Min,Text Validation Max,Identifier?,Branching Logic (Show field only if...),Required Field?,Custom Alignment,Question Number (surveys only),Matrix Group Name,Matrix Ranking?,Field Annotation
+id,complaint,,text,Complaint ID,,,,,,,,y,,,,,
+family,complaint,,text,Product family,,,,,,,,y,,,,,
+date_received,complaint,,text,Awareness date (YYYY-MM-DD),,,date_ymd,,,,,y,,,,,
+event,complaint,,dropdown,Event type,"death, Death | serious_injury, Serious injury | malfunction, Malfunction | other, Other",,,,,,,y,,,,,
+device_related,complaint,,yesno,Device may be related,,,,,,,,y,,,,,
+recurrence_harm,complaint,,yesno,Malfunction recurrence could cause serious harm,,,,,,,,y,,,,,
+eu_serious,complaint,,yesno,EU serious incident assessed,,,,,,,,y,,,,,
+public_health_threat,complaint,,yesno,Serious public health threat,,,,,,,,y,,,,,
+unanticipated,complaint,,yesno,Unanticipated serious deterioration,,,,,,,,y,,,,,
+hazard_id,complaint,,text,Hazard ID,,,,,,,,y,,,,,

@@ -1,0 +1,10 @@
+name: microbiome-qc
+channels:
+  - conda-forge
+  - bioconda
+channel_priority: strict
+dependencies:
+  - r-base=4.5.2
+  - bioconductor-dada2=1.38.0
+  - r-vegan=2.7_2
+  - python=3.12.9

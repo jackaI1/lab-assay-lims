@@ -1,0 +1,309 @@
+{
+  "revision": "A",
+  "sccr": {
+    "panel_ka": 5,
+    "limiting_tags": [
+      "K1",
+      "OL1"
+    ],
+    "available_fault_ka": 4,
+    "adequate_for_assumed_fault": true,
+    "included": [
+      {
+        "tag": "Q0",
+        "ka": 10,
+        "basis": "UL489 interrupting rating",
+        "source": "breaker"
+      },
+      {
+        "tag": "Q1",
+        "ka": 10,
+        "basis": "UL489 interrupting rating",
+        "source": "breaker"
+      },
+      {
+        "tag": "Q2",
+        "ka": 10,
+        "basis": "UL489 interrupting rating",
+        "source": "control_breaker"
+      },
+      {
+        "tag": "K1",
+        "ka": 5,
+        "basis": "SB4.1 unmarked motor controller",
+        "source": "sb"
+      },
+      {
+        "tag": "OL1",
+        "ka": 5,
+        "basis": "SB4.1 unmarked overload",
+        "source": "sb"
+      },
+      {
+        "tag": "X0",
+        "ka": 10,
+        "basis": "SB4.1 terminal block",
+        "source": "sb"
+      },
+      {
+        "tag": "X1",
+        "ka": 10,
+        "basis": "SB4.1 terminal block",
+        "source": "sb"
+      }
+    ],
+    "excluded": [
+      {
+        "tag": "PS1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "A1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "F3",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "F4",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "S0",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "S1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "S2",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "S3",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "H1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "M1",
+        "reason": "External machine load, outside panel SCCR boundary"
+      },
+      {
+        "tag": "YV1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "S4",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "X2",
+        "reason": "not in power path"
+      },
+      {
+        "tag": "PE",
+        "reason": "not in power path"
+      },
+      {
+        "tag": "W1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "E1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "DR1",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "DR2",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "DR3",
+        "reason": "control circuit"
+      },
+      {
+        "tag": "WD1",
+        "reason": "control circuit"
+      }
+    ]
+  },
+  "thermal": {
+    "heat_w": 31.593466666666668,
+    "exposed_area_m2": 0.56,
+    "conductance_w_k": 3.08,
+    "natural_rise_k": 10.257619047619048,
+    "natural_internal_c": 50.257619047619045,
+    "surface_loss_at_limit_w": 15.4,
+    "active_cooling_w": 16.193466666666666,
+    "required_airflow_m3h": 10.039949333333333,
+    "required_airflow_with_margin_m3h": 12.549936666666666,
+    "fan_delivered_m3h": 0,
+    "fan_sufficient": false,
+    "fan_internal_c": 50.257619047619045,
+    "mode": "ambient-air cooling",
+    "ambient_c": 40,
+    "limit_c": 45
+  },
+  "dc": {
+    "load_w": 16.2568,
+    "load_a": 0.6773666666666666,
+    "capacity_w": 60,
+    "spare_w": 43.7432,
+    "adequate": true
+  },
+  "heat_breakdown": [
+    {
+      "tag": "Q0",
+      "watts": 3.5,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "breaker_loss"
+    },
+    {
+      "tag": "Q1",
+      "watts": 3.5,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "breaker_loss"
+    },
+    {
+      "tag": "Q2",
+      "watts": 2.8,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "control_breaker"
+    },
+    {
+      "tag": "K1",
+      "watts": 6.0,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "contactor"
+    },
+    {
+      "tag": "OL1",
+      "watts": 1.67,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "overload"
+    },
+    {
+      "tag": "PS1",
+      "watts": 6.66666666666667,
+      "basis": "assembly total at simultaneous duty; external loads excluded",
+      "source": "supply"
+    },
+    {
+      "tag": "A1",
+      "watts": 3.8568,
+      "basis": "2.88 W CPU plus 0.9768 W seven input channels, maximum input currents at 26.4 V",
+      "source": "plc_wiring"
+    },
+    {
+      "tag": "F3",
+      "watts": 0.3,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "F4",
+      "watts": 0.2,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "S0",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "S1",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "S2",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "S3",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "H1",
+      "watts": 0.5,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "X0",
+      "watts": 0.2,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "X1",
+      "watts": 0.2,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "X2",
+      "watts": 0.1,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "PE",
+      "watts": 0.1,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "W1",
+      "watts": 2,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "E1",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "DR1",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "DR2",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "DR3",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    },
+    {
+      "tag": "WD1",
+      "watts": 0,
+      "basis": "explicit engineering allowance or simulated load, see design inputs",
+      "source": "scenario"
+    }
+  ],
+  "caveat": "Simulation study, not a UL listing. No series-rating or current-limiting uplift. Thermal inputs include explicit allowances and typical efficiency."
+}

@@ -1,0 +1,5 @@
+sample	type	run	forward	reverse
+D0	sample	SRR7588938	tests/fixture/D0_R1.fastq.gz	tests/fixture/D0_R2.fastq.gz
+D4	sample	SRR7588942	tests/fixture/D4_R1.fastq.gz	tests/fixture/D4_R2.fastq.gz
+D8	sample	SRR7588945	tests/fixture/D8_R1.fastq.gz	tests/fixture/D8_R2.fastq.gz
+Blank	negative	SRR10898399	tests/fixture/Blank_R1.fastq.gz	tests/fixture/Blank_R2.fastq.gz

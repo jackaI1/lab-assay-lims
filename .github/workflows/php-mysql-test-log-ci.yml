@@ -1,0 +1,51 @@
+name: php-mysql-test-log / Test log CI
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/php-mysql-test-log/**
+    - .github/workflows/php-mysql-test-log-ci.yml
+  pull_request:
+    paths:
+    - projects/php-mysql-test-log/**
+    - .github/workflows/php-mysql-test-log-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_DATABASE: testlog_test
+          MYSQL_USER: testlog
+          MYSQL_PASSWORD: test-only
+          MYSQL_ROOT_PASSWORD: test-root-only
+        ports:
+        - 3306:3306
+        options: --health-cmd="mysqladmin ping -h 127.0.0.1 --silent" --health-interval=5s --health-timeout=5s --health-retries=30
+    env:
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: testlog_test
+      DB_USER: testlog
+      DB_PASSWORD: test-only
+    steps:
+    - uses: actions/checkout@v4
+    - uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: pdo_mysql, mbstring, dom, xml, xmlwriter
+        coverage: none
+    - run: composer validate --strict
+    - run: composer install --no-interaction --prefer-dist --no-progress
+    - run: composer audit
+    - run: composer lint
+    - run: composer test
+    timeout-minutes: 20
+defaults:
+  run:
+    working-directory: projects/php-mysql-test-log

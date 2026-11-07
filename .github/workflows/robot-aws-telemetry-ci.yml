@@ -1,0 +1,52 @@
+name: robot-aws-telemetry / Test
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/robot-aws-telemetry/**
+    - .github/workflows/robot-aws-telemetry-ci.yml
+  pull_request:
+    paths:
+    - projects/robot-aws-telemetry/**
+    - .github/workflows/robot-aws-telemetry-ci.yml
+  workflow_dispatch: {}
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      AWS_DEFAULT_REGION: us-east-1
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    - run: pip install -r requirements.txt
+    - run: python -m unittest discover -s tests -p 'test_*.py' -v
+    - name: Start LocalStack
+      run: 'docker run -d --name robot-localstack -p 4566:4566 -p 4510-4559:4510-4559 localstack/localstack:3.8
+
+        for i in $(seq 1 60); do curl -sf http://localhost:4566/_localstack/health >/dev/null && exit 0; sleep 2; done
+
+        exit 1
+
+        '
+    - name: Start MQTT broker
+      run: 'printf "listener 1883\nallow_anonymous true\n" > /tmp/robot-mosquitto.conf
+
+        docker run -d --name robot-mqtt -p 1883:1883 -v /tmp/robot-mosquitto.conf:/mosquitto/config/mosquitto.conf:ro eclipse-mosquitto:2
+
+        '
+    - name: Test deployed pipeline
+      run: python -m unittest discover -s tests -p 'integration.py' -v
+    - name: Stop LocalStack
+      if: always()
+      run: docker rm -f robot-localstack robot-mqtt || true
+permissions:
+  contents: read
+defaults:
+  run:
+    working-directory: projects/robot-aws-telemetry
