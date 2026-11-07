@@ -1,6 +1,6 @@
 # java-lab-results-service
 
-I built a small service for lab measurements to learn how the underlying idea works. This is a learning project.
+I built a small service for lab measurements because I wanted to learn how to keep a result and its corrections together. It records a measurement, checks that a correction is based on the latest version, and keeps the earlier values in a history. I can run the example below with invented data and see the full workflow without an AWS account.
 
 The example patient and sample identifiers are invented.
 

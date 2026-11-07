@@ -14,7 +14,8 @@ def read(path):
 results = read('/api/results?patientId=SYN-DEMO-002')
 assert len(results) == 1
 result, = results
-assert result['revision'] == 2 and result['value'] == 4.3
+assert result['revision'] == 2 and result['value'] == 4.3 and result['status'] == 'AMENDED'
 history = read('/api/results/' + result['id'] + '/history')
-assert [row['snapshot']['value'] for row in history] == [4.1, 4.3]
+assert [(row['revision'], row['snapshot']['value']) for row in history] == [(1, 4.1), (2, 4.3)]
+assert history[1]['actor'] == 'technician' and history[1]['reason'] == 'Rechecked synthetic instrument reading'
 print('2 persistence checks passed after restarting the deployed app.')
