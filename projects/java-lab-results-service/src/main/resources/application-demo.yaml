@@ -1,0 +1,3 @@
+spring:
+  flyway:
+    locations: ${lab.migrations:classpath:db/migration},${lab.demo-migrations:classpath:db/demo}

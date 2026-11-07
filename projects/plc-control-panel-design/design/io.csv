@@ -1,0 +1,16 @@
+tag,direction,plc_ref,terminal,wire
+Start,input,PLC1I01,X101,W101
+Stop,input,PLC1I02,X102,W102
+Reset,input,PLC1I03,X103,W103
+EStopOK,input,PLC1I04,X104,W104
+GuardClosed,input,PLC1I05,X105,W105
+TankOK,input,PLC1I06,X106,W106
+BottleAtFill,input,PLC1I07,X107,W107
+ExitSensor,input,PLC1I08,X108,W108
+JamSwitch,input,PLC1I09,X109,W109
+Run,output,PLC1Q01,X201,W201
+Conveyor,output,PLC1Q02,X202,W202
+Valve,output,PLC1Q03,X203,W203
+Alarm,output,PLC1Q04,X204,W204
+BatchDone,output,PLC1Q05,X205,W205
+FillBlocked,output,PLC1Q06,X206,W206

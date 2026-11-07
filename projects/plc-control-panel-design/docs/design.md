@@ -1,0 +1,29 @@
+# Design basis and review checklist
+
+This is a preliminary functional design for the software filling-line cell, not a shop drawing, certified assembly, or proof of compliance. Do not energize or fabricate it without a qualified panel designer selecting actual parts, completing the missing diagrams and calculations, and validating the machine safety function. The source interface is pinned to [plc-filling-line commit 778a054016f5c8f2f752738276c58beef27208ed](https://github.com/jackaI1/plc-filling-line/blob/778a054016f5c8f2f752738276c58beef27208ed/plc/line.st). The program is a simulation and does not specify real PLC addresses or hardware.
+
+## Reading the drawings
+
+Five KiCad sheets use functional two-terminal blocks, not manufacturer symbols or full internal device models. Matching labels represent connections between sheets; within a sheet KiCad connects matching labels. Blocks with multiple references (PS1–PS4, SR1–SR4, K11–K15 and Q1/Q2) represent separate functions or poles of the same named physical device, not separate devices. Their pin numbers are conceptual, not manufacturer terminals. Complete device terminal diagrams, common rails, cable shields, door bonds and all field wiring before construction. The netlist check is limited to the I/O sheets; it does not establish electrical safety or validate the other sheets.
+
+Assumed supply is single-phase 120 VAC, 60 Hz, with protective earth. Q1/Q2 are the two poles of a lockable disconnect. F1 is a proposed 2 A class CC branch fuse for an isolated 24 VDC supply; F2 is a 2 A DC-rated control branch and F3 a 3 A DC-rated actuator branch. These are preliminary maximums, not selected parts: verify power-supply inrush, fuse curves, voltage/interrupt ratings and manufacturer's protection instructions. The supply must support the sum of branch loads. A 24 VDC supply rated at least 5 A is an initial allowance, subject to actual load and thermal calculation.
+
+Use preliminary 14 AWG copper for the AC supply and protective earth, 18 AWG copper for 24 V distribution, and 20 AWG copper for individual signal wires, subject to terminal ratings, conductor ampacity, derating, fault protection and voltage drop verification. Route AC separately from low-voltage signals. Provide a separately bonded enclosure and door. The enclosure is 400 × 500 mm, with a 360 × 460 mm backplate; the SVG uses 1 unit per mm. Device rectangles are allocations, not clearances from selected manufacturer drawings. Verify depth, bend radius, ventilation, spacing and thermal rise.
+
+## Control and safety concept
+
+The PLC receives nine signals and drives six outputs. Start, Stop, and Reset are momentary normally-open contacts as required by the software's Boolean logic; GuardClosed and TankOK are true when healthy. EStopOK is an auxiliary indication of the safety contactor, never the safety function. The e-stop has two normally closed channels to a safety relay, a separate manual reset and contactor feedback. The safety relay removes power through K1 to the actuator supply. Reset must not cause a restart. The PLC remains powered so it can show the fault. GuardClosed is only a process input in this concept and is **not** a safety interlock: assess guard hazards and add a suitable independent safety function if required. One contactor and the illustrated functional blocks do not establish a safety category or performance level; redundancy, diagnostics and stopping performance follow a documented risk assessment.
+
+Output modules must be compatible with a separately supplied 24 V sourcing output group whose supply is P24_SAFE, while PLC logic stays powered from P24_CTRL. Confirm current limits and the behavior of all outputs on loss and return of supply. K2 is an interface relay for a separately engineered motor starter; motor power, overload protection and the motor disconnect are outside this drawing. Specify loads and suppression compatible with the output module and stopping time. A real design must include full field-device supply and return wiring, protective devices, manufacturer pin numbers, safety relay wiring and output module commons. The sheets use abstract blocks to communicate intent, not a complete construction circuit.
+
+## Standards review, not a compliance claim
+
+| Review item | Design response | Open verification |
+| --- | --- | --- |
+| NFPA 79 (2024) 5.3, supply disconnect | Q1/Q2 concept isolates both supply conductors. | Select a listed disconnect, operating handle and lockout arrangement and verify installation. |
+| NFPA 79 (2024) 9.2.5.4.1, emergency stop | Two stop channels and hardwired contactor removal are independent of PLC logic. | Risk assess stop category, select listed safety parts, verify reset, stopping time and fault behavior. |
+| NFPA 79 (2024) 9.4.2.1, control circuit faults | Separate 24 V branch and protective bonding are shown conceptually. | Complete grounding, fault analysis and testing; prevent unintended starts and loss of stopping. |
+| UL 508A Supplement SB, short-circuit current rating (SCCR) | F1 and power-path devices are identified for review. | Select every actual power component, determine component SCCRs and protective-device interrupt ratings, calculate assembly SCCR and compare available fault current. No SCCR is claimed. |
+| UL 508A Supplement SA, component selection | Functional blocks identify required device roles. | Select appropriately listed/recognized components and follow their conditions of acceptability and installation instructions. |
+
+References: [NFPA 79 changes and section references](https://cdn.intertek.com/www-intertek-com/dms-legacy/NFPA-79-SUN-Rev-11-30-2017-and-10-25-2020-ED-6-1-2024.pdf), [UL Solutions on SCCR and Supplement SB](https://www.ul.com/resources/determining-short-circuit-current-rating-sccr-machinery), and the applicable licensed editions of the standards. Confirm edition and local adoption with the authority having jurisdiction.
