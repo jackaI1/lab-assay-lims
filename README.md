@@ -6,6 +6,8 @@ The tests in this project use a plastic tray with many small containers, called 
 
 The page warns me when repeated readings disagree or the control samples do not separate clearly. It keeps the original readings and a history of saved changes. I can also download instructions for an Opentrons OT-2, a robot that moves measured amounts of liquid between containers. My included full-test demonstration uses clearly labelled synthetic data, so it runs without laboratory equipment.
 
+I also wanted to learn how spectrum measurements work. My simulated spectrum analyzer sweeps a signal, finds its strongest frequency, estimates the noise floor, and checks harmonics and unwanted peaks. My hands-on waveform work comes from my NE 241 labs; this analyzer is a software simulation. Run the spectrum command below to save a plot and report.
+
 **Try it locally:** run the commands below, open the page, and click **Open synthetic demo**. The demo has two samples with known answers, 7 and 12 nanograms per millilitre (ng/mL). I can inspect each well, compare the recovered concentrations, download the results, and prepare a robot plan without an instrument or an account.
 
 ![Plate map, fitted standard curve and recovered synthetic sample concentrations](docs/plate-review.png)
@@ -30,6 +32,8 @@ I also use this notebook to practice measurements and plan experiments without n
 ```sh
 # Repeated simulated oscilloscope and optical spectrum captures, with CSV and JSON
 uv run python -m lab_assay.instrument --repeats 3 --output instrument-output
+# Measure a simulated RF signal and save spectrum.png and report.json
+uv run python -m lab_assay.spectrum --output spectrum-output
 # Sweep a synthetic power supply over a local network socket
 uv run python -m lab_assay.scpi_server --output sweep.csv
 # Plan and analyse a simulated thin-film experiment
@@ -37,6 +41,8 @@ uv run python -m lab_assay.doe --output doe-output
 # Calculate plate counts, monitoring flags and medium volume
 uv run python -m lab_assay.microbiology data/synthetic-plates.csv --limit 10000 --environment data/synthetic-environment.csv --limits data/synthetic-limits.json --media-lot DEMO-01 --plates 20 --output microbiology-report.json
 ```
+
+The spectrum exercise uses a simulated signal source and analyzer, with adjustable frequency, power, sweep range and resolution bandwidth (the width of the analyzer filter). The report shows the median noise floor, peak, second and third harmonics, and strongest other spur compared with a relative power limit. See [measurement details](docs/spectrum.md).
 
 The instrument exercise sends text commands called SCPI to simulated devices using PyVISA. It checks the highest spectral peak, its power and the spacing between the two strongest peaks, and saves settings and repeated readings. The same capture is available at `POST /api/instruments/capture?repeats=3` while the app is running. The deposition exercise changes power, pressure and time together to estimate their effects, interactions and a curved response. The microbiology exercise estimates colony-forming units (CFU) from duplicate plates and flags unusually high environmental counts. These are teaching examples, not validated methods or real equipment results. [Details and assumptions](docs/lab-exercises.md).
 
