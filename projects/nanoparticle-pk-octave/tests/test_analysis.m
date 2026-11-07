@@ -65,3 +65,9 @@
 %! assert(rows(:,3),f.predicted,1e-12);
 %! assert(rows(:,4),f.predicted-observed,1e-12);
 %! assert(rows(:,5),100*(f.predicted-observed)./observed,1e-10);
+
+%!test
+%! f=struct('predicted',[1 NaN]);
+%! fail('pk_fit_residuals([0 1],[1 2],f)', 'finite and nonnegative');
+%! f.predicted=[1 2];
+%! fail('pk_fit_residuals([0 -1],[1 2],f)', 'finite and nonnegative');

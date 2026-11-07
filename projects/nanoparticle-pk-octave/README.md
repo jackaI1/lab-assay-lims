@@ -1,10 +1,10 @@
-# nanoparticle-pk-octave
+# Nanoparticle drug circulation
 
-I built a nanoparticle drug circulation simulator to learn how the underlying idea works. This is a learning project.
+I built a nanoparticle drug circulation simulator because I wanted to understand how liposomal drug concentrations change over time. It divides the body into connected pools and compares their predicted concentrations with measurements read from a published graph. I can run the example below or change the dose and pool settings for my own exploration.
 
-## Running it on my own data
+## Try the example
 
-On Ubuntu, the complete installation is:
+Install GNU Octave and a plotting backend. On Ubuntu:
 
 ```sh
 sudo apt-get update
@@ -14,42 +14,36 @@ octave --no-gui --quiet scripts/regenerate_all.m
 octave --no-gui --quiet scripts/check_results.m
 ```
 
-On macOS, I use `brew install octave gnuplot`. There are no extra Octave packages or paid toolboxes. Docker is another option: `docker build -t nanoparticle-pk .` followed by `docker run --rm nanoparticle-pk`. That runs tests and regeneration inside the container; its files disappear when it exits. To keep the output on my computer, I use `docker run --rm -v "$PWD/figures:/work/figures" -v "$PWD/results:/work/results" nanoparticle-pk`.
+Run these commands from this project folder. On macOS I use `brew install octave gnuplot`. The regeneration writes graphs to `figures/` and tables to `results/` without downloading data.
 
-For a different experiment, I can call the functions directly in Octave:
+## A worked fit
+
+I fitted clearance (the rate at which drug leaves the central pool) and central volume (the apparent size of that pool) to six rounded group means read from a published liposomal doxorubicin graph. For the one-pool model, the fitted clearance is about 0.0120 L/h/m² and the central volume is about 1.55 L/m². At 25.5 hours the observed concentration is 26.2 µg/mL and the prediction is 26.57 µg/mL, an error of +0.37 µg/mL. The [full table](results/fit_residuals.csv) lists every observation, prediction and error for each model.
+
+![Fitted concentration curves and residuals](figures/fits.png)
+
+The plot compares the fits and shows residuals, the differences between predictions and observations. These are in-sample comparisons, not independent predictions. The data are approximate group means, not individual patient measurements; only six rounded points were read, and the exchange parameters in the multi-pool models are assumed. These limits mean the fits cannot describe individual patients or establish clinical dosing. The [data notes](data/README.md) identify the paper and explain the digitization.
+
+## Use different inputs
 
 ```matlab
 addpath('src');
-p = pk_parameters(2);        % Two pools, initially assumed parameters
-p.dose = 50;                 % mg
-p.infusion = 1.5;            % hours; use 0 for an immediate bolus
-p.V = [2, 1];                % litres, central first
-p.CL = 0.02;                 % central clearance, L/h
-p.Q = 0.01;                  % exchange clearance, L/h
+p = pk_parameters(2);       % two pools
+p.dose = 50;               % mg
+p.infusion = 1.5;          % hours; zero gives an immediate dose
+p.V = [2, 1];              % litres
+p.CL = 0.02;               % L/h
+p.Q = 0.01;                % L/h between pools
 s = pk_simulate(p, [0 1 2 24 48 96]);
 plot(s.time, s.concentration);
 xlabel('Time (h)'); ylabel('Concentration (mg/L)');
-
-% These are synthetic example observations, not published measurements.
+% Synthetic example observations:
 f = pk_fit([2 24 48 96], [24 18 14 8], p, {'CL', 'V1'});
-a = pk_sensitivity(f.params, [2 24 48 96], {'CL', 'V1', 'Q1'});
-m = pk_monte_carlo(f.params, [0 2 24 48 96], {'CL', 'V1'}, 0.2, 200, 2026);
+rows = pk_fit_residuals([2 24 48 96], [24 18 14 8], f)
 ```
 
-`pk_parameters(1)`, `(2)` and `(3)` select one, two or three compartments. Units are mg, L and hours; mg/L has the same numerical value as µg/mL. For the published example, the dose is 50 mg/m², so the fitted volumes and clearances are interpreted per square metre of body surface area. I keep that scaling explicit instead of guessing a patient size.
+`pk_parameters(1)`, `(2)` and `(3)` select one, two or three compartments. Units are mg, L and hours; mg/L and µg/mL have the same numerical value. The published example uses a dose per square metre of body surface area, so its fitted volumes and clearances use that same scaling. See [methods](docs/methods.md) for assumptions and equations.
 
-## Library and reproducible outputs
+## Implementation and checks
 
-Each function in `src/` has a help comment with its inputs, outputs and units. `scripts/regenerate_all.m` rebuilds all four figures and seven CSV files in `results/`, including fitted parameters, concentration curves, sensitivity, every Monte Carlo draw, percentile curves and mass balance. Nothing downloads during a run.
-
-## Tests and limits
-
-I kept 3 files of test code and supporting test helpers in this copy. That source count does not establish an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
-
-
-
-Generated output omitted from this copy: results/ (generated output). Regenerate it with the project scripts.
-
-The relocated workflow failed in GitHub Actions and was removed to keep the hub checks independent. Local test sources remain available.
-
-No project-specific GitHub Actions workflow was retained. The local test sources remain in this folder.
+The MATLAB-language functions in `src/` use `ode45` to integrate the compartment equations and `fminsearch` to fit parameters. The regeneration script also calculates sensitivity, mass balance and simulated variability. The Octave tests cover analytical solutions, mass balance, parameter recovery and diagnostics; CI runs the suite, regenerates the outputs and checks the exported tables and figures.

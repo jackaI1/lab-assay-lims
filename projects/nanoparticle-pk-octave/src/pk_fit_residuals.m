@@ -10,6 +10,9 @@ function rows = pk_fit_residuals(time, observed, fit)
   if any(~isfinite(observed)) || any(observed<=0)
     error('pk:diagnostics','Observations must be finite and positive');
   end
+  if any(~isfinite(time)) || any(time<0) || any(~isfinite(predicted)) || any(predicted<0)
+    error('pk:diagnostics','Times and predictions must be finite and nonnegative');
+  end
   error_amount=predicted-observed;
   rows=[time observed predicted error_amount 100*error_amount./observed];
 end

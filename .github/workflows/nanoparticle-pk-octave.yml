@@ -1,0 +1,28 @@
+name: Nanoparticle PK Octave
+on:
+  push:
+    branches: [main, 'skills/**']
+    paths: ['projects/nanoparticle-pk-octave/**', '.github/workflows/nanoparticle-pk-octave.yml']
+  pull_request:
+    paths: ['projects/nanoparticle-pk-octave/**', '.github/workflows/nanoparticle-pk-octave.yml']
+permissions:
+  contents: read
+jobs:
+  octave:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: projects/nanoparticle-pk-octave
+    env:
+      GNUTERM: pngcairo
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Octave and headless plotting
+        run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends octave gnuplot-nox ghostscript fonts-freefont-otf
+      - name: Run tests
+        run: octave --no-gui --quiet scripts/run_tests.m
+      - name: Regenerate figures and tables
+        run: octave --no-gui --quiet scripts/regenerate_all.m
+      - name: Check results
+        run: octave --no-gui --quiet scripts/check_results.m
