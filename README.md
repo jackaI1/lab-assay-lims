@@ -141,3 +141,6 @@ My original assay suite includes **51 tests**, including four real Opentrons sim
 - [radionuclide-batch-timing](projects/radionuclide-batch-timing/)
 - [robot-aws-telemetry](projects/robot-aws-telemetry/)
 - [robot-cluster-scheduler](projects/robot-cluster-scheduler/)
+
+- [java-lab-results-service](projects/java-lab-results-service/)
+- [plc-control-panel-design](projects/plc-control-panel-design/)

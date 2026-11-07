@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 610" width="500mm" height="610mm">
+<rect x="50" y="45" width="400" height="500" fill="#f7f7f7" stroke="black" stroke-width="2"/>
+<text x="60" y="35" font-size="14">ENCLOSURE 400 x 500 mm | SCALE 1 SVG unit = 1 mm</text>
+<rect x="70" y="65" width="360" height="460" fill="white" stroke="#555"/>
+<text x="75" y="82" font-size="11">Backplate 360 x 460 mm; origin at upper left</text>
+<rect x="85" y="100" width="330" height="35" fill="#e1e5e9" stroke="#777"/><text x="90" y="121" font-size="11">HORIZONTAL WIRING DUCT 330 x 35</text>
+<rect x="85" y="165" width="330" height="8" fill="#999"/><text x="90" y="157" font-size="10">DIN RAIL 1 (35 mm), length 330</text>
+<g fill="#dce8f0" stroke="#222"><rect x="90" y="145" width="50" height="65"/><rect x="150" y="145" width="50" height="65"/><rect x="210" y="145" width="75" height="65"/><rect x="295" y="145" width="55" height="65"/><rect x="360" y="145" width="45" height="65"/></g>
+<g font-size="10"><text x="95" y="178">Q1</text><text x="155" y="178">F1-F3</text><text x="215" y="178">PS1</text><text x="300" y="178">SR1</text><text x="365" y="178">K1</text></g>
+<rect x="85" y="230" width="330" height="35" fill="#e1e5e9" stroke="#777"/><text x="90" y="251" font-size="11">WIRING DUCT</text>
+<rect x="85" y="300" width="330" height="8" fill="#999"/><text x="90" y="290" font-size="10">DIN RAIL 2</text>
+<g fill="#dce8f0" stroke="#222"><rect x="90" y="280" width="130" height="70"/><rect x="235" y="280" width="55" height="70"/><rect x="305" y="280" width="95" height="70"/></g><g font-size="10"><text x="95" y="315">PLC I/O</text><text x="240" y="315">K2</text><text x="310" y="315">SPARE</text></g>
+<rect x="85" y="370" width="330" height="35" fill="#e1e5e9" stroke="#777"/><text x="90" y="391" font-size="11">WIRING DUCT</text>
+<rect x="85" y="455" width="330" height="8" fill="#999"/><rect x="90" y="430" width="230" height="55" fill="#dce8f0" stroke="#222"/><text x="95" y="460" font-size="10">X101-109 / X201-206 / PE</text><text x="90" y="510" font-size="10">DIN RAIL 3 | dimensions are allocation envelopes</text>
+<text x="50" y="575" font-size="11">Verify actual component clearances and heat before fabrication.</text></svg>

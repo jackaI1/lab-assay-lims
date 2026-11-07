@@ -1,0 +1,100 @@
+name: java-lab-results-service / Maven and Compose
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/java-lab-results-service/**
+    - .github/workflows/java-lab-results-service-ci.yml
+  pull_request:
+    paths:
+    - projects/java-lab-results-service/**
+    - .github/workflows/java-lab-results-service-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    name: verify-${{ matrix.database }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - database: postgresql
+          tests: FhirExporterTest,LabResultsIntegrationTest
+          compose: -p lab-ci-pg -f compose.yaml
+        - database: mysql
+          tests: FhirExporterTest,MySqlIntegrationTest
+          compose: -p lab-ci-mysql -f compose.yaml -f compose.mysql.yaml
+        - database: sqlserver
+          tests: FhirExporterTest,SqlServerIntegrationTest
+          compose: -p lab-ci-sqlserver -f compose.yaml -f compose.sqlserver.yaml
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+        cache: maven
+    - name: Test with real database container and package
+      run: ./mvnw -B -Duser.timezone=America/Toronto -Dtest=${{ matrix.tests }} verify
+    - name: Start synthetic demo
+      run: './scripts/setup-demo.sh
+
+        docker compose ${{ matrix.compose }} up --build --wait --wait-timeout 180
+
+        '
+    - name: Exercise HTTP workflow
+      run: ./scripts/demo.sh
+    - name: Stop demo containers and volumes
+      if: always()
+      run: docker compose ${{ matrix.compose }} down -v --remove-orphans
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: junit-results-${{ matrix.database }}
+        path: projects/java-lab-results-service/target/surefire-reports/*.xml
+  aws-sandbox:
+    name: deploy-aws-sandbox
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      LAB_IMAGE: lab-results:ci
+    steps:
+    - uses: actions/checkout@v4
+    - uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: 1.14.0
+        terraform_wrapper: false
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install AWS client for deployment assertions
+      run: pip install boto3==1.40.75
+    - name: Build the deployment image
+      run: docker build -t "$LAB_IMAGE" .
+    - name: Scan the exact image before deployment
+      uses: aquasecurity/trivy-action@0.35.0
+      with:
+        image-ref: lab-results:ci
+        format: table
+        exit-code: '1'
+        ignore-unfixed: true
+        severity: CRITICAL,HIGH
+    - name: Apply AWS infrastructure and exercise deployed runtime
+      run: ./scripts/sandbox.sh
+    - name: Verify cleanup even after an interrupted deployment
+      if: always()
+      run: "if [ -f .sandbox/compose.json ]; then\n  docker compose -p lab-aws-runtime -f .sandbox/compose.json down -v --remove-orphans\n\
+        fi\ndocker compose -p lab-aws-apis -f compose.sandbox.yaml down -v --remove-orphans\ntest -z \"$(docker ps -aq --filter\
+        \ label=com.docker.compose.project=lab-aws-runtime)\"\ntest -z \"$(docker ps -aq --filter label=com.docker.compose.project=lab-aws-apis)\"\
+        \nrm -rf .sandbox infra/terraform.tfstate* infra/sandbox.auto.tfvars.json\n"
+defaults:
+  run:
+    working-directory: projects/java-lab-results-service
