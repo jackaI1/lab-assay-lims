@@ -1,0 +1,29 @@
+name: Omics agent checks
+on:
+  push:
+    branches: [main]
+    paths: ['projects/omics-rag-agent/**', '.github/workflows/omics-rag-agent-ci.yml']
+  pull_request:
+    paths: ['projects/omics-rag-agent/**', '.github/workflows/omics-rag-agent-ci.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ['3.11', '3.12']
+    defaults:
+      run:
+        working-directory: projects/omics-rag-agent
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: '0.12.19'
+          python-version: ${{ matrix.python }}
+      - run: uv sync --locked --dev
+      - run: uv run ruff check src scripts tests
+      - run: uv run ruff format --check src scripts tests
+      - run: uv run pytest -q
+      - run: uv run omics-rag --evaluate-retrieval > retrieval-results.json
