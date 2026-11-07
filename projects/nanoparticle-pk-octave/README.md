@@ -1,6 +1,8 @@
 # Nanoparticle drug circulation
 
-I built a nanoparticle drug circulation simulator because I wanted to understand how liposomal drug concentrations change over time. It divides the body into connected pools and compares their predicted concentrations with measurements read from a published graph. I can run the example below or change the dose and pool settings for my own exploration.
+I built a drug circulation simulator because I wanted to understand how the amount of medicine in the blood changes after a dose. It compares a simple prediction with measurements read from a published graph, and I can change the dose to explore what happens. The example uses doxorubicin, a cancer medicine carried in tiny fat bubbles called liposomes. Those bubbles are nanoparticles, meaning particles small enough to be measured in billionths of a metre. Concentration is the amount of drug in a given volume of blood.
+
+The simulator divides the body into connected pools, simplified places where drug can move and collect. It estimates the concentration in the main pool over time.
 
 ## Try the example
 
