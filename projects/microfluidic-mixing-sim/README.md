@@ -2,6 +2,8 @@
 
 I built a small-channel mixing simulator to learn how the underlying idea works. This is a learning project.
 
+The channel and mixing examples are numerical simulations.
+
 ## Running my full comparison
 
 ```sh

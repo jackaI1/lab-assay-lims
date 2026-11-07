@@ -2,6 +2,8 @@
 
 I built a checker for symptom lists to learn how the underlying idea works. This is a learning project.
 
+The bundled phenotype examples are fictional.
+
 ## How I review a list
 
 ```sh
