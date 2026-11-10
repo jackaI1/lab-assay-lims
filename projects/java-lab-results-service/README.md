@@ -14,7 +14,16 @@ docker compose up --build --wait
 ./scripts/demo.sh
 ```
 
-The first build downloads dependencies and may take a few minutes. The script exercises recording, reading, correction, history and export, including requests that should be refused. The service listens at `http://127.0.0.1:8080`. Compose loads one synthetic glucose result with ID `11111111-1111-4111-8111-111111111111`.
+The first build downloads dependencies and may take a few minutes. The script exercises recording, reading, correction, history, export and filtering, including requests that should be refused. The service listens at `http://127.0.0.1:8080`. Compose loads one synthetic glucose result with ID `11111111-1111-4111-8111-111111111111`.
+
+To look at one kind of test for one invented patient, I ask the list endpoint for it. The `setup-demo.sh` script wrote the reader password into `.env`, so I read it from there:
+
+```sh
+READER_PASSWORD=$(grep '^READER_PASSWORD=' .env | cut -d= -f2-)
+curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=SYN-DEMO-002&test=POTASSIUM'
+```
+
+Both filters are optional. `test` accepts only `GLUCOSE`, `POTASSIUM` or `HEMOGLOBIN`; any other name returns `400`. The list is newest first and returns up to `limit` results (1 to 100, default 50).
 
 ## Choose MySQL instead
 
@@ -104,9 +113,18 @@ This is a local demonstration with synthetic data, not a system for patient care
 
 A database administrator can disable the audit trigger. The FHIR output is an R4 resource export, not a complete FHIR server or proof of conformance to a particular clinical profile. The bounded recent-results list does not page through an entire database.
 
-## Tests and limits
+## Tests
 
-I kept 5 files of test code and supporting test helpers in this copy. This is a file inventory, not an execution result. This is a source snapshot, and running it on a new machine may need environment-specific setup.
+The tests run in GitHub Actions for each push. The Maven tests start a real PostgreSQL, MySQL or SQL Server container, so they need Docker and cannot run on a computer without it. Each database job then starts the Compose demo and runs the HTTP script. The workflow file is [java-lab-results-service-ci.yml](../../.github/workflows/java-lab-results-service-ci.yml), and its run history is on the repository's Actions page.
 
+The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export and the new filter. The `FhirExporterTest` class checks the export without a database.
 
-Project checks run from this directory through the path-filtered hub workflows: `java-lab-results-service-ci.yml`.
+In the last CI run, each database job ran 28 tests: 24 storage tests against that database and 4 FHIR tests. All 28 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script also passed in each job.
+
+To run the Docker-free test on your own machine with Java 21 and Maven installed:
+
+```sh
+./mvnw -Dtest=FhirExporterTest test
+```
+
+The project checks run from this directory through the path-filtered workflow `java-lab-results-service-ci.yml`.

@@ -99,6 +99,23 @@ abstract class ResultStorageContract {
         mvc.perform(get("/api/results/{id}", id).with(httpBasic("reader", "test-reader-password")))
                 .andExpect(jsonPath("$.value").value(5.4)).andExpect(jsonPath("$.unit").value("mmol/L"));
     }
+    @Test void filtersOneTestForOnePatientAndRejectsUnknownTestNames() throws Exception {
+        String glucose = VALID.replace("SYN-001", "SYN-FILTER");
+        String potassium = """
+                {"patientId":"SYN-FILTER","specimenId":"LAB-002","test":"POTASSIUM",
+                 "value":4.1,"observedAt":"2026-01-16T10:30:00Z"}
+                """;
+        create(glucose);
+        create(potassium);
+        var response = mvc.perform(get("/api/results").param("patientId", "SYN-FILTER").param("test", "POTASSIUM")
+                .with(httpBasic("reader", "test-reader-password"))).andExpect(status().isOk()).andReturn().getResponse();
+        JsonNode list = json.readTree(response.getContentAsString());
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0).get("test").asText()).isEqualTo("POTASSIUM");
+        assertThat(list.get(0).get("unit").asText()).isEqualTo("mmol/L");
+        mvc.perform(get("/api/results").param("test", "BOGUS").with(httpBasic("reader", "test-reader-password")))
+                .andExpect(status().isBadRequest());
+    }
     @Test void correctionPreservesOriginalAndActorAndRejectsStaleRevision() throws Exception {
         String id = create().get("id").asText();
         assertThat(correct(id, correction(1, "5.9", "Recalibrated instrument"))).isEqualTo(200);
@@ -154,7 +171,7 @@ abstract class ResultStorageContract {
         String reason = "Rechecked '); DELETE FROM lab_result; --";
         assertThat(correct(id, correction(1, "5.9", reason))).isEqualTo(200);
         assertThat(service.history(UUID.fromString(id)).get(1).reason()).isEqualTo(reason);
-        assertThat(service.list("SYN-001' OR '1'='1", 10)).isEmpty();
+        assertThat(service.list("SYN-001' OR '1'='1", null, 10)).isEmpty();
         for (int i = 0; i < 12; i++) {
             assertThatThrownBy(() -> service.correct(UUID.fromString(id),
                     new CorrectionRequest(1, new java.math.BigDecimal("6.1"), "Stale"), "technician"))

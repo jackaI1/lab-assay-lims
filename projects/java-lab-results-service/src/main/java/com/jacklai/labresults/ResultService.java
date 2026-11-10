@@ -54,16 +54,24 @@ public class ResultService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Result not found"));
     }
 
-    public List<LabResult> list(String patientId, int limit) {
-        if (sqlserver) {
-            if (patientId == null) return query("select * from lab_result order by observed_at desc, id offset 0 rows fetch next ? rows only", this::readResult, limit);
-            return query("select * from lab_result where patient_id = ? order by observed_at desc, id offset 0 rows fetch next ? rows only", this::readResult, patientId, limit);
+    public List<LabResult> list(String patientId, LabTest test, int limit) {
+        // Filters are optional; values are always bound as parameters, never concatenated into SQL.
+        var conditions = new ArrayList<String>();
+        var parameters = new ArrayList<Object>();
+        if (patientId != null) {
+            conditions.add("patient_id = ?");
+            parameters.add(patientId);
         }
-        if (patientId == null) {
-            return query("select * from lab_result order by observed_at desc, id limit ?", this::readResult, limit);
+        if (test != null) {
+            conditions.add("test = ?");
+            parameters.add(test.name());
         }
-        return query("select * from lab_result where patient_id = ? order by observed_at desc, id limit ?",
-                this::readResult, patientId, limit);
+        String where = conditions.isEmpty() ? "" : " where " + String.join(" and ", conditions);
+        String page = sqlserver
+                ? " order by observed_at desc, id offset 0 rows fetch next ? rows only"
+                : " order by observed_at desc, id limit ?";
+        parameters.add(limit);
+        return query("select * from lab_result" + where + page, this::readResult, parameters.toArray());
     }
 
     @Transactional
