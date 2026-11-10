@@ -115,16 +115,16 @@ A database administrator can disable the audit trigger. The FHIR output is an R4
 
 ## Tests
 
-The tests run in GitHub Actions for each push. The Maven tests start a real PostgreSQL, MySQL or SQL Server container, so they need Docker and cannot run on a computer without it. Each database job then starts the Compose demo and runs the HTTP script. The workflow file is [java-lab-results-service-ci.yml](../../.github/workflows/java-lab-results-service-ci.yml), and its run history is on the repository's Actions page.
-
-The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export and the new filter. The `FhirExporterTest` class checks the export without a database.
-
-In the last CI run, each database job ran 28 tests: 24 storage tests against that database and 4 FHIR tests. All 28 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script also passed in each job.
-
-To run the Docker-free test on your own machine with Java 21 and Maven installed:
+Run the quick test on your own computer first. It needs Java 21 and Maven, but no database or Docker:
 
 ```sh
 ./mvnw -Dtest=FhirExporterTest test
 ```
+
+The full tests start a real PostgreSQL, MySQL or SQL Server container, so they need Docker. GitHub Actions runs them for each push. The workflow file is [java-lab-results-service-ci.yml](../../.github/workflows/java-lab-results-service-ci.yml), and its run history is on the repository's Actions page. Each database job then starts the Compose demo and runs the HTTP script.
+
+The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export and the new filter. The `FhirExporterTest` class checks the export without a database.
+
+In the last CI run, each database job ran 28 tests: 24 storage tests against that database and 4 FHIR tests. All 28 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script also passed in each job.
 
 The project checks run from this directory through the path-filtered workflow `java-lab-results-service-ci.yml`.
