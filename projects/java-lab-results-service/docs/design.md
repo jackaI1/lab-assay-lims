@@ -18,7 +18,7 @@ HAPI FHIR builds an R4 Observation, the FHIR resource for a measurement. The exp
 
 ## Boundaries
 
-Listing is newest observation first with a stable ID tie-breaker, an optional exact patient filter, and a limit from 1 to 100. This is a bounded recent-results view, not a full pagination API. Each history belongs to one result. Demo data is loaded only through the `demo` profile's extra Flyway location. The ordinary profile starts without sample records.
+Listing is newest observation first with a stable ID tie-breaker, optional exact patient and test filters (the test must be one of the catalog names, otherwise the request returns 400), and a limit from 1 to 100. This is a bounded recent-results view, not a full pagination API. Each history belongs to one result. Demo data is loaded only through the `demo` profile's extra Flyway location. The ordinary profile starts without sample records.
 
 HTTP Basic is convenient for a local demonstration. Before any real deployment I would use TLS, individual accounts from an identity provider, narrower authorization by organization or patient, retention policies, rate limits, backups and operational monitoring. A shared role account identifies a role in the demo, not an individual technician. These are documented limits, not implemented safeguards.
 

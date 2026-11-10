@@ -63,6 +63,9 @@ assert content_type.startswith('application/fhir+json')
 assert fhir['resourceType'] == 'Observation' and fhir['status'] == 'amended'
 assert fhir['code']['coding'][0]['code'] == '2823-3' and fhir['valueQuantity']['value'] == 4.3
 assert fhir['meta']['versionId'] == '2'
+filtered, _ = request('GET', '/api/results?patientId=SYN-DEMO-002&test=POTASSIUM', 'reader')
+assert filtered and all(row['test'] == 'POTASSIUM' and row['patientId'] == 'SYN-DEMO-002' for row in filtered)
+assert result['id'] in [row['id'] for row in filtered]
 request('POST', path + '/corrections', 'technician', dict(correction, expectedRevision=2, value=-1), 400)
-print(f'{checks} HTTP checks passed: create, read, roles, correction, conflict, history, FHIR and validation.')
+print(f'{checks} HTTP checks passed: create, read, roles, correction, conflict, history, FHIR, filter and validation.')
 PY
