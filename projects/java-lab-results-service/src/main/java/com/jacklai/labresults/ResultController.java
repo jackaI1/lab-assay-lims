@@ -28,8 +28,9 @@ public class ResultController {
     @GetMapping("/api/results")
     List<LabResult> list(@RequestParam(required = false) @Pattern(regexp = "SYN-[A-Z0-9-]{1,32}") String patientId,
                          @RequestParam(required = false) LabTest test,
-                         @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit) {
-        return results.list(patientId, test, limit);
+                         @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit,
+                         @RequestParam(defaultValue = "0") @Min(0) @Max(1000000) int offset) {
+        return results.list(patientId, test, limit, offset);
     }
     @GetMapping("/api/results/{id}")
     LabResult get(@PathVariable UUID id) { return results.get(id); }
