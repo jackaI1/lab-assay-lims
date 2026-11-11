@@ -31,6 +31,17 @@ To read older results, I add `offset` to skip that many rows. With pages of one,
 curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=SYN-DEMO-PAGE&limit=1&offset=1'
 ```
 
+## Save a list as a spreadsheet
+
+The list comes back as JSON, which is hard to read by eye. When I want to check a run of results by hand, I download the same list as a CSV file that Excel or LibreOffice opens directly. It takes the same `patientId`, `test`, `limit` and `offset` options:
+
+```sh
+READER_PASSWORD=$(grep '^READER_PASSWORD=' .env | cut -d= -f2-)
+curl -u "reader:$READER_PASSWORD" -o lab-results.csv 'http://127.0.0.1:8080/api/results.csv?patientId=SYN-DEMO-002'
+```
+
+The file has one row per result: ID, patient, specimen, test, value, unit, observation time, status, revision and last change. Rows come in the same newest-first order as the list. A file holds up to `limit` rows (50 by default, 100 at most), so I use `offset` to fetch a longer history one page at a time. Like the list, it needs the reader password.
+
 ## Choose MySQL instead
 
 I added a second database option so I can run the same measurement workflow where MySQL is already available. PostgreSQL remains the default. For a separate MySQL 8.4 demo, I use the same setup script and add an override file, which replaces the database container and selects the matching app settings:

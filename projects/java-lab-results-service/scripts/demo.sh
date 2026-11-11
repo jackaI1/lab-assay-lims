@@ -38,7 +38,9 @@ def request(method, path, role=None, body=None, expected=200):
     if status != expected:
         raise SystemExit(f'{method} {path}: expected {expected}, received {status}')
     checks += 1
-    return json.loads(raw) if raw else None, content_type
+    if raw and 'json' in content_type:
+        return json.loads(raw), content_type
+    return (raw.decode() if raw else None), content_type
 
 request('GET', '/health')
 request('GET', '/api/results', expected=401)
@@ -75,6 +77,12 @@ assert len(everything) >= 2
 page, _ = request('GET', '/api/results?patientId=SYN-DEMO-PAGE&test=POTASSIUM&limit=2&offset=1', 'reader')
 assert [row['id'] for row in page] == [row['id'] for row in everything[1:3]]
 request('GET', '/api/results?limit=1&offset=-1', 'reader', expected=400)
+csv_text, csv_type = request('GET', '/api/results.csv?patientId=SYN-DEMO-002&test=POTASSIUM', 'reader')
+assert csv_type.startswith('text/csv')
+csv_lines = csv_text.strip().split('\r\n')
+assert csv_lines[0].startswith('id,patient_id,') and len(csv_lines) == len(filtered) + 1
+assert result['id'] in csv_text and ',SYN-DEMO-002,LAB-DEMO-002,POTASSIUM,4.3000,mmol/L,' in csv_text
+request('GET', '/api/results.csv', expected=401)
 request('POST', path + '/corrections', 'technician', dict(correction, expectedRevision=2, value=-1), 400)
-print(f'{checks} HTTP checks passed: create, read, roles, correction, conflict, history, FHIR, filter, paging and validation.')
+print(f'{checks} HTTP checks passed: create, read, roles, correction, conflict, history, FHIR, filter, CSV export, paging and validation.')
 PY

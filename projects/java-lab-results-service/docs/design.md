@@ -16,6 +16,8 @@ An audit entry includes the complete result after that change, the authenticated
 
 HAPI FHIR builds an R4 Observation, the FHIR resource for a measurement. The export contains the result ID, revision, final or amended status, laboratory category, LOINC test, quantity with UCUM units, synthetic subject and specimen identifiers, observation time and last change time. It represents the current revision. The history route contains earlier snapshots. No request is sent to a remote FHIR server, and no Patient resource or clinical profile conformance is claimed.
 
+The CSV route, `GET /api/results.csv`, returns the same filtered, paged list as `/api/results` in a file with a header row. `ResultCsv` writes RFC 4180 text with CRLF line endings and quotes any field containing a comma, quote or line break. It reuses `ResultService.list`, so the export adds no SQL and has no separate filter logic. The `reader` role can use it.
+
 ## Boundaries
 
 Listing is newest observation first with a stable ID tie-breaker, optional exact patient and test filters (the test must be one of the catalog names, otherwise the request returns 400), a limit from 1 to 100, and an `offset` (0 to 1,000,000, default 0) for stepping through older pages. Offset paging adds no total count and no cursor; a page request is a fresh query, so rows inserted between requests can shift later pages. Each history belongs to one result. Demo data is loaded only through the `demo` profile's extra Flyway location. The ordinary profile starts without sample records.

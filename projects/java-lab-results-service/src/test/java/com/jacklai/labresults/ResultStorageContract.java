@@ -277,6 +277,29 @@ abstract class ResultStorageContract {
         json.readTree(response.getContentAsString()).forEach(node -> ids.add(node.get("id").asText()));
         return ids;
     }
+    @Test void csvExportMatchesFilteredListAndRequiresReaderRole() throws Exception {
+        String patient = "SYN-CSV";
+        create(VALID.replace("SYN-001", patient));
+        create("""
+                {"patientId":"SYN-CSV","specimenId":"LAB-CSV","test":"POTASSIUM",
+                 "value":4.1,"observedAt":"2026-01-16T10:30:00Z"}
+                """);
+        mvc.perform(get("/api/results.csv").param("patientId", patient)).andExpect(status().isUnauthorized());
+        var response = mvc.perform(get("/api/results.csv").param("patientId", patient).param("test", "POTASSIUM")
+                        .with(httpBasic("reader", "test-reader-password")))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith("text/csv"))
+                .andExpect(header().string("Content-Disposition", "attachment; filename=\"lab-results.csv\""))
+                .andReturn().getResponse();
+        String[] lines = response.getContentAsString().split("\r\n");
+        assertThat(lines).hasSize(2);
+        assertThat(lines[0]).isEqualTo(ResultCsv.HEADER);
+        assertThat(lines[1]).contains(",SYN-CSV,LAB-CSV,POTASSIUM,4.1000,mmol/L,");
+        mvc.perform(get("/api/results.csv").param("test", "BOGUS").with(httpBasic("reader", "test-reader-password")))
+                .andExpect(status().isBadRequest());
+        mvc.perform(get("/api/results.csv").param("limit", "101").with(httpBasic("reader", "test-reader-password")))
+                .andExpect(status().isBadRequest());
+    }
     @Test void missingResultsAndMalformedIdsHaveExplicitErrors() throws Exception {
         for (String suffix : List.of("", "/history")) {
             mvc.perform(get("/api/results/" + UUID.randomUUID() + suffix).with(httpBasic("reader", "test-reader-password")))

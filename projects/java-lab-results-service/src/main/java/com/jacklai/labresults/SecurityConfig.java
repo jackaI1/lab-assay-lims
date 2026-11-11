@@ -33,7 +33,7 @@ class SecurityConfig {
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/health").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/results", "/api/results/**").hasRole("READER")
+                        .requestMatchers(HttpMethod.GET, "/api/results", "/api/results.csv", "/api/results/**").hasRole("READER")
                         .requestMatchers(HttpMethod.POST, "/api/results", "/api/results/*/corrections").hasRole("TECHNICIAN")
                         .anyRequest().denyAll())
                 .build();

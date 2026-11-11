@@ -2,10 +2,13 @@ package com.jacklai.labresults;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +18,7 @@ import java.util.UUID;
 public class ResultController {
     private final ResultService results;
     private final FhirExporter fhir;
+    private final ResultCsv csv = new ResultCsv();
     ResultController(ResultService results, FhirExporter fhir) { this.results = results; this.fhir = fhir; }
 
     @GetMapping("/health")
@@ -31,6 +35,18 @@ public class ResultController {
                          @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit,
                          @RequestParam(defaultValue = "0") @Min(0) @Max(1000000) int offset) {
         return results.list(patientId, test, limit, offset);
+    }
+    @GetMapping(value = "/api/results.csv", produces = "text/csv")
+    ResponseEntity<String> exportList(@RequestParam(required = false) @Pattern(regexp = "SYN-[A-Z0-9-]{1,32}") String patientId,
+                                      @RequestParam(required = false) LabTest test,
+                                      @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit,
+                                      @RequestParam(defaultValue = "0") @Min(0) @Max(1000000) int offset) {
+        // Same filters, ordering and paging as /api/results, returned as a spreadsheet-ready file.
+        String body = csv.export(results.list(patientId, test, limit, offset));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"lab-results.csv\"")
+                .contentType(new MediaType("text", "csv", StandardCharsets.UTF_8))
+                .body(body);
     }
     @GetMapping("/api/results/{id}")
     LabResult get(@PathVariable UUID id) { return results.get(id); }
