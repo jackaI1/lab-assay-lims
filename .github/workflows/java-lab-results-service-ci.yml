@@ -24,13 +24,13 @@ jobs:
       matrix:
         include:
         - database: postgresql
-          tests: FhirExporterTest,LabResultsIntegrationTest
+          tests: FhirExporterTest,ResultCsvTest,LabResultsIntegrationTest
           compose: -p lab-ci-pg -f compose.yaml
         - database: mysql
-          tests: FhirExporterTest,MySqlIntegrationTest
+          tests: FhirExporterTest,ResultCsvTest,MySqlIntegrationTest
           compose: -p lab-ci-mysql -f compose.yaml -f compose.mysql.yaml
         - database: sqlserver
-          tests: FhirExporterTest,SqlServerIntegrationTest
+          tests: FhirExporterTest,ResultCsvTest,SqlServerIntegrationTest
           compose: -p lab-ci-sqlserver -f compose.yaml -f compose.sqlserver.yaml
     runs-on: ubuntu-latest
     timeout-minutes: 20
