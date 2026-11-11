@@ -11,6 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Callable;
@@ -171,7 +174,7 @@ abstract class ResultStorageContract {
         String reason = "Rechecked '); DELETE FROM lab_result; --";
         assertThat(correct(id, correction(1, "5.9", reason))).isEqualTo(200);
         assertThat(service.history(UUID.fromString(id)).get(1).reason()).isEqualTo(reason);
-        assertThat(service.list("SYN-001' OR '1'='1", null, 10)).isEmpty();
+        assertThat(service.list("SYN-001' OR '1'='1", null, 10, 0)).isEmpty();
         for (int i = 0; i < 12; i++) {
             assertThatThrownBy(() -> service.correct(UUID.fromString(id),
                     new CorrectionRequest(1, new java.math.BigDecimal("6.1"), "Stale"), "technician"))
@@ -240,6 +243,39 @@ abstract class ResultStorageContract {
             mvc.perform(get("/api/results").param("limit", limit).with(httpBasic("reader", "test-reader-password")))
                     .andExpect(status().isBadRequest());
         }
+        for (String offset : List.of("-1", "1000001", "invalid")) {
+            mvc.perform(get("/api/results").param("offset", offset).with(httpBasic("reader", "test-reader-password")))
+                    .andExpect(status().isBadRequest());
+        }
+    }
+    @Test void pagesThroughPatientResultsWithoutSkippingOrRepeating() throws Exception {
+        String patient = "SYN-PAGE";
+        Set<String> expected = new HashSet<>();
+        for (int day = 1; day <= 5; day++) {
+            expected.add(create(VALID.replace("SYN-001", patient)
+                    .replace("2026-01-15T10:30:00Z", "2026-02-0" + day + "T10:30:00Z")).get("id").asText());
+        }
+        // A second result at the same instant as the newest one checks that the ID tie-breaker keeps pages stable.
+        expected.add(create(VALID.replace("SYN-001", patient)
+                .replace("2026-01-15T10:30:00Z", "2026-02-05T10:30:00Z")).get("id").asText());
+        List<String> seen = new ArrayList<>();
+        for (int offset = 0; offset < 6; offset += 2) {
+            seen.addAll(listIds(patient, 2, offset));
+        }
+        assertThat(seen).hasSize(6).doesNotHaveDuplicates().containsExactlyInAnyOrderElementsOf(expected);
+        assertThat(listIds(patient, 2, 4)).hasSize(2);
+        assertThat(listIds(patient, 2, 6)).isEmpty();
+        assertThat(service.list(patient, null, 2, 0).getFirst().observedAt())
+                .isEqualTo(java.time.Instant.parse("2026-02-05T10:30:00Z"));
+    }
+    private List<String> listIds(String patient, int limit, int offset) throws Exception {
+        var response = mvc.perform(get("/api/results").param("patientId", patient)
+                        .param("limit", String.valueOf(limit)).param("offset", String.valueOf(offset))
+                        .with(httpBasic("reader", "test-reader-password")))
+                .andExpect(status().isOk()).andReturn().getResponse();
+        List<String> ids = new ArrayList<>();
+        json.readTree(response.getContentAsString()).forEach(node -> ids.add(node.get("id").asText()));
+        return ids;
     }
     @Test void missingResultsAndMalformedIdsHaveExplicitErrors() throws Exception {
         for (String suffix : List.of("", "/history")) {

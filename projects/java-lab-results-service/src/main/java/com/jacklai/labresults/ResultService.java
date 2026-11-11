@@ -54,7 +54,7 @@ public class ResultService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Result not found"));
     }
 
-    public List<LabResult> list(String patientId, LabTest test, int limit) {
+    public List<LabResult> list(String patientId, LabTest test, int limit, int offset) {
         // Filters are optional; values are always bound as parameters, never concatenated into SQL.
         var conditions = new ArrayList<String>();
         var parameters = new ArrayList<Object>();
@@ -67,11 +67,17 @@ public class ResultService {
             parameters.add(test.name());
         }
         String where = conditions.isEmpty() ? "" : " where " + String.join(" and ", conditions);
-        String page = sqlserver
-                ? " order by observed_at desc, id offset 0 rows fetch next ? rows only"
-                : " order by observed_at desc, id limit ?";
+        // The ID tie-breaker keeps pages stable when two results share an observation time.
+        if (sqlserver) {
+            parameters.add(offset);
+            parameters.add(limit);
+            return query("select * from lab_result" + where
+                    + " order by observed_at desc, id offset ? rows fetch next ? rows only", this::readResult, parameters.toArray());
+        }
         parameters.add(limit);
-        return query("select * from lab_result" + where + page, this::readResult, parameters.toArray());
+        parameters.add(offset);
+        return query("select * from lab_result" + where + " order by observed_at desc, id limit ? offset ?",
+                this::readResult, parameters.toArray());
     }
 
     @Transactional

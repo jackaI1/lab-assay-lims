@@ -25,6 +25,12 @@ curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=S
 
 Both filters are optional. `test` accepts only `GLUCOSE`, `POTASSIUM` or `HEMOGLOBIN`; any other name returns `400`. The list is newest first and returns up to `limit` results (1 to 100, default 50).
 
+To read older results, I add `offset` to skip that many rows. With pages of two, the second page is `limit=2&offset=2`, the third is `limit=2&offset=4`, and so on. I keep asking for the next page until one comes back shorter than `limit`; the service does not send a total count. A negative `offset` returns `400`.
+
+```sh
+curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=SYN-DEMO-002&limit=2&offset=2'
+```
+
 ## Choose MySQL instead
 
 I added a second database option so I can run the same measurement workflow where MySQL is already available. PostgreSQL remains the default. For a separate MySQL 8.4 demo, I use the same setup script and add an override file, which replaces the database container and selects the matching app settings:
@@ -111,7 +117,7 @@ I explain the request flow and tradeoffs in [docs/design.md](docs/design.md). Th
 
 This is a local demonstration with synthetic data, not a system for patient care. Identifier prefixes cannot guarantee that someone has avoided personal data. The two shared accounts identify demo roles rather than individual people. HTTP Basic sends credentials on each request, so I would require TLS and individual accounts from an identity provider before deployment. I would also need authorization by organization or patient, operational monitoring, backups and retention rules.
 
-A database administrator can disable the audit trigger. The FHIR output is an R4 resource export, not a complete FHIR server or proof of conformance to a particular clinical profile. The bounded recent-results list does not page through an entire database.
+A database administrator can disable the audit trigger. The FHIR output is an R4 resource export, not a complete FHIR server or proof of conformance to a particular clinical profile. The list uses offset paging, so a very deep page can get slower on a large table. A new result inserted while I page can shift later rows by one.
 
 ## Tests
 
