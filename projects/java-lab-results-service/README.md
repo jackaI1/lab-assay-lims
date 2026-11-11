@@ -142,6 +142,6 @@ The full tests start a real PostgreSQL, MySQL or SQL Server container, so they n
 
 The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export, the CSV export, the patient and test filter, and paging through a patient's results without skipping or repeating any. The `FhirExporterTest` and `ResultCsvTest` classes check their exports without a database.
 
-In the last CI run on this branch, each database job ran 33 tests: 26 storage tests against that database, 4 FHIR tests and 3 CSV tests. All 33 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script passed 19 checks in each job.
+In the last CI run on this branch, each database job ran 36 tests: 26 storage tests against that database, 4 FHIR tests and 6 CSV tests. All 36 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script passed 19 checks in each job.
 
 The project checks run from this directory through the path-filtered workflow `java-lab-results-service-ci.yml`.
