@@ -129,8 +129,8 @@ Run the quick test on your own computer first. It needs Java 21 and Maven, but n
 
 The full tests start a real PostgreSQL, MySQL or SQL Server container, so they need Docker. GitHub Actions runs them for each push. The workflow file is [java-lab-results-service-ci.yml](../../.github/workflows/java-lab-results-service-ci.yml), and its run history is on the repository's Actions page. Each database job then starts the Compose demo and runs the HTTP script.
 
-The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export and the new filter. The `FhirExporterTest` class checks the export without a database.
+The shared storage tests cover validation, the role checks, corrections, the stale-revision conflict, the concurrent correction race, history, the FHIR export, the patient and test filter, and paging through a patient's results without skipping or repeating any. The `FhirExporterTest` class checks the export without a database.
 
-In the last CI run, each database job ran 28 tests: 24 storage tests against that database and 4 FHIR tests. All 28 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script also passed in each job.
+In the last CI run on this branch, each database job ran 29 tests: 25 storage tests against that database and 4 FHIR tests. All 29 passed in each of the PostgreSQL, MySQL and SQL Server jobs, with no failures or errors. The Compose demo HTTP script passed 17 checks in each job.
 
 The project checks run from this directory through the path-filtered workflow `java-lab-results-service-ci.yml`.
