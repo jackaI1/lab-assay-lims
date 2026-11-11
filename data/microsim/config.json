@@ -1,0 +1,168 @@
+{
+  "_about": "Inputs for lab_assay.microsim. Every number here is either a published value with its source, or an assumption marked as such. Edit this file to test other inputs; the model reads it on each run.",
+  "start_age": 65,
+  "end_age": 100,
+  "initial": {
+    "_source": "Assumption. Starting prevalence at age 65 is not taken from a published table in this config.",
+    "mci": 0.08,
+    "dementia": 0.01
+  },
+  "rates": {
+    "_source": "Assumed annual probabilities at age 65, rising exponentially with age (growth per year). The growth values were chosen by hand so the age pattern is steep enough for the CSHA anchors; the calibration multipliers then set the level. The level is fitted, the shape is not.",
+    "h_to_mci": {
+      "base": 0.02,
+      "growth": 0.1
+    },
+    "mci_to_d": {
+      "base": 0.08,
+      "growth": 0.13
+    },
+    "h_to_d": {
+      "base": 0.002,
+      "growth": 0.16
+    },
+    "mci_revert": {
+      "base": 0.05,
+      "growth": 0.0
+    },
+    "d_to_ltc": {
+      "base": 0.1,
+      "growth": 0.03
+    }
+  },
+  "mortality": {
+    "_source": "Gompertz hazard q(age) = a0 * exp(slope * (age - 65)). The slope is an assumption. a0 is solved so that life expectancy at 65 equals target_e65.",
+    "slope": 0.085,
+    "target_e65": 21.0,
+    "target_e65_note": "Average of 22.3 years (female) and 19.7 years (male) remaining life expectancy at 65 for 2023, reported by Statistics Canada (Daily, 9 Jan 2026). A sex-neutral simplification.",
+    "hazard_ratio": {
+      "mci": 1.3,
+      "dementia": 2.5,
+      "ltc": 3.0,
+      "_note": "Assumed relative mortality hazards by state. Not from a specific published source; tested in the sensitivity analysis."
+    }
+  },
+  "targets": [
+    {
+      "band": [
+        65,
+        74
+      ],
+      "value": 0.024,
+      "role": "calibration",
+      "tolerance": 0.25,
+      "source": "Canadian Study of Health and Aging (CSHA-1, 1991 data): dementia prevalence 2.4% at ages 65-74. Ebly et al., Canadian Study of Health and Aging Working Group, CMAJ 1994 (PubMed 8131123)."
+    },
+    {
+      "band": [
+        75,
+        84
+      ],
+      "value": 0.096,
+      "role": "validation",
+      "tolerance": 0.35,
+      "source": "Derived, not a published figure. Assumes prevalence doubles every five years (a secondary summary of the CSHA data): 2.4% at the 65-74 midpoint (69.5) x 2^((79.5-69.5)/5) = 9.6% at the 75-84 midpoint (79.5). Held out of calibration and only checked afterwards."
+    },
+    {
+      "band": [
+        85,
+        100
+      ],
+      "value": 0.345,
+      "role": "calibration",
+      "tolerance": 0.25,
+      "source": "CSHA-1, 1991 data: 34.5% dementia prevalence at age 85 and over. Same CMAJ 1994 paper as above."
+    }
+  ],
+  "sensitivity": [
+    {
+      "name": "mult_h_to_mci",
+      "kind": "relative",
+      "low": 0.8,
+      "high": 1.2,
+      "label": "Healthy to MCI incidence (x0.8 / x1.2)"
+    },
+    {
+      "name": "mult_dementia_onset",
+      "kind": "relative",
+      "low": 0.8,
+      "high": 1.2,
+      "label": "Dementia onset rates (x0.8 / x1.2)"
+    },
+    {
+      "name": "mult_d_to_ltc",
+      "kind": "relative",
+      "low": 0.7,
+      "high": 1.3,
+      "label": "Dementia to long-term care (x0.7 / x1.3)"
+    },
+    {
+      "name": "mult_mci_revert",
+      "kind": "relative",
+      "low": 0.5,
+      "high": 1.5,
+      "label": "MCI back to healthy (x0.5 / x1.5)"
+    },
+    {
+      "name": "hr_mci",
+      "kind": "absolute",
+      "low": 1.1,
+      "high": 1.5,
+      "label": "Mortality hazard, MCI (1.1 / 1.5)"
+    },
+    {
+      "name": "hr_dementia",
+      "kind": "absolute",
+      "low": 2.0,
+      "high": 3.0,
+      "label": "Mortality hazard, dementia (2.0 / 3.0)"
+    },
+    {
+      "name": "hr_ltc",
+      "kind": "absolute",
+      "low": 2.0,
+      "high": 4.0,
+      "label": "Mortality hazard, long-term care (2.0 / 4.0)"
+    }
+  ],
+  "psa": [
+    {
+      "name": "mult_h_to_mci",
+      "dist": "lognormal",
+      "sd": 0.2
+    },
+    {
+      "name": "mult_dementia_onset",
+      "dist": "lognormal",
+      "sd": 0.2
+    },
+    {
+      "name": "mult_d_to_ltc",
+      "dist": "lognormal",
+      "sd": 0.2
+    },
+    {
+      "name": "mult_mci_revert",
+      "dist": "lognormal",
+      "sd": 0.2
+    },
+    {
+      "name": "hr_mci",
+      "dist": "normal_relative",
+      "sd": 0.1,
+      "min": 1.0
+    },
+    {
+      "name": "hr_dementia",
+      "dist": "normal_relative",
+      "sd": 0.15,
+      "min": 1.0
+    },
+    {
+      "name": "hr_ltc",
+      "dist": "normal_relative",
+      "sd": 0.25,
+      "min": 1.0
+    }
+  ]
+}

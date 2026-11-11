@@ -76,12 +76,29 @@ I also included 24 public, measured calibration wells from Feng Feng's MIT-licen
 
 For a curved response I use a **four-parameter logistic curve (4PL)**: a smooth response with two plateaus, a midpoint and a slope. I support increasing and decreasing responses. **CV%** measures variation between repeated wells, and **Z-prime** measures how clearly positive and negative controls separate. The default review limits are R² ≥ 0.98 for curve fit, CV ≤ 20%, and Z-prime ≥ 0.5. These are demonstration limits, not a validated laboratory acceptance procedure. [Equations, import formats and failure rules](docs/assay-method.md).
 
+## Simulate a population with dementia
+
+I built a small health simulation because I wanted to see how many people might move from healthy ageing into memory problems, dementia and long-term care, and how much the answer depends on the numbers I guess. Health planners use models like this to estimate future care needs before they decide how many beds or staff to plan for.
+
+The model starts with a made-up group of 20,000 people, all aged 65. Each year, each person can stay as they are, develop mild memory problems (mild cognitive impairment), develop dementia, move into long-term care or die. The chance of each change comes from a configuration file. Every number in it is either a published figure with its source, or marked as my assumption.
+
+I tuned the model to two published Canadian figures: 2.4% of people aged 65 to 74 have dementia, and 34.5% of people aged 85 and over do (Canadian Study of Health and Aging, 1991 data). It also matches a Statistics Canada life expectancy of 21 years at age 65, which is an average of the male and female figures. I left out the 75 to 84 group while tuning and check afterwards whether the model lands near it. That target is a rough estimate I worked out from the other two numbers, so it is a sanity check and not a second published result.
+
+```sh
+uv run python -m lab_assay.microsim --output microsim-output
+```
+
+This writes `microsim-output/report.json` and three plots. With the default settings, a person aged 65 spends about 2.1 years with dementia on average. When I vary the assumptions together, the 95% range is 1.6 to 2.9 years. The tornado plot shows which assumptions change the answer most: how likely people are to die while in long-term care, and how fast dementia starts.
+
+Options: `--population` sets the group size, `--seed` sets the random seed (the same seed gives the same result), `--psa-draws` sets how many sets of assumptions are sampled, and `--config` points to another configuration file. The methods note, with every assumption and limitation, is in [docs/microsim.md](docs/microsim.md).
+
 ## Inside the project
 
 - `lab_assay/store.py` keeps related samples, lots, wells, imports, results and audit events in SQLite.
 - `lab_assay/app.py` serves the page and FastAPI endpoints, with input validation and download routes.
 - `lab_assay/importers.py` reads normalized reader exports; `analysis.py` fits curves and calculates results.
 - `lab_assay/protocols.py` produces standalone Opentrons API v2 instructions and volume plans.
+- `lab_assay/microsim.py` runs the dementia simulation; its inputs are in `data/microsim/config.json`.
 - `lab_assay/static/` contains the page, forms, plate map and curve plot. [API walkthrough](docs/api-example.md).
 
 The audit trail is append-only at the database level, with original import bytes and SHA-256 fingerprints retained. It is not a regulated LIMS: there are no authenticated signatures, access roles, inventory consumption records or protection against a database administrator changing the schema. Each plate references one reagent lot. I also do not estimate concentration uncertainty or support kinetic/multi-wavelength vendor exports directly.
@@ -98,7 +115,7 @@ uv run playwright install chromium
 uv run python scripts/browser_check.py
 ```
 
-My original assay suite includes **51 tests**, including four real Opentrons simulator runs. The seeded curve recovers 6.9989 and 12.0007 ng/mL for the 7 and 12 ng/mL samples, with Z-prime 0.9894. GitHub Actions runs the same unit and API tests on Python 3.11 and 3.12, plus the browser workflow. Tests cover concentration recovery, public calibration, malformed CSV/XLSX files, invalid record links, immutable history, expired lots, failing controls and impossible liquid transfers. The browser check registers materials, saves a map, imports a plate, calculates results, downloads files and checks desktop/mobile layouts. It closes its browser and temporary server in a `finally` block and checks that the port is closed.
+My original assay suite includes **51 tests**, including four real Opentrons simulator runs. The simulation adds **9 tests** in `tests/test_microsim.py`, covering seeded reproducibility, probability conservation, calibration recovery and the command-line tool. They run in the same CI job, with the full suite at 75 tests. The seeded curve recovers 6.9989 and 12.0007 ng/mL for the 7 and 12 ng/mL samples, with Z-prime 0.9894. GitHub Actions runs the same unit and API tests on Python 3.11 and 3.12, plus the browser workflow. Tests cover concentration recovery, public calibration, malformed CSV/XLSX files, invalid record links, immutable history, expired lots, failing controls and impossible liquid transfers. The browser check registers materials, saves a map, imports a plate, calculates results, downloads files and checks desktop/mobile layouts. It closes its browser and temporary server in a `finally` block and checks that the port is closed.
 
 
 ## Other things I've built here
