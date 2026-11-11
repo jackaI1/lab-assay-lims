@@ -25,10 +25,10 @@ curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=S
 
 Both filters are optional. `test` accepts only `GLUCOSE`, `POTASSIUM` or `HEMOGLOBIN`; any other name returns `400`. The list is newest first and returns up to `limit` results (1 to 100, default 50).
 
-To read older results, I add `offset` to skip that many rows. With pages of two, the second page is `limit=2&offset=2`, the third is `limit=2&offset=4`, and so on. I keep asking for the next page until one comes back shorter than `limit`; the service does not send a total count. A negative `offset` returns `400`.
+To read older results, I add `offset` to skip that many rows. With pages of two, the second page is `limit=2&offset=2`, the third is `limit=2&offset=4`, and so on. I keep asking for the next page until one comes back shorter than `limit`; the service does not send a total count. A negative `offset` returns `400`. The demo script creates two or more results for `SYN-DEMO-PAGE`, so that patient is the one to page through.
 
 ```sh
-curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=SYN-DEMO-002&limit=2&offset=2'
+curl -u "reader:$READER_PASSWORD" 'http://127.0.0.1:8080/api/results?patientId=SYN-DEMO-PAGE&limit=2&offset=2'
 ```
 
 ## Choose MySQL instead

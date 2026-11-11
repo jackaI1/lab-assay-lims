@@ -67,11 +67,11 @@ filtered, _ = request('GET', '/api/results?patientId=SYN-DEMO-002&test=POTASSIUM
 assert filtered and all(row['test'] == 'POTASSIUM' and row['patientId'] == 'SYN-DEMO-002' for row in filtered)
 assert result['id'] in [row['id'] for row in filtered]
 request('POST', '/api/results', 'technician', {
-    'patientId': 'SYN-DEMO-002', 'specimenId': 'LAB-DEMO-003', 'test': 'POTASSIUM',
+    'patientId': 'SYN-DEMO-PAGE', 'specimenId': 'LAB-DEMO-003', 'test': 'POTASSIUM',
     'value': 3.9, 'observedAt': '2026-01-14T10:30:00Z'}, 201)
-everything, _ = request('GET', '/api/results?patientId=SYN-DEMO-002&test=POTASSIUM&limit=100', 'reader')
+everything, _ = request('GET', '/api/results?patientId=SYN-DEMO-PAGE&test=POTASSIUM&limit=100', 'reader')
 assert len(everything) >= 2
-page, _ = request('GET', '/api/results?patientId=SYN-DEMO-002&test=POTASSIUM&limit=2&offset=1', 'reader')
+page, _ = request('GET', '/api/results?patientId=SYN-DEMO-PAGE&test=POTASSIUM&limit=2&offset=1', 'reader')
 assert [row['id'] for row in page] == [row['id'] for row in everything[1:3]]
 request('GET', '/api/results?limit=1&offset=-1', 'reader', expected=400)
 request('POST', path + '/corrections', 'technician', dict(correction, expectedRevision=2, value=-1), 400)
