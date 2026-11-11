@@ -66,9 +66,10 @@ assert fhir['meta']['versionId'] == '2'
 filtered, _ = request('GET', '/api/results?patientId=SYN-DEMO-002&test=POTASSIUM', 'reader')
 assert filtered and all(row['test'] == 'POTASSIUM' and row['patientId'] == 'SYN-DEMO-002' for row in filtered)
 assert result['id'] in [row['id'] for row in filtered]
-request('POST', '/api/results', 'technician', {
-    'patientId': 'SYN-DEMO-PAGE', 'specimenId': 'LAB-DEMO-003', 'test': 'POTASSIUM',
-    'value': 3.9, 'observedAt': '2026-01-14T10:30:00Z'}, 201)
+for specimen, observed in [('LAB-DEMO-003', '2026-01-14T10:30:00Z'), ('LAB-DEMO-004', '2026-01-13T10:30:00Z')]:
+    request('POST', '/api/results', 'technician', {
+        'patientId': 'SYN-DEMO-PAGE', 'specimenId': specimen, 'test': 'POTASSIUM',
+        'value': 3.9, 'observedAt': observed}, 201)
 everything, _ = request('GET', '/api/results?patientId=SYN-DEMO-PAGE&test=POTASSIUM&limit=100', 'reader')
 assert len(everything) >= 2
 page, _ = request('GET', '/api/results?patientId=SYN-DEMO-PAGE&test=POTASSIUM&limit=2&offset=1', 'reader')
