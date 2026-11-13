@@ -140,7 +140,7 @@ My original assay suite includes **51 tests**, including four real Opentrons sim
 - [selenium-test-harness](projects/selenium-test-harness/)
 - [tissue-patch-eval](projects/tissue-patch-eval/)
 - [titration-curve-analysis](projects/titration-curve-analysis/)
-- [trial-criteria-checker](projects/trial-criteria-checker/)
+- [trial-criteria-checker](https://github.com/jackaI1/trial-criteria-checker) (in its own repo again; [older copy](projects/trial-criteria-checker/))
 - [chart-send-extension](projects/chart-send-extension/)
 - [px4-drone-identity](projects/px4-drone-identity/)
 - [px4-drone-identity-sitl](projects/px4-drone-identity-sitl/)
