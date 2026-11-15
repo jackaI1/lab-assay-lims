@@ -1,8 +1,8 @@
 # rails-lab-results-api
 
-I built a Ruby on Rails version of my lab results service because I wanted to put the same rules in a second language and see how the code differs. The Java service in [java-lab-results-service](../java-lab-results-service/) already keeps a measured value, its corrections and a history. This one does the same job with Rails, so I can compare the two side by side.
+I built a small web service that stores lab results, refuses bad entries and keeps a permanent history of every correction, because I wanted to learn Ruby on Rails by rebuilding the rules I already have in my Java lab results service. Rails is a framework for building web services in the Ruby language. Running both side by side lets me compare how each one handles the same job: the [Java service](../java-lab-results-service/) is the original.
 
-It stores a lab result, rejects bad input, and only accepts a correction if it is based on the newest revision. Every saved change adds a line to an audit table that cannot be edited or deleted. The sample IDs and values are invented.
+Here a "revision" is a version number: each correction must name the version it is changing, so a correction based on an old copy is turned away instead of overwriting newer work. Every saved change adds a line to an audit table (a history log) that cannot be edited or deleted. The sample IDs and values are invented.
 
 ## Start it
 
