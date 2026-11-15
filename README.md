@@ -120,7 +120,7 @@ My original assay suite includes **51 tests**, including four real Opentrons sim
 
 ## Two more pieces: a Rails copy and a hydrogen model
 
-I built a Ruby on Rails copy of the lab results service in [rails-lab-results-api](projects/rails-lab-results-api/) because I wanted to learn Rails by building rules I already had in Java. It keeps the same idea: a correction must name the revision it is based on, and every saved change adds a line to an audit table that the database will not let anyone edit or delete. It has 29 RSpec tests, and CI runs them with the Ruby version pinned in `.ruby-version`.
+I built a small web service in Ruby on Rails, in [rails-lab-results-api](projects/rails-lab-results-api/), because I wanted to learn Rails by rebuilding the rules I already had in Java. It keeps the same idea: a correction must name the version it is changing, and every saved change adds a line to a history log that the database will not let anyone edit or delete. It has 29 RSpec tests, and CI runs them with the Ruby version pinned in `.ruby-version`.
 
 I built a hydrogen process model in [hydrogen-process-model](projects/hydrogen-process-model/) because I kept seeing two routes called the cheap way to make hydrogen, and I wanted to check the energy and cost myself. It uses Cantera to find the equilibrium gas mix from steam methane reforming, models electrolysis from its efficiency, and writes a cost comparison to an Excel workbook. Its 35 tests check that carbon, hydrogen, oxygen and mass balance at every point. The prices in its assumptions file are examples, not quotes.
 
