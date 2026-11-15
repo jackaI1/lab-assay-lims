@@ -1,0 +1,39 @@
+name: rails-lab-results-api / RSpec
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/rails-lab-results-api/**
+    - .github/workflows/rails-lab-results-api-ci.yml
+  pull_request:
+    paths:
+    - projects/rails-lab-results-api/**
+    - .github/workflows/rails-lab-results-api-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  rspec:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: projects/rails-lab-results-api
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install Ruby pinned in .ruby-version
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: .ruby-version
+        bundler-cache: true
+        working-directory: projects/rails-lab-results-api
+    - name: Check autoloading
+      run: bin/rails zeitwerk:check
+    - name: Prepare the test database from db/structure.sql
+      run: RAILS_ENV=test bin/rails db:prepare
+    - name: Run RSpec model and request specs
+      run: bundle exec rspec --format documentation
