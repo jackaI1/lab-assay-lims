@@ -1,0 +1,44 @@
+name: hydrogen-process-model / Cantera and pytest
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - projects/hydrogen-process-model/**
+    - .github/workflows/hydrogen-process-model-ci.yml
+  pull_request:
+    paths:
+    - projects/hydrogen-process-model/**
+    - .github/workflows/hydrogen-process-model-ci.yml
+  workflow_dispatch: {}
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: projects/hydrogen-process-model
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/setup-uv@v6
+      with:
+        enable-cache: true
+        cache-dependency-glob: projects/hydrogen-process-model/uv.lock
+        python-version: '3.12'
+    - run: uv sync --locked --extra dev
+    - run: uv run ruff check .
+    - run: uv run ruff format --check .
+    - run: uv run pytest -q --tb=short
+    - name: Run the comparison end to end
+      run: uv run h2-compare --output h2-output
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: hydrogen-comparison
+        path: projects/hydrogen-process-model/h2-output/hydrogen_comparison.xlsx
+        if-no-files-found: ignore

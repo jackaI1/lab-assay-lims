@@ -1,0 +1,29 @@
+# Assumptions for the hydrogen comparison.
+#
+# Every price and cost below is an EXAMPLE placeholder chosen so the model runs. None of them
+# is a quote or a market price. Replace them with your own quotes and tariff before using the
+# results. Money is in one currency unit (for example CAD); the spreadsheet labels it "$".
+
+# Energy prices
+natural_gas_price_per_gj = 4.00     # price of methane, feed and furnace fuel, per GJ (LHV)
+electricity_price_per_kwh = 0.07    # electricity price, per kWh
+
+# Money and plant life
+discount_rate = 0.08                # interest rate used for the capital recovery factor
+lifetime_years = 20                 # years the capital is spread over
+fixed_om_fraction = 0.03            # yearly fixed operating and maintenance cost, as a share of capital
+availability = 0.90                 # share of hours the plant runs (also sets electrolyser power)
+plant_kg_per_day = 1000.0           # hydrogen output the two routes are sized for
+
+# Capital
+smr_capex_per_kg_per_day = 5000.0   # steam methane reformer capital per kg/day of capacity
+electrolyser_capex_per_kw = 2000.0  # electrolyser capital per kW of electrical input
+
+# Efficiencies
+furnace_efficiency = 0.90           # share of furnace fuel energy that reaches the reformer
+electrolyser_efficiency_hhv = 0.70  # electricity to hydrogen HHV, the basis most makers quote
+
+# Reformer operating point used for the cost comparison
+smr_temperature_c = 900.0
+smr_steam_to_carbon = 3.0
+smr_pressure_bar = 25.0
